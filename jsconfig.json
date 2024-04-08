@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "jsx": "preserve",
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "allowJs": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["element-plus/global"]
+  }
+}

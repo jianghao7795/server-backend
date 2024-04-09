@@ -4,10 +4,8 @@
       <el-row :class="[isShadowBg ? 'shadowBg' : '']" @click="changeShadow()" />
       <el-aside class="main-cont main-left">
         <div class="tilte" :style="{ background: backgroundColor }" @click="returnHome">
-          <img alt class="logoimg" :src="$GIN_VUE_ADMIN.appLogo" />
-          <h2 v-if="isSider" class="tit-text" :style="{ color: textColor }">
-            {{ $GIN_VUE_ADMIN.appName }}
-          </h2>
+          <img alt class="logoimg" :src="$ADMIN.appLogo" />
+          <h2 v-if="isSider" class="tit-text" :style="{ color: textColor }">{{ $ADMIN.appName }}</h2>
         </div>
         <Aside class="aside" />
         <el-backtop :right="100" :bottom="100"></el-backtop>
@@ -44,6 +42,15 @@
                     </el-col>
                     <el-col :xs="12" :lg="9" :md="9" :sm="14" :xl="9">
                       <div class="right-box">
+                        <el-dropdown trigger="click">
+                          <span class="el-dropdown-link"><translate theme="filled" size="20" fill="#333" strokeLinejoin="miter" strokeLinecap="square" /></span>
+                          <template #dropdown>
+                            <el-dropdown-menu @click="toggle" v-model="locale">
+                              <el-dropdown-item>English</el-dropdown-item>
+                              <el-dropdown-item>中文</el-dropdown-item>
+                            </el-dropdown-menu>
+                          </template>
+                        </el-dropdown>
                         <Search />
                         <el-dropdown @visible-change="changeMouse">
                           <div class="dp-flex justify-content-center align-items height-full width-full">
@@ -116,12 +123,13 @@ import CustomPic from "@/components/customPic/index.vue";
 import Setting from "./setting/index.vue";
 import { setUserAuthority } from "@/api/user";
 import { emitter } from "@/utils/bus.js";
-import { computed, ref, onMounted, nextTick } from "vue";
+import { computed, ref, onMounted, nextTick, inject } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import { useAuthorityStore } from "@/pinia/modules/authority";
 import { useRouterStore } from "@/pinia/modules/router";
 import { fmtTitle } from "@/utils/fmtRouterTitle";
+import { Translate } from "@icon-park/vue-next";
 // import { useRefreshStore } from "@/pinia/modules/refresh";
 
 // const refreshStore = useRefreshStore();
@@ -129,6 +137,9 @@ import { fmtTitle } from "@/utils/fmtRouterTitle";
 // watchEffect(() => {
 //   console.log(refreshStore.isRefresh);
 // });
+
+const locale = inject("locale");
+const toggle = inject("toggle");
 
 const router = useRouter();
 const route = useRoute();
@@ -293,16 +304,7 @@ const changeMouse = (e) => {
 .switch-mouse {
   transition: transform 0.5s;
 }
-// .list-enter-active, 动画  内置过渡动画
-// .list-leave-active {
-//   transition: opacity 0.5s, transform 0.5s;
-// }
-// .list-enter-from {
-//   opacity: 0;
-//   transform: translateX(-5%);
-// }
-// .list-leave-to {
-//   opacity: 0;
-//   transform: translateX(5%);
-// }
+.el-dropdown-link {
+  margin-right: 15px;
+}
 </style>

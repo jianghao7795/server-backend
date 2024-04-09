@@ -12,8 +12,8 @@ import "@/style/element_visiable.scss";
 // 引入封装的router
 import router from "@/router/index";
 import "@/permission";
-import run from "@/core/vue-admin";
-import auth from "@/directive/auth";
+import run from "@/core/vue-admin"; // 图标加载
+import auth from "@/directive/auth"; // 权限
 import { store } from "@/pinia";
 import App from "./App.vue";
 import "vue-cropper/dist/index.css";
@@ -22,7 +22,7 @@ import "vue-cropper/dist/index.css";
 import i18n from "@/locals/index"; //语言翻译 i18b
 
 const app = createApp(App);
-app.config.productionTip = false;
+// app.config.productionTip = false;
 
 app.use(run).use(store).use(auth).use(router).use(i18n).mount("#app");
 

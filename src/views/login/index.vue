@@ -3,8 +3,8 @@
     <div class="login_panle">
       <div class="login_panle_form">
         <div class="login_panle_form_title" style="text-align: center">
-          <img class="login_panle_form_title_logo" :src="$GIN_VUE_ADMIN.appLogo" alt />
-          <p class="login_panle_form_title_p">{{ $GIN_VUE_ADMIN.appName }}</p>
+          <img class="login_panle_form_title_logo" :src="$ADMIN.appLogo" alt />
+          <p class="login_panle_form_title_p">{{ $ADMIN.appName }}</p>
         </div>
         <el-form ref="loginForm" :model="loginFormData" :rules="rules" @keyup.enter="submitForm">
           <el-form-item prop="username">

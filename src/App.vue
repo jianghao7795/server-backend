@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <router-view /> -->
-    <el-config-provider :locale="zhCn">
+    <el-config-provider :locale="locale">
       <router-view />
     </el-config-provider>
   </div>
@@ -14,7 +14,16 @@ export default {
 </script>
 
 <script setup>
+import { computed, ref, provide } from "vue";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+import en from "element-plus/dist/locale/en.mjs";
+const language = ref("zh-cn");
+const locale = computed(() => (language.value === "zh-cn" ? zhCn : en));
+const toggle = () => {
+  language.value = language.value === "zh-cn" ? "en" : "zh-cn";
+};
+provide("locale", locale);
+provide("toggle", toggle);
 </script>
 
 <style lang="scss">

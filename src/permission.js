@@ -50,14 +50,17 @@ router.beforeEach(async (to, from, next) => {
   const token = userStore.token;
   // 在白名单中的判断情况
   document.title = getPageTitle(to.meta.title);
-  if (whiteList.indexOf(to.name) > -1) {
+  if (whiteList.includes(to.name)) {
     if (token) {
-      if (!asyncRouterFlag && whiteList.indexOf(from.name) < 0) {
+      if (!asyncRouterFlag && !whiteList.includes(from.name)) {
         asyncRouterFlag++;
         await getRouter(userStore);
       }
-      next({ name: userStore.userInfo.authority.defaultRouter });
-      // next({ name: "layout404" });
+      if (router.hasRoute(userStore.userInfo.authority.defaultRouter)) {
+        return { name: userStore.userInfo.authority.defaultRouter };
+      } else {
+        return { path: "/layout/404" };
+      }
     } else {
       next();
     }
@@ -65,7 +68,7 @@ router.beforeEach(async (to, from, next) => {
     // 不在白名单中并且已经登陆的时候
     if (token) {
       // 添加flag防止多次获取动态路由和栈溢出
-      if (!asyncRouterFlag && whiteList.indexOf(from.name) < 0) {
+      if (!asyncRouterFlag && !whiteList.includes(from.name)) {
         asyncRouterFlag++;
         await getRouter(userStore);
         next({ ...to, replace: true });

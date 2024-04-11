@@ -50,16 +50,19 @@ router.beforeEach(async (to, from, next) => {
   const token = userStore.token;
   // 在白名单中的判断情况
   document.title = getPageTitle(to.meta.title);
+  // console.log(to.name);
+  // console.log(userStore.userInfo.authority.defaultRouter);
   if (whiteList.includes(to.name)) {
     if (token) {
-      if (!asyncRouterFlag && !whiteList.includes(from.name)) {
-        asyncRouterFlag++;
-        await getRouter(userStore);
-      }
+      // if (!asyncRouterFlag && !whiteList.includes(from.name)) {
+      //   asyncRouterFlag++;
+      //   await getRouter(userStore);
+      // }
+      // console.log(router.hasRoute(userStore.userInfo.authority.defaultRouter));
       if (router.hasRoute(userStore.userInfo.authority.defaultRouter)) {
-        return { name: userStore.userInfo.authority.defaultRouter };
+        return next({ name: userStore.userInfo.authority.defaultRouter });
       } else {
-        return { path: "/layout/404" };
+        return next({ path: "/layout/404" });
       }
     } else {
       next();

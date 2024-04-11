@@ -21,21 +21,11 @@
             <el-button size="small" :text="true" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">
-              删除
-            </el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table
-        v-loading="loadingInit"
-        ref="multipleTable"
-        style="width: 100%"
-        tooltip-effect="dark"
-        :data="tableData"
-        row-key="ID"
-        @selection-change="handleSelectionChange"
-      >
+      <el-table v-loading="loadingInit" ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData" row-key="ID" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="日期" width="180">
           <template #default="scope">
@@ -45,13 +35,7 @@
         <el-table-column align="left" label="标签名称" prop="name" width="120" />
         <el-table-column align="left" label="状态" prop="status" width="150">
           <template #default="scope">
-            <el-switch
-              v-model="scope.row.status"
-              :loading="loading[scope.row.id]"
-              :before-change="() => changeHide(scope.row)"
-              active-text="显示"
-              inactive-text="隐藏"
-            />
+            <el-switch v-model="scope.row.status" :loading="loading[scope.row.id]" :before-change="() => changeHide(scope.row)" active-text="显示" inactive-text="隐藏" />
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作">
@@ -62,16 +46,7 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
     <el-dialog :model-value="dialogFormVisible" :before-close="closeDialog" title="标签">
@@ -81,8 +56,8 @@
         </el-form-item>
         <el-form-item label="状态:">
           <el-radio-group v-model="formData.status">
-            <el-radio-button :label="1">显示</el-radio-button>
-            <el-radio-button :label="0">隐藏</el-radio-button>
+            <el-radio-button :value="1">显示</el-radio-button>
+            <el-radio-button :value="0">隐藏</el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-form>

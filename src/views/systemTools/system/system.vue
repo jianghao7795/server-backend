@@ -155,10 +155,10 @@
             </el-form-item>
             <el-form-item label="logMode">
               <el-radio-group v-model="config.mysql['log-mode']">
-                <el-radio-button name="Silent" label="silent" />
-                <el-radio-button name="Error" label="error" />
-                <el-radio-button name="Warn" label="warn" />
-                <el-radio-button name="Info" label="info" />
+                <el-radio-button name="Silent" value="silent" />
+                <el-radio-button name="Error" value="error" />
+                <el-radio-button name="Warn" value="warn" />
+                <el-radio-button name="Info" value="info" />
               </el-radio-group>
             </el-form-item>
           </template>

@@ -105,14 +105,14 @@
         </el-form-item>
         <el-form-item label="状态" prop="state">
           <el-radio-group v-model="formData.state">
-            <el-radio-button :label="1">显示</el-radio-button>
-            <el-radio-button :label="0">隐藏</el-radio-button>
+            <el-radio-button :value="1">显示</el-radio-button>
+            <el-radio-button :value="0">隐藏</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="首页显示" prop="is_important">
           <el-radio-group v-model="formData.is_important">
-            <el-radio-button :label="1">显示</el-radio-button>
-            <el-radio-button :label="2">隐藏</el-radio-button>
+            <el-radio-button :value="1">显示</el-radio-button>
+            <el-radio-button :value="2">隐藏</el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-form>

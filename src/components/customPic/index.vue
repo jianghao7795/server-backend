@@ -15,13 +15,7 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: "CustomPic",
-};
-</script>
-
-<script setup>
+<script setup name="CustomPic">
 import noAvatarPng from "@/assets/noBody.png";
 import { useUserStore } from "@/pinia/modules/user";
 import { computed, ref } from "vue";
@@ -78,7 +72,6 @@ const file = computed(() => {
   margin-right: 8px;
 }
 .file {
-  width: 80px;
   height: 80px;
   position: relative;
 }

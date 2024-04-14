@@ -1,15 +1,19 @@
-FROM node:16
+FROM node:16.20.2 as builder
 
-WORKDIR /web/
-COPY . .
+LABEL org.opencontainers.image.authors="jianghao"
 
-RUN yarn && yarn build
+WORKDIR /backend/
+COPY . /backend/
+
+RUN npm install -g pnpm
+RUN pnpm config set registry https://registry.npmmirror.com
+RUN pnpm install && pnpm run build
 
 FROM nginx:alpine
-LABEL MAINTAINER="SliverHorn@sliver_horn@qq.com"
+LABEL org.opencontainers.image.authors="jianghao"
 
-COPY .docker-compose/nginx/conf.d/my.conf /etc/nginx/conf.d/my.conf
-COPY --from=0 /web/dist /usr/share/nginx/html
+COPY ./conf.d/my.conf /etc/nginx/conf.d/my.conf
+COPY --from=builder /backend/dist /usr/share/nginx/html
 RUN cat /etc/nginx/nginx.conf
 RUN cat /etc/nginx/conf.d/my.conf
 RUN ls -al /usr/share/nginx/html

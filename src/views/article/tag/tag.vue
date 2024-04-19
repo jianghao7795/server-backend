@@ -248,7 +248,7 @@ const updateTagFunc = async (row) => {
   const res = await findTag({ ID: row.ID });
   type.value = "update";
   if (res.code === 0) {
-    formData.value = res.data.reappTab;
+    formData.value = res.data.tag;
     dialogFormVisible.value = true;
   }
 };

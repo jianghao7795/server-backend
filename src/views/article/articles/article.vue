@@ -342,9 +342,9 @@ const updateArticleFunc = async (row) => {
   const res = await findArticle({ ID: row.ID });
   type.value = "update";
   if (res.code === 0) {
-    changeTags.value = res.data.rearticle.tags;
-    formData.value = res.data.rearticle;
-    formData.value.tags = res.data.rearticle.tags.map((i) => i.ID);
+    changeTags.value = res.data.article.tags;
+    formData.value = res.data.article;
+    formData.value.tags = res.data.article.tags.map((i) => i.ID);
     // text.value = formData.value.content;
     dialogFormVisible.value = true;
   }

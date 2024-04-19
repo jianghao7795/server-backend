@@ -325,8 +325,8 @@ const updateCommentFunc = async (row) => {
   const res = await findComment({ ID: row.ID });
   type.value = "update";
   if (res.code === 0) {
-    formData.value = res.data.recomment;
-    options.value = [res.data.recomment.article];
+    formData.value = res.data.comment;
+    options.value = [res.data.comment.article];
     // formData.value.SysUser = undefined;
     // formData.value.article = undefined;
     dialogFormVisible.value = true;

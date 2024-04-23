@@ -319,7 +319,7 @@ const updateMoblieUserFunc = async (row) => {
   const res = await findMobileUser({ ID: row.ID });
   type.value = "update";
   if (res.code === 0) {
-    formData.value = res.data.remoblieUser;
+    formData.value = res.data.moblieUser;
     dialogFormVisible.value = true;
   }
 };

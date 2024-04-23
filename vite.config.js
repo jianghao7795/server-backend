@@ -17,7 +17,7 @@ import AutoImport from "unplugin-auto-import/vite";
 // import { isAsyncFunction } from 'util/types';
 // @see https://cn.vitejs.dev/config/
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ command }) => {
   // mode development and production
   if (command === "serve") {
     // return {

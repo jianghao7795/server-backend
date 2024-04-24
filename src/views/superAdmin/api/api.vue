@@ -9,11 +9,12 @@
           <el-input v-model="searchInfo.description" placeholder="描述" />
         </el-form-item>
         <el-form-item label="API组">
-          <el-input v-model="searchInfo.apiGroup" placeholder="api组" />
+          <el-input v-model="searchInfo.api_group" placeholder="api组" />
         </el-form-item>
         <el-form-item label="请求">
-          <el-select v-model="searchInfo.method" clearable placeholder="请选择">
-            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`" :value="item.value" />
+          <el-select v-model="searchInfo.method" clearable placeholder="请选择" style="width: 120px">
+            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`"
+              :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -32,15 +33,17 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" :disabled="!apis.length" style="margin-left: 10px" @click="deleteVisible = true">删除</el-button>
+            <el-button icon="delete" size="small" :disabled="!apis.length" style="margin-left: 10px"
+              @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table :data="tableData" @sort-change="sortChange" @selection-change="handleSelectionChange" stripe v-loading="loading">
+      <el-table :data="tableData" @sort-change="sortChange" @selection-change="handleSelectionChange" stripe
+        v-loading="loading">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="id" min-width="60" prop="ID" sortable="custom" />
         <el-table-column align="left" label="API路径" min-width="150" prop="path" sortable="custom" />
-        <el-table-column align="left" label="API分组" min-width="150" prop="apiGroup" sortable="custom" />
+        <el-table-column align="left" label="API分组" min-width="150" prop="api_group" sortable="custom" />
         <el-table-column align="left" label="API简介" min-width="150" prop="description" sortable="custom" />
         <el-table-column align="left" label="请求" min-width="150" prop="method" sortable="custom">
           <template #default="scope">
@@ -56,16 +59,9 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
-          background
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
 
@@ -76,11 +72,12 @@
         </el-form-item>
         <el-form-item label="请求" prop="method">
           <el-select v-model="form.method" placeholder="请选择" style="width: 100%">
-            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`" :value="item.value" />
+            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`"
+              :value="item.value" />
           </el-select>
         </el-form-item>
-        <el-form-item label="api分组" prop="apiGroup">
-          <el-input v-model="form.apiGroup" autocomplete="off" />
+        <el-form-item label="api分组" prop="api_group">
+          <el-input v-model="form.api_group" autocomplete="off" />
         </el-form-item>
         <el-form-item label="api简介" prop="description">
           <el-input v-model="form.description" autocomplete="off" />
@@ -119,7 +116,7 @@ const loading = ref(false);
 const pathRef = ref();
 const form = ref({
   path: "",
-  apiGroup: "",
+  api_group: "",
   method: "",
   description: "",
 });
@@ -149,7 +146,7 @@ const methodOptions = ref([
 const type = ref("");
 const rules = ref({
   path: [{ required: true, message: "请输入api路径", trigger: "blur" }],
-  apiGroup: [{ required: true, message: "请输入组名称", trigger: "blur" }],
+  api_group: [{ required: true, message: "请输入组名称", trigger: "blur" }],
   method: [{ required: true, message: "请选择请求方式", trigger: "blur" }],
   description: [{ required: true, message: "请输入api介绍", trigger: "blur" }],
 });
@@ -244,7 +241,7 @@ const initForm = () => {
   apiForm.value.resetFields();
   form.value = {
     path: "",
-    apiGroup: "",
+    api_group: "",
     method: "",
     description: "",
   };
@@ -353,10 +350,12 @@ const deleteApiFunc = async (row) => {
 <style scoped lang="scss">
 .button-box {
   padding: 10px 20px;
+
   .el-button {
     float: right;
   }
 }
+
 .warning {
   color: #dc143c;
 }

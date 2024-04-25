@@ -406,7 +406,7 @@ const config = ref({
 
 const initForm = async () => {
   const res = await getSystemConfig();
-  if (res.code === 0) {
+  if (res.code === 200) {
     config.value = res.data.config;
   }
 };
@@ -414,7 +414,7 @@ initForm();
 // console.log(config.value);
 const update = async () => {
   const res = await setSystemConfig({ config: config.value });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "配置文件设置成功",
@@ -424,7 +424,7 @@ const update = async () => {
 };
 const email = async () => {
   const res = await emailTest(config.value.email);
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "邮件发送成功",
@@ -440,7 +440,7 @@ const email = async () => {
 //开启任务
 const handleStartTask = async () => {
   const resp = await startTasking({ task: "Tasking" });
-  if (resp.code === 0) {
+  if (resp.code === 200) {
     ElMessage({
       message: "开启成功",
       type: "success",
@@ -450,7 +450,7 @@ const handleStartTask = async () => {
 
 const reload = async () => {
   const resp = await reloadSystem();
-  if (resp.code === 0) {
+  if (resp.code === 200) {
     ElMessage({
       message: "重启成功",
       type: "success",
@@ -465,15 +465,18 @@ const reload = async () => {
   background: #fff;
   padding: 36px;
   border-radius: 2px;
+
   h2 {
     padding: 10px;
     margin: 10px 0;
     font-size: 16px;
     box-shadow: -4px 0px 0px 0px #e7e8e8;
   }
+
   ::v-deep(.el-input-number__increase) {
     top: 5px !important;
   }
+
   .btn-list {
     margin-top: 16px;
   }

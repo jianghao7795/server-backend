@@ -21,7 +21,8 @@
       <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="openDialog">新增</el-button>
       </div>
-      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" v-loading="loading">
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID"
+        v-loading="loading">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="ID" prop="ID" width="80"></el-table-column>
         <el-table-column align="left" label="接入日期" width="180">
@@ -33,19 +34,15 @@
         <el-table-column align="left" label="电话" prop="customerPhoneData" width="120" />
         <el-table-column align="left" label="创建人" prop="sysUserId" width="120">
           <template #default="{ row }">
-            <el-tag class="ml-2" :type="row.sysUser.name === 'admin' ? 'success' : 'info'">{{ row.sysUser.userName }}</el-tag>
+            <el-tag class="ml-2" :type="row.sysUser.name === 'admin' ? 'success' : 'info'">{{ row.sysUser.userName
+              }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作" min-width="160">
           <template #default="scope">
             <el-button size="small" link type="primary" icon="edit" @click="updateCustomer(scope.row)">编辑</el-button>
-            <el-popconfirm
-              confirm-button-text="确定"
-              cancel-button-text="取消"
-              title="确定要删除吗？"
-              @confirm="deleteCustomer(scope.row)"
-              placement="top"
-            >
+            <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" title="确定要删除吗？"
+              @confirm="deleteCustomer(scope.row)" placement="top">
               <!-- @click="deleteCustomer(scope.row)" -->
               <template #reference>
                 <el-button link type="danger" icon="delete" size="small">删除</el-button>
@@ -55,16 +52,9 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
-          background
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="客户">
@@ -126,7 +116,7 @@ const getTableData = async () => {
     ...searchInfo.value,
   });
   loading.value = false;
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -153,7 +143,7 @@ const type = ref("");
 const updateCustomer = async (row) => {
   const res = await getExaCustomer({ ID: row.ID });
   type.value = "update";
-  if (res.code === 0) {
+  if (res.code === 200) {
     form.value = res.data.customer;
     dialogFormVisible.value = true;
   }
@@ -168,7 +158,7 @@ const closeDialog = () => {
 const deleteCustomer = async (row) => {
   row.visible = false;
   const res = await deleteExaCustomer({ ID: row.ID });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -193,7 +183,7 @@ const enterDialog = async () => {
       break;
   }
 
-  if (res.code === 0) {
+  if (res.code === 200) {
     closeDialog();
     getTableData();
   }

@@ -8,7 +8,8 @@
           <input v-show="false" id="file" ref="FileInput" multiple="multiple" type="file" @change="choseFile" />
         </div>
       </form>
-      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn" @click="getFile">上传文件</el-button>
+      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn"
+        @click="getFile">上传文件</el-button>
       <div class="el-upload__tip">请上传不超过5MB的文件</div>
       <div class="list">
         <transition name="list" tag="p">
@@ -151,7 +152,7 @@ const upLoadFileSlice = async (item) => {
       fileMd5: fileMd5.value,
     };
     const res = await breakpointContinueFinish(params);
-    if (res.code === 0) {
+    if (res.code === 200) {
       // 合成文件过后 删除缓存切片
       const params = {
         fileName: file.value.name,
@@ -180,20 +181,25 @@ export default {
 h3 {
   margin: 40px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
   color: #42b983;
 }
+
 #fromCont {
   display: inline-block;
 }
+
 .fileUpload {
   padding: 3px 10px;
   font-size: 12px;
@@ -206,6 +212,7 @@ a {
   border-radius: 4px;
   overflow: hidden;
   display: inline-block;
+
   input {
     position: absolute;
     font-size: 100px;
@@ -215,22 +222,26 @@ a {
     cursor: pointer;
   }
 }
+
 .fileName {
   display: inline-block;
   vertical-align: top;
   margin: 6px 15px 0 15px;
 }
+
 .uploadBtn {
   position: relative;
   top: -10px;
   margin-left: 15px;
 }
+
 .tips {
   margin-top: 30px;
   font-size: 14px;
   font-weight: 400;
   color: #606266;
 }
+
 .el-divider {
   margin: 0 0 30px 0;
 }
@@ -238,6 +249,7 @@ a {
 .list {
   margin-top: 15px;
 }
+
 .list-item {
   display: block;
   margin-right: 10px;
@@ -245,16 +257,22 @@ a {
   line-height: 25px;
   margin-bottom: 5px;
   width: 40%;
+
   .percentage {
     float: right;
   }
 }
+
 .list-enter-active,
 .list-leave-active {
   transition: all 1s;
 }
-.list-enter, .list-leave-to
-/* .list-leave-active for below version 2.1.8 */ {
+
+.list-enter,
+.list-leave-to
+
+/* .list-leave-active for below version 2.1.8 */
+  {
   opacity: 0;
   transform: translateY(-30px);
 }

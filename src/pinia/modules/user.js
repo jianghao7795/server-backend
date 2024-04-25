@@ -48,7 +48,7 @@ export const useUserStore = defineStore("user", () => {
   /* 获取用户信息*/
   const GetUserInfo = async () => {
     const res = await getUserInfo();
-    if (res.code === 0) {
+    if (res.code === 200) {
       setUserInfo(res.data.userInfo);
     } else {
       setUserInfo({});
@@ -63,7 +63,7 @@ export const useUserStore = defineStore("user", () => {
     });
     try {
       const res = await login(loginInfo);
-      if (res.code === 0) {
+      if (res.code === 200) {
         setUserInfo(res.data.user);
         setToken(res.data.token);
         const routerStore = useRouterStore();
@@ -85,7 +85,7 @@ export const useUserStore = defineStore("user", () => {
   /* 登出*/
   const LoginOut = async () => {
     const res = await jsonInBlacklist();
-    if (res.code === 0) {
+    if (res.code === 200) {
       token.value = "";
       sessionStorage.clear();
       localStorage.clear();
@@ -96,7 +96,7 @@ export const useUserStore = defineStore("user", () => {
   /* 设置侧边栏模式*/
   const changeSideMode = async (data) => {
     const res = await setSelfInfo({ sideMode: data });
-    if (res.code === 0) {
+    if (res.code === 200) {
       userInfo.value.sideMode = data;
       ElMessage({
         type: "success",

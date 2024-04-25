@@ -7,14 +7,11 @@
 
           <div class="fl-center avatar-box">
             <div class="user-card">
-              <div
-                class="user-headpic-update"
-                :style="{
-                  'background-image': `url(${userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http' ? path + userStore.userInfo.headerImg : userStore.userInfo.headerImg})`,
-                  'background-repeat': 'no-repeat',
-                  'background-size': 'cover',
-                }"
-              >
+              <div class="user-headpic-update" :style="{
+                'background-image': `url(${userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http' ? path + userStore.userInfo.headerImg : userStore.userInfo.headerImg})`,
+                'background-repeat': 'no-repeat',
+                'background-size': 'cover',
+              }">
                 <span class="update" @click="openChooseImg">
                   <el-icon>
                     <edit />
@@ -152,7 +149,8 @@
         </el-form-item>
         <el-form-item label="验证码" label-width="120px">
           <div class="code-box">
-            <el-input v-model="phoneForm.code" autocomplete="off" placeholder="请自行设计短信服务，此处为模拟随便写" style="width: 300px" />
+            <el-input v-model="phoneForm.code" autocomplete="off" placeholder="请自行设计短信服务，此处为模拟随便写"
+              style="width: 300px" />
             <el-button size="small" type="primary" :disabled="time > 0" @click="getCode">
               {{ time > 0 ? `(${time}s)后重新获取` : "获取验证码" }}
             </el-button>
@@ -174,7 +172,8 @@
         </el-form-item>
         <el-form-item label="验证码" label-width="120px">
           <div class="code-box">
-            <el-input v-model="emailForm.code" placeholder="请自行设计邮件服务，此处为模拟随便写" autocomplete="off" style="width: 300px" />
+            <el-input v-model="emailForm.code" placeholder="请自行设计邮件服务，此处为模拟随便写" autocomplete="off"
+              style="width: 300px" />
             <el-button size="small" type="primary" :disabled="emailTime > 0" @click="getEmailCode">
               {{ emailTime > 0 ? `(${emailTime}s)后重新获取` : "获取验证码" }}
             </el-button>
@@ -219,7 +218,8 @@
           </div>
           <div>
             <el-form-item label="" label-width="100px">
-              <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true" style="width: 100%" :icon="Plus"></el-button>
+              <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true"
+                style="width: 100%" :icon="Plus"></el-button>
             </el-form-item>
           </div>
         </div>
@@ -242,7 +242,8 @@
         </div>
         <div>
           <el-form-item label="" label-width="100px">
-            <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true" style="width: 100%" :icon="Plus"></el-button>
+            <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true"
+              style="width: 100%" :icon="Plus"></el-button>
           </el-form-item>
         </div>
         <div style="text-align: center">
@@ -251,7 +252,8 @@
       </div>
     </el-dialog>
 
-    <ImageCropModal :img-url="cropUrl" :dialog-form-visible="cropStatus" :crop-data="cropData" @changeImageStatus="changeImageStatus" @changeAvatar="changeAvatar" />
+    <ImageCropModal :img-url="cropUrl" :dialog-form-visible="cropStatus" :crop-data="cropData"
+      @changeImageStatus="changeImageStatus" @changeAvatar="changeAvatar" />
   </div>
 </template>
 
@@ -319,7 +321,7 @@ const addChallenge = () => {
 const setProblem = async () => {
   securityQuestionList.value = securityQuestionList.value.map((i) => ({ ...i, sys_user_id: userStore.userInfo.ID }));
   const resp = await putProblem({ data: securityQuestionList.value });
-  if (resp?.code === 0) {
+  if (resp?.code === 200) {
     if (resp.data) {
       ElMessage.success({
         message: "设置成功",
@@ -338,7 +340,7 @@ const nextStep = async () => {
   const activeValue = active.value;
   if (activeValue === 0) {
     const resp = await VerifyAnswer({ data: random.value });
-    if (resp?.code === 0) {
+    if (resp?.code === 200) {
       if (resp.data) {
         ElMessage.success({
           message: "回答成功，请设置问题并提交",
@@ -357,7 +359,7 @@ const nextStep = async () => {
   if (activeValue === 1) {
     console.log(securityQuestionList.value);
     const resp = await putProblem({ data: securityQuestionList.value });
-    if (resp?.code === 0) {
+    if (resp?.code === 200) {
       if (resp.data) {
         ElMessage.success({
           message: "设置成功",
@@ -396,12 +398,12 @@ const forwardStep = () => {
 
 onMounted(() => {
   isSettingProblem({ uid: userStore.userInfo.ID }).then((resp) => {
-    if (resp?.code === 0) {
+    if (resp?.code === 200) {
       hasSetting.value = resp?.data || false;
     }
   });
   // getProblemList({ id: userStore.userInfo.ID }).then((resp) => {
-  //   if (resp.code === 0) {
+  //   if (resp.code === 200) {
   //     securityQuestionList.value = resp.data.list || [];
   //     random.value = resp.data.list[0];
   //     random.value;
@@ -416,7 +418,7 @@ const changeSecurity = (status = false) => {
   securityQuestion.value = status;
   if (status && hasSetting.value) {
     getProblemList({ id: userStore.userInfo.ID }).then((resp) => {
-      if (resp.code === 0) {
+      if (resp.code === 200) {
         securityQuestionList.value = resp.data.list || [];
         random.value = resp.data.list[0];
       }
@@ -440,7 +442,7 @@ const savePassword = () => {
         password: pwdModify.value.password,
         newPassword: pwdModify.value.newPassword,
       });
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage.success("修改密码成功！");
       }
       showPassword.value = false;
@@ -482,7 +484,7 @@ const enterImg = async (url, record) => {
 
 const changeAvatar = async (url) => {
   const res = await setSelfInfo({ headerImg: url });
-  if (res.code === 0) {
+  if (res.code === 200) {
     userStore.ResetUserInfo({ headerImg: url });
     ElMessage({
       type: "success",
@@ -505,7 +507,7 @@ const enterEdit = async () => {
   const res = await setSelfInfo({
     nickName: nickName.value,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     userStore.ResetUserInfo({ nickName: nickName.value });
     ElMessage({
       type: "success",
@@ -546,7 +548,7 @@ const closeChangePhone = () => {
 
 const changePhone = async () => {
   const res = await setSelfInfo({ phone: phoneForm.phone });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage.success("修改成功");
     userStore.ResetUserInfo({ phone: phoneForm.phone });
     closeChangePhone();
@@ -579,7 +581,7 @@ const closeChangeEmail = () => {
 
 const changeEmail = async () => {
   const res = await setSelfInfo({ email: emailForm.email });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage.success("修改成功");
     userStore.ResetUserInfo({ email: emailForm.email });
     closeChangeEmail();
@@ -591,6 +593,7 @@ const changeEmail = async () => {
 .botto {
   margin-bottom: 15px;
 }
+
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -598,9 +601,11 @@ const changeEmail = async () => {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -609,56 +614,69 @@ const changeEmail = async () => {
   line-height: 178px;
   text-align: center;
 }
+
 .avatar {
   width: 178px;
   height: 178px;
   display: block;
 }
+
 .avatar-box {
   // box-shadow: -2px 0 20px -16px;
   width: 100%;
   height: 100%;
+
   .user-card {
     min-height: calc(90vh - 200px);
     padding: 30px 20px;
     text-align: center;
+
     .el-avatar {
       border-radius: 50%;
     }
+
     .user-personality {
       padding: 24px 0;
       text-align: center;
+
       p {
         font-size: 16px;
       }
+
       .nickName {
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 26px;
       }
+
       .person-info {
         margin-top: 6px;
         font-size: 14px;
         color: #999;
       }
     }
+
     .user-information {
       width: 100%;
       height: 100%;
       text-align: left;
+
       ul {
         display: inline-block;
         height: 100%;
         width: 100%;
+
         li {
           width: 100%;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+
           i {
             margin-right: 8px;
           }
+
           padding: 20px 0;
           font-size: 16px;
           font-weight: 400;
@@ -668,6 +686,7 @@ const changeEmail = async () => {
     }
   }
 }
+
 .user-addcount {
   ul {
     li {
@@ -676,19 +695,23 @@ const changeEmail = async () => {
         font-size: 18px;
         color: #696969;
       }
+
       .desc {
         font-size: 16px;
         padding: 0 10px 20px 10px;
         color: #a9a9a9;
+
         a {
           color: rgb(64, 158, 255);
           float: right;
         }
       }
+
       border-bottom: 2px solid #f0f2f5;
     }
   }
 }
+
 .user-headpic-update {
   width: 120px;
   height: 120px;
@@ -697,15 +720,18 @@ const changeEmail = async () => {
   display: flex;
   justify-content: center;
   border-radius: 20px;
+
   &:hover {
     color: #fff;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%), radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%) #989898;
     background-blend-mode: multiply, multiply;
+
     .update {
       color: #fff;
       cursor: pointer;
     }
   }
+
   .update {
     height: 120px;
     width: 120px;
@@ -713,9 +739,11 @@ const changeEmail = async () => {
     color: transparent;
   }
 }
+
 .pointer {
   cursor: pointer;
 }
+
 .code-box {
   display: flex;
   justify-content: space-between;

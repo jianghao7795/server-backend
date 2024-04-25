@@ -1,12 +1,15 @@
 <template>
   <div class="commit-table">
     <div class="commit-table-title">
-      <el-button link @click="loadCommits" type="success" :loading="loadingPlue" :loading-icon="LoadingFour">更新日志</el-button>
-      <el-button link @click="() => scrollChange(1)" type="success" :loading="loading" :loading-icon="LoadingFour">更新commit</el-button>
+      <el-button link @click="loadCommits" type="success" :loading="loadingPlue"
+        :loading-icon="LoadingFour">更新日志</el-button>
+      <el-button link @click="() => scrollChange(1)" type="success" :loading="loading"
+        :loading-icon="LoadingFour">更新commit</el-button>
     </div>
     <div class="log">
       <div>
-        <ul v-infinite-scroll="scrollChange" class="infinite-list log" :infinite-scroll-delay="500" :infinite-scroll-immediate="false" style="overflow: auto">
+        <ul v-infinite-scroll="scrollChange" class="infinite-list log" :infinite-scroll-delay="500"
+          :infinite-scroll-immediate="false" style="overflow: auto">
           <li v-for="(item, key) in dataTimeline" :key="item.commit_time" class="infinite-list-item log-item">
             <!-- {{ key + 1 }} - {{ item.message }} - {{ item.author }} -->
 
@@ -53,7 +56,7 @@ const scrollChange = (pageValue) => {
 const handleCreateGithub = (status = false) => {
   getGithubCommitList({ page: page.value, pageSize: 10 })
     .then((resp) => {
-      if (resp?.code === 0) {
+      if (resp?.code === 200) {
         if (status) {
           dataTimeline.value = resp.data.list || [];
         } else {
@@ -70,7 +73,7 @@ const loadCommits = () => {
   loadingPlue.value = true;
   createCommit()
     .then((resp) => {
-      if (resp.code === 0) {
+      if (resp.code === 200) {
         handleCreateGithub(true);
         ElMessage({
           type: "success",
@@ -108,12 +111,14 @@ onMounted(() => {
   text-align: center;
   margin-bottom: 15px;
 }
+
 .infinite-list {
   height: 300px;
   padding: 0;
   margin: 0;
   list-style: none;
 }
+
 .infinite-list .infinite-list-item {
   display: flex;
   align-items: center;
@@ -123,33 +128,41 @@ onMounted(() => {
   margin: 2px;
   color: #111;
 }
-.infinite-list .infinite-list-item + .list-item {
+
+.infinite-list .infinite-list-item+.list-item {
   margin-top: 10px;
 }
+
 .commit-table {
   background-color: #fff;
   height: 400px;
+
   &-title {
     font-weight: 600;
     margin-bottom: 12px;
   }
+
   .commit-table-title {
     display: flex;
     justify-content: space-between;
   }
+
   .log {
     &-item {
       display: flex;
       justify-content: space-between;
       margin-top: 14px;
+
       .key-box {
         justify-content: center;
       }
+
       .key {
         &.top {
           background: #314659;
           color: #ffffff;
         }
+
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -160,37 +173,47 @@ onMounted(() => {
         text-align: center;
         color: rgba($color: #000000, $alpha: 0.65);
       }
+
       .message {
         color: rgba(0, 0, 0, 0.65);
       }
+
       .form {
         color: rgba(0, 0, 0, 0.65);
         margin-left: 5px;
       }
+
       .flex {
         line-height: 14px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+
       .flex-1 {
         flex: 1;
       }
+
       .flex-2 {
         flex: 2;
       }
+
       .flex-3 {
         flex: 3;
       }
+
       .flex-4 {
         flex: 4;
       }
+
       .flex-5 {
         flex: 5;
       }
+
       .flex-6 {
         flex: 6;
       }
+
       .flex-7 {
         flex: 13;
       }

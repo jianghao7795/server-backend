@@ -32,11 +32,13 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">删除</el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length"
+              @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" @selection-change="handleSelectionChange" v-loading="loading">
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID"
+        @selection-change="handleSelectionChange" v-loading="loading">
         <el-table-column align="left" type="selection" width="55" />
         <el-table-column align="left" label="操作人" width="160">
           <template #default="scope">
@@ -64,7 +66,9 @@
                   <pre>{{ fmtBody(scope.row.body) }}</pre>
                 </div>
                 <template #reference>
-                  <el-icon style="cursor: pointer"><warning color="green" /></el-icon>
+                  <el-icon style="cursor: pointer">
+                    <warning color="green" />
+                  </el-icon>
                 </template>
               </el-popover>
 
@@ -80,7 +84,9 @@
                   <pre>{{ fmtBody(scope.row.resp) }}</pre>
                 </div>
                 <template #reference>
-                  <el-icon style="cursor: pointer"><warning color="#f00" /></el-icon>
+                  <el-icon style="cursor: pointer">
+                    <warning color="#f00" />
+                  </el-icon>
                 </template>
               </el-popover>
               <span v-else>无</span>
@@ -96,14 +102,17 @@
                 <el-button size="small" type="primary" @click="deleteSysOperationRecordFunc(scope.row)">确定</el-button>
               </div>
               <template #reference>
-                <el-button icon="delete" size="small" link type="primary" @click="scope.row.visible = true">删除</el-button>
+                <el-button icon="delete" size="small" link type="primary"
+                  @click="scope.row.visible = true">删除</el-button>
               </template>
             </el-popover>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
   </div>
@@ -154,7 +163,7 @@ const getTableData = async () => {
     ...searchInfo.value,
   });
   loading.value = false;
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -178,7 +187,7 @@ const onDelete = async () => {
       ids.push(item.ID);
     });
   const res = await deleteSysOperationRecordByIds({ ids });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -193,7 +202,7 @@ const onDelete = async () => {
 const deleteSysOperationRecordFunc = async (row) => {
   row.visible = false;
   const res = await deleteSysOperationRecord({ ID: row.ID });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -223,9 +232,11 @@ export default {
 .table-expand {
   padding-left: 60px;
   font-size: 0;
+
   label {
     width: 90px;
     color: #99a9bf;
+
     .el-form-item {
       margin-right: 0;
       margin-bottom: 0;
@@ -233,6 +244,7 @@ export default {
     }
   }
 }
+
 .popover-box {
   background: #112435;
   color: #f08047;
@@ -240,7 +252,9 @@ export default {
   width: 420px;
   overflow: auto;
 }
+
 .popover-box::-webkit-scrollbar {
-  display: none; /* Chrome Safari */
+  display: none;
+  /* Chrome Safari */
 }
 </style>

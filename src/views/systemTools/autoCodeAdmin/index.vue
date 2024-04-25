@@ -22,10 +22,12 @@
         <el-table-column align="left" label="操作" min-width="240">
           <template #default="scope">
             <div>
-              <el-button size="small" link type="primary" :disabled="scope.row.flag === 1" @click="rollbackFunc(scope.row, true)">
+              <el-button size="small" link type="primary" :disabled="scope.row.flag === 1"
+                @click="rollbackFunc(scope.row, true)">
                 回滚(删表)
               </el-button>
-              <el-button size="small" link type="primary" :disabled="scope.row.flag === 1" @click="rollbackFunc(scope.row, false)">
+              <el-button size="small" link type="primary" :disabled="scope.row.flag === 1"
+                @click="rollbackFunc(scope.row, false)">
                 回滚(不删表)
               </el-button>
               <el-button size="small" link type="primary" @click="goAutoCode(scope.row)">复用</el-button>
@@ -35,16 +37,9 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination
-          background
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
   </div>
@@ -86,7 +81,7 @@ const getTableData = async () => {
     page: page.value,
     pageSize: pageSize.value,
   });
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -103,7 +98,7 @@ const deleteRow = async (row) => {
     type: "warning",
   }).then(async () => {
     const res = await delSysHistory({ id: Number(row.ID) });
-    if (res.code === 0) {
+    if (res.code === 200) {
       ElMessage.success("删除成功");
       getTableData();
     }
@@ -116,7 +111,7 @@ const rollbackFunc = async (row, flag) => {
     type: "warning",
   }).then(async () => {
     const res = await rollback({ id: Number(row.ID), deleteTable: flag });
-    if (res.code === 0) {
+    if (res.code === 200) {
       ElMessage.success("回滚成功");
       getTableData();
     }
@@ -139,13 +134,16 @@ const goAutoCode = (row) => {
 <style scoped lang="scss">
 .button-box {
   padding: 10px 20px;
+
   .el-button {
     float: right;
   }
 }
+
 .el-tag--mini {
   margin-left: 5px;
 }
+
 .warning {
   color: #dc143c;
 }

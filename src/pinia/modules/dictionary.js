@@ -15,7 +15,7 @@ export const useDictionaryStore = defineStore("dictionary", () => {
       return dictionaryMap.value[type];
     } else {
       const res = await findSysDictionary({ type });
-      if (res.code === 0) {
+      if (res.code === 200) {
         const dictionaryRes = {};
         const dict = [];
         res.data.resysDictionary.sysDictionaryDetails &&

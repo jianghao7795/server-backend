@@ -21,11 +21,13 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">删除</el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length"
+              @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData" row-key="ID" @selection-change="handleSelectionChange">
+      <el-table ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData" row-key="ID"
+        @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="ID" prop="ID" width="80" />
         <el-table-column align="left" label="用户名" prop="name" width="120" />
@@ -44,13 +46,16 @@
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button link type="primary" icon="edit" size="small" class="table-button" @click="() => updateUserFunc(scope.row)">编辑</el-button>
+            <el-button link type="primary" icon="edit" size="small" class="table-button"
+              @click="() => updateUserFunc(scope.row)">编辑</el-button>
             <el-button link type="primary" icon="delete" size="small" @click="() => deleteRow(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize"
+          :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="用户">
@@ -62,7 +67,8 @@
           <el-input type="password" show-password v-model="formData.password" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="背景图:">
-          <img v-if="formData.headImg" class="header-img-box" :src="formData.headImg && formData.headImg.slice(0, 4) !== 'http' ? path + `/${formData.headImg}` : formData.headImg" />
+          <img v-if="formData.headImg" class="header-img-box"
+            :src="formData.headImg && formData.headImg.slice(0, 4) !== 'http' ? path + `/${formData.headImg}` : formData.headImg" />
         </el-form-item>
         <el-form-item label="简介:">
           <el-input v-model="formData.introduction" clearable placeholder="请输入" />
@@ -72,7 +78,8 @@
         </el-form-item>
         <el-form-item label="头像:" label-width="80px">
           <div style="display: inline-block" @click="openHeaderChange">
-            <img v-if="formData.header" class="header-img-box" :src="formData.header && formData.header.slice(0, 4) !== 'http' ? path + `/${formData.header}` : formData.header" />
+            <img v-if="formData.header" class="header-img-box"
+              :src="formData.header && formData.header.slice(0, 4) !== 'http' ? path + `/${formData.header}` : formData.header" />
             <div v-else class="header-img-box">从媒体库选择</div>
           </div>
         </el-form-item>
@@ -154,7 +161,7 @@ const handleCurrentChange = (val) => {
 // 查询
 const getTableData = async () => {
   const table = await getUserList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value });
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -208,7 +215,7 @@ const onDelete = async () => {
       ids.push(item.ID);
     });
   const res = await deleteUserByIds({ ids });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -228,7 +235,7 @@ const type = ref("");
 const updateUserFunc = async (row) => {
   const res = await findUser({ ID: row.ID });
   type.value = "update";
-  if (res.code === 0) {
+  if (res.code === 200) {
     formData.value = res.data.reuser;
     dialogFormVisible.value = true;
     console.log(formData.value);
@@ -238,7 +245,7 @@ const updateUserFunc = async (row) => {
 // 删除行
 const deleteUserFunc = async (row) => {
   const res = await deleteUser({ ID: row.ID });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -283,7 +290,7 @@ const enterDialog = async () => {
       res = await createUser(formData.value);
       break;
   }
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "创建/更改成功",

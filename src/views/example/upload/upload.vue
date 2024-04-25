@@ -4,7 +4,8 @@
     <div class="table-box">
       <div class="btn-list">
         <upload-common v-model:imageCommon="imageCommon" class="upload-btn" @on-success="getTableData" />
-        <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn" @on-success="getTableData" />
+        <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn"
+          @on-success="getTableData" />
         <el-form ref="searchForm" :inline="true" :model="search" @keyup.enter.native="getTableData">
           <el-form-item label="">
             <el-input v-model="search.keyword" class="keyword" placeholder="请输入文件名或备注" />
@@ -64,7 +65,9 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper"
+          @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
       <!-- <VueViewer :images="tableData.map((i) => i.url)">
         <template slot-scope="scope">
@@ -73,30 +76,13 @@
       </VueViewer> -->
       <el-dialog v-model="dialogFormVisible" title="裁剪图片">
         <div style="width: 100%; height: 400px">
-          <vue-cropper
-            ref="cropper"
-            :img="option.img"
-            :output-size="option.size"
-            :output-type="option.outputType"
-            :info="true"
-            :full="option.full"
-            :fixed="false"
-            :fixed-number="[75, 34]"
-            :can-move="option.canMove"
-            :can-move-box="option.canMoveBox"
-            :fixed-box="option.fixedBox"
-            :original="option.original"
-            :auto-crop="option.autoCrop"
-            :auto-crop-width="option.autoCropWidth"
-            :auto-crop-height="option.autoCropHeight"
-            :center-box="option.centerBox"
-            @real-time="realTime"
-            :high="option.high"
-            @img-load="imgLoad"
-            mode="contain"
-            :max-img-size="option.max"
-            @crop-moving="cropMoving"
-          ></vue-cropper>
+          <vue-cropper ref="cropper" :img="option.img" :output-size="option.size" :output-type="option.outputType"
+            :info="true" :full="option.full" :fixed="false" :fixed-number="[75, 34]" :can-move="option.canMove"
+            :can-move-box="option.canMoveBox" :fixed-box="option.fixedBox" :original="option.original"
+            :auto-crop="option.autoCrop" :auto-crop-width="option.autoCropWidth"
+            :auto-crop-height="option.autoCropHeight" :center-box="option.centerBox" @real-time="realTime"
+            :high="option.high" @img-load="imgLoad" mode="contain" :max-img-size="option.max"
+            @crop-moving="cropMoving"></vue-cropper>
         </div>
         <template #footer>
           <span class="dialog-footer">
@@ -183,7 +169,7 @@ const onOk = () => {
     const forms = new FormData();
     forms.append("file", file);
     const resp = await uploadFile(forms, 2);
-    if (resp.code === 0) {
+    if (resp.code === 200) {
       ElMessage({
         type: "success",
         message: "截图成功 上传成功！",
@@ -223,7 +209,7 @@ const getTableData = async () => {
     pageSize: pageSize.value,
     ...search.value,
   });
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -243,7 +229,7 @@ const deleteFileFunc = async (row) => {
   })
     .then(async () => {
       const res = await deleteFile(row);
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage({
           type: "success",
           message: "删除成功!",
@@ -288,7 +274,7 @@ const editFileNameFunc = async (row) => {
       row.name = value;
       // console.log(value);
       const res = await editFileName(row);
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage({
           type: "success",
           message: "编辑成功!",
@@ -315,7 +301,8 @@ export default {
   cursor: pointer;
   color: #4d70ff;
 }
-.upload-btn + .upload-btn {
+
+.upload-btn+.upload-btn {
   margin-left: 12px;
 }
 </style>

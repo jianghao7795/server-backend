@@ -22,10 +22,16 @@
           <el-input v-model.number="formData.introduction" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="网站头像:" prop="head_img">
-          <el-upload :action="`${path}/base_message/upload_file`" ref="upload" :class="[fileList.length === 5 ? 'disUoloadSty' : '']" accept=".png,.jpg,.jpeg" list-type="picture-card" :disabled="fileList.length === 5" :limit="5" :headers="{ Authorization: `Bearer ${userStore.token}` }" :file-list="fileList" :on-success="uploadSuccess" :on-remove="handleRemove" :on-error="uploadError" :on-change="changeFile">
+          <el-upload :action="`${path}/base_message/upload_file`" ref="upload"
+            :class="[fileList.length === 5 ? 'disUoloadSty' : '']" accept=".png,.jpg,.jpeg" list-type="picture-card"
+            :disabled="fileList.length === 5" :limit="5" :headers="{ Authorization: `Bearer ${userStore.token}` }"
+            :file-list="fileList" :on-success="uploadSuccess" :on-remove="handleRemove" :on-error="uploadError"
+            :on-change="changeFile">
             <template #default>
               <div>
-                <el-icon><Plus /></el-icon>
+                <el-icon>
+                  <Plus />
+                </el-icon>
               </div>
             </template>
 
@@ -37,10 +43,14 @@
                     <el-icon><zoom-in /></el-icon>
                   </span>
                   <span class="el-upload-list__item-delete" @click="handleDownload(file)">
-                    <el-icon><Download /></el-icon>
+                    <el-icon>
+                      <Download />
+                    </el-icon>
                   </span>
                   <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-                    <el-icon><Delete /></el-icon>
+                    <el-icon>
+                      <Delete />
+                    </el-icon>
                   </span>
                 </span>
               </div>
@@ -103,7 +113,7 @@ const rules = ref({
 
 onMounted(() => {
   getBaseMessage({ id: userStore.userInfo.ID }).then((resp) => {
-    if (resp?.code === 0 && !resp?.data?.error) {
+    if (resp?.code === 200 && !resp?.data?.error) {
       formData.value = resp.data.baseMessage || {};
       if (resp.data.baseMessage.head_img) {
         fileList.value = resp.data.baseMessage.head_img.split(",").map((i) => ({ name: i.split("/").pop(), url: `/api/${i}`, status: "success" }));
@@ -159,7 +169,7 @@ const handleSubmit = () => {
   if (formData.value.ID) {
     updateBaseMessage({ ...formData.value, user_id: userStore.userInfo.ID }).then((resp) => {
       loading.value = false;
-      if (resp?.code === 0) {
+      if (resp?.code === 200) {
         ElMessage({
           message: "更新成功",
           type: "success",
@@ -169,7 +179,7 @@ const handleSubmit = () => {
   } else {
     createBaseMessage({ ...formData.value, user_id: userStore.userInfo.ID }).then((resp) => {
       loading.value = false;
-      if (resp?.code === 0) {
+      if (resp?.code === 200) {
         ElMessage({
           message: "创建成功",
           type: "success",

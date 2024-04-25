@@ -19,7 +19,8 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="loginFormData.password" :type="lock === 'lock' ? 'password' : 'text'" placeholder="请输入密码">
+            <el-input v-model="loginFormData.password" :type="lock === 'lock' ? 'password' : 'text'"
+              placeholder="请输入密码">
               <template #suffix>
                 <span class="input-icon">
                   <el-icon>
@@ -41,7 +42,9 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" style="width: 46%" size="large" v-if="isInit" @click="checkInit">前往初始化</el-button>
-            <el-button v-bind:loading="loading" type="primary" size="large" :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登 录</el-button>
+            <el-button v-bind:loading="loading" type="primary" size="large"
+              :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登
+              录</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -105,7 +108,7 @@ const checkPassword = (rule, value, callback) => {
 // 获取验证码
 const loginVerify = () => {
   captcha({}).then((ele) => {
-    if (ele.code === 0) {
+    if (ele.code === 200) {
       rules.captcha[1].max = ele.data.captchaLength;
       rules.captcha[1].min = ele.data.captchaLength;
       picPath.value = ele.data.picPath;
@@ -183,7 +186,7 @@ const checkInit = async () => {
     router.push({ name: "Init" });
   }
   // const res = await checkDB();
-  // if (res.code === 0) {
+  // if (res.code === 200) {
   //   if (res.data?.needInit) {
   //     userStore.NeedInit();
 

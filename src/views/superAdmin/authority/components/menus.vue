@@ -4,30 +4,16 @@
       <el-input v-model="filterText" class="fitler" placeholder="筛选" />
       <el-button class="fl-right" size="small" type="primary" @click="relation">确 定</el-button>
     </div>
-    <el-tree
-      ref="menuTree"
-      :data="menuTreeData"
-      :default-checked-keys="menuTreeIds"
-      :props="menuDefaultProps"
-      default-expand-all
-      highlight-current
-      node-key="ID"
-      show-checkbox
-      :filter-node-method="filterNode"
-      @check="nodeChange"
-    >
+    <el-tree ref="menuTree" :data="menuTreeData" :default-checked-keys="menuTreeIds" :props="menuDefaultProps"
+      default-expand-all highlight-current node-key="ID" show-checkbox :filter-node-method="filterNode"
+      @check="nodeChange">
       <template #default="{ node, data }">
         <span class="custom-tree-node">
           <span>{{ node.label }}</span>
           <span v-if="!data.children">
-            <el-button
-              link
-              type="primary"
-              size="small"
-              :style="{ color: row.defaultRouter === data.name ? '#E6A23C' : '#85ce61' }"
-              :disabled="!node.checked"
-              @click="() => setDefault(data)"
-            >
+            <el-button link type="primary" size="small"
+              :style="{ color: row.defaultRouter === data.name ? '#E6A23C' : '#85ce61' }" :disabled="!node.checked"
+              @click="() => setDefault(data)">
               {{ row.defaultRouter === data.name ? "首页" : "设为首页" }}
             </el-button>
           </span>
@@ -107,7 +93,7 @@ const setDefault = async (data) => {
     parentId: props.row.parentId,
     defaultRouter: data.name,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({ type: "success", message: "设置成功" });
     emit("changeRow", "defaultRouter", res.data.authority.defaultRouter);
   }
@@ -127,7 +113,7 @@ const relation = async () => {
     menus: checkArr,
     authorityId: props.row.authorityId,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "菜单设置成功!",
@@ -146,7 +132,7 @@ let menuID = "";
 const OpenBtn = async (data) => {
   menuID = data.ID;
   const res = await getAuthorityBtnApi({ menuID: menuID, authorityId: props.row.authorityId });
-  if (res.code === 0) {
+  if (res.code === 200) {
     openDialog(data);
     await nextTick();
     if (res.data.selected) {
@@ -180,7 +166,7 @@ const enterDialog = async () => {
     selected,
     authorityId: props.row.authorityId,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({ type: "success", message: "设置成功" });
     btnVisible.value = false;
   }
@@ -204,7 +190,7 @@ export default {
 
 <style lang="scss" scope>
 .custom-tree-node {
-  span + span {
+  span+span {
     margin-left: 12px;
   }
 }

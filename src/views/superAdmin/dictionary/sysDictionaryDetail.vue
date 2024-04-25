@@ -42,15 +42,10 @@
 
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button size="small" link type="primary" icon="edit" @click="updateSysDictionaryDetailFunc(scope.row)">编辑</el-button>
-            <el-popconfirm
-              placement="top"
-              width="160"
-              title="确定要删除吗?"
-              confirm-button-text="确定"
-              cancel-button-text="取消"
-              @confirm="deleteSysDictionaryDetailFunc(scope.row)"
-            >
+            <el-button size="small" link type="primary" icon="edit"
+              @click="updateSysDictionaryDetailFunc(scope.row)">编辑</el-button>
+            <el-popconfirm placement="top" width="160" title="确定要删除吗?" confirm-button-text="确定" cancel-button-text="取消"
+              @confirm="deleteSysDictionaryDetailFunc(scope.row)">
               <!-- <p>确定要删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
                 <el-button size="small" link type="primary" @click="scope.row.visible = false">
@@ -65,7 +60,8 @@
                 </el-button>
               </div> -->
               <template #reference>
-                <el-button link type="primary" icon="delete" size="small" @click="scope.row.visible = true">删除</el-button>
+                <el-button link type="primary" icon="delete" size="small"
+                  @click="scope.row.visible = true">删除</el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -73,16 +69,9 @@
       </el-table>
 
       <div class="pagination">
-        <el-pagination
-          background
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
 
@@ -92,7 +81,8 @@
           <el-input v-model="formData.label" placeholder="请输入展示值" clearable :style="{ width: '100%' }" />
         </el-form-item>
         <el-form-item label="字典值" prop="value">
-          <el-input-number v-model.number="formData.value" step-strictly :step="1" placeholder="请输入字典值" clearable :style="{ width: '100%' }" />
+          <el-input-number v-model.number="formData.value" step-strictly :step="1" placeholder="请输入字典值" clearable
+            :style="{ width: '100%' }" />
         </el-form-item>
         <el-form-item label="启用状态" prop="status" required>
           <el-switch v-model="formData.status" active-text="开启" inactive-text="停用" />
@@ -198,7 +188,7 @@ const getTableData = async () => {
     pageSize: pageSize.value,
     ...searchInfo.value,
   });
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -213,7 +203,7 @@ const dialogFormVisible = ref(false);
 const updateSysDictionaryDetailFunc = async (row) => {
   const res = await findSysDictionaryDetail({ ID: row.ID });
   type.value = "update";
-  if (res.code === 0) {
+  if (res.code === 200) {
     formData.value = res.data.resysDictionaryDetail;
     dialogFormVisible.value = true;
   }
@@ -232,7 +222,7 @@ const closeDialog = () => {
 const deleteSysDictionaryDetailFunc = async (row) => {
   row.visible = false;
   const res = await deleteSysDictionaryDetail({ ID: row.ID });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -261,7 +251,7 @@ const enterDialog = async () => {
         res = await createSysDictionaryDetail(formData.value);
         break;
     }
-    if (res.code === 0) {
+    if (res.code === 200) {
       ElMessage({
         type: "success",
         message: "创建/更改成功",

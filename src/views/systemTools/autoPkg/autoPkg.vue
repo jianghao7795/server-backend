@@ -93,7 +93,7 @@ const enterDialog = async () => {
   pkgForm.value.validate(async (valid) => {
     if (valid) {
       const res = await createPackageApi(form.value);
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage({
           type: "success",
           message: "添加成功",
@@ -109,7 +109,7 @@ const enterDialog = async () => {
 const tableData = ref([]);
 const getTableData = async () => {
   const table = await getPackageApi();
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.pkgs;
   }
 };
@@ -121,7 +121,7 @@ const deleteApiFunc = async (row) => {
     type: "warning",
   }).then(async () => {
     const res = await deletePackageApi(row);
-    if (res.code === 0) {
+    if (res.code === 200) {
       ElMessage({
         type: "success",
         message: "删除成功!",
@@ -137,10 +137,12 @@ getTableData();
 <style scoped lang="scss">
 .button-box {
   padding: 10px 20px;
+
   .el-button {
     float: right;
   }
 }
+
 .warning {
   color: #dc143c;
 }

@@ -54,7 +54,8 @@
           </div>
         </template>
         <el-row :gutter="20">
-          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items" @click="toTarget(card.name)">
+          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items"
+            @click="toTarget(card.name)">
             <div class="quick-entrance-item">
               <div class="quick-entrance-item-icon" :style="{ backgroundColor: card.bg }">
                 <el-icon>
@@ -169,7 +170,7 @@ onMounted(() => {
     timeNow.value = "晚上";
   }
   userCount().then((resp) => {
-    if (resp?.code === 0) {
+    if (resp?.code === 200) {
       userNumber.value = resp.data.count || 0;
     }
   });
@@ -180,7 +181,7 @@ onMounted(() => {
     readingQuantity.value = resp.data.reading_quantity || 0;
   });
   getFileList({ pageSize: 10, proportion: 1.5 }).then((resp) => {
-    if (resp?.code === 0) {
+    if (resp?.code === 200) {
       uploadedFile.value = resp.data.list;
     }
   });
@@ -388,7 +389,7 @@ export default {
   .card-box {
     padding: 12px 16px;
 
-    & + .card-box {
+    &+.card-box {
       padding-top: 0px;
     }
   }
@@ -434,7 +435,7 @@ export default {
       }
 
       &-item {
-        + .top-card-left-item {
+        +.top-card-left-item {
           margin-top: 24px;
         }
 

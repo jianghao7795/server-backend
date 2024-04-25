@@ -17,7 +17,7 @@ export const useAuthorityStore = defineStore("authority", {
       //   console.log(userStore.userInfo);
       if (userStore.userInfo?.authority?.authorityId) {
         const response = await getPolicyPathByAuthorityId({ id: userStore.userInfo?.authority?.authorityId });
-        if (response?.code === 0) {
+        if (response?.code === 200) {
           this.data = response.data.pahts;
         }
       }

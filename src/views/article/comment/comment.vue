@@ -136,7 +136,7 @@ const currentUser = useUserStore();
 onMounted(() => {
   // getUserList({ page: 1, pageSize: 999 }).then((resp) => {
   //   // console.log(resp);
-  //   if (resp?.code === 0) {
+  //   if (resp?.code === 200) {
   //     userInfo.value = resp?.data?.list || [];
   //   }
   // });
@@ -178,7 +178,7 @@ const changeLikeItStatus = async (row, index) => {
   }
 
   const resp = await pariseComment({ user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: praiseAuth.ID });
-  if (resp?.code === 0) {
+  if (resp?.code === 200) {
     if (!addValue) {
       row.praise = [...row.praise, { user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: resp.data.ID }];
       ElMessage.success({
@@ -241,7 +241,7 @@ const getTableData = async () => {
     pageSize: pageSize.value | 10,
     ...searchInfo.value,
   });
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -257,7 +257,7 @@ const search = (query) => {
   if (query) {
     getArticleList({ title: query }).then((resp) => {
       searchLoading.value = false;
-      if (resp.code === 0) {
+      if (resp.code === 200) {
         options.value = resp.data.list;
       }
     });
@@ -312,7 +312,7 @@ const onDelete = async () => {
       ids.push(item.ID);
     });
   const res = await deleteCommentByIds({ ids });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -332,7 +332,7 @@ const type = ref("");
 const updateCommentFunc = async (row) => {
   const res = await findComment({ ID: row.ID });
   type.value = "update";
-  if (res.code === 0) {
+  if (res.code === 200) {
     formData.value = res.data.comment;
     options.value = [res.data.comment.article];
     // formData.value.SysUser = undefined;
@@ -346,7 +346,7 @@ const updateCommentFunc = async (row) => {
 // 删除行
 const deleteCommentFunc = async (row) => {
   const res = await deleteComment({ ID: row.ID });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -403,7 +403,7 @@ const enterDialog = async () => {
       res = await createComment(formData.value);
       break;
   }
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "创建/更改成功",

@@ -15,12 +15,14 @@
           <el-form ref="getTableForm" style="margin-top: 24px" :inline="true" :model="dbform" label-width="120px">
             <el-form-item label="数据库名" prop="structName">
               <el-select v-model="dbform.dbName" filterable placeholder="请选择数据库" @change="getTableFunc">
-                <el-option v-for="item in dbOptions" :key="item.database" :label="item.database" :value="item.database" />
+                <el-option v-for="item in dbOptions" :key="item.database" :label="item.database"
+                  :value="item.database" />
               </el-select>
             </el-form-item>
             <el-form-item label="表名" prop="structName">
               <el-select v-model="dbform.tableName" :disabled="!dbform.dbName" filterable placeholder="请选择表">
-                <el-option v-for="item in tableOptions" :key="item.tableName" :label="item.tableName" :value="item.tableName" />
+                <el-option v-for="item in tableOptions" :key="item.tableName" :label="item.tableName"
+                  :value="item.tableName" />
               </el-select>
             </el-form-item>
             <el-form-item>
@@ -46,13 +48,16 @@
           <el-input v-model="form.description" placeholder="中文描述作为自动api描述" />
         </el-form-item>
         <el-form-item label="文件名称" prop="packageName">
-          <el-input v-model="form.packageName" placeholder="生成文件的默认名称(建议为驼峰格式,首字母小写,如sysXxxXxxx)" @blur="toLowerCaseFunc(form, 'packageName')" />
+          <el-input v-model="form.packageName" placeholder="生成文件的默认名称(建议为驼峰格式,首字母小写,如sysXxxXxxx)"
+            @blur="toLowerCaseFunc(form, 'packageName')" />
         </el-form-item>
         <el-form-item label="Package（包）" prop="packageName">
           <el-select v-model="form.package" style="width: 194px">
             <el-option v-for="item in pkgs" :key="item.ID" :value="item.packageName" :label="item.packageName" />
           </el-select>
-          <el-icon class="auto-icon" @click="getPkgs"><refresh /></el-icon>
+          <el-icon class="auto-icon" @click="getPkgs">
+            <refresh />
+          </el-icon>
           <el-icon class="auto-icon" @click="goPkgs"><document-add /></el-icon>
         </el-form-item>
         <el-form-item>
@@ -92,8 +97,10 @@
         <el-table-column align="left" label="操作" width="300">
           <template #default="scope">
             <el-button size="small" link type="primary" icon="edit" @click="editAndAddField(scope.row)">编辑</el-button>
-            <el-button size="small" link type="primary" :disabled="scope.$index === 0" @click="moveUpField(scope.$index)">上移</el-button>
-            <el-button size="small" link type="primary" :disabled="scope.$index + 1 === form.fields.length" @click="moveDownField(scope.$index)">下移</el-button>
+            <el-button size="small" link type="primary" :disabled="scope.$index === 0"
+              @click="moveUpField(scope.$index)">上移</el-button>
+            <el-button size="small" link type="primary" :disabled="scope.$index + 1 === form.fields.length"
+              @click="moveDownField(scope.$index)">下移</el-button>
             <el-popover v-model:visible="scope.row.visible" placement="top">
               <p>确定删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
@@ -101,7 +108,8 @@
                 <el-button type="primary" size="small" @click="deleteField(scope.$index)">确定</el-button>
               </div>
               <template #reference>
-                <el-button size="small" link type="primary" icon="delete" @click="scope.row.visible = true">删除</el-button>
+                <el-button size="small" link type="primary" icon="delete"
+                  @click="scope.row.visible = true">删除</el-button>
               </template>
             </el-popover>
           </template>
@@ -353,13 +361,13 @@ const enterForm = async (isPreview) => {
 };
 const getDbFunc = async () => {
   const res = await getDB();
-  if (res.code === 0) {
+  if (res.code === 200) {
     dbOptions.value = res.data.dbs;
   }
 };
 const getTableFunc = async () => {
   const res = await getTable({ dbName: dbform.value.dbName });
-  if (res.code === 0) {
+  if (res.code === 200) {
     tableOptions.value = res.data.tables;
   }
   dbform.value.tableName = "";
@@ -367,7 +375,7 @@ const getTableFunc = async () => {
 const getColumnFunc = async () => {
   const gormModelList = ["id", "created_at", "updated_at", "deleted_at"];
   const res = await getColumn(dbform.value);
-  if (res.code === 0) {
+  if (res.code === 200) {
     const tbHump = toHump(dbform.value.tableName);
     form.value.structName = toUpperCase(tbHump);
     form.value.tableName = dbform.value.tableName;
@@ -408,7 +416,7 @@ const setFdMap = async () => {
 };
 const getAutoCodeJson = async (id) => {
   const res = await getMeta({ id: Number(id) });
-  if (res.code === 0) {
+  if (res.code === 200) {
     form.value = JSON.parse(res.data.meta);
   }
 };
@@ -416,7 +424,7 @@ const getAutoCodeJson = async (id) => {
 const pkgs = ref([]);
 const getPkgs = async () => {
   const res = await getPackageApi();
-  if (res.code === 0) {
+  if (res.code === 200) {
     pkgs.value = res.data.pkgs;
   }
 };
@@ -449,16 +457,20 @@ export default {
   align-items: center;
   padding: 5px 0;
 }
+
 .button-box {
   padding: 10px 20px;
+
   .el-button {
     margin-right: 20px;
     float: right;
   }
 }
+
 .auto-btn-list {
   margin-top: 16px;
 }
+
 .auto-icon {
   margin-left: 6px;
   color: #666;

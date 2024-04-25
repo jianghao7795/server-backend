@@ -39,13 +39,15 @@
           <template #default="scope">
             <el-button size="small" icon="plus" link type="primary" @click="addMenu(scope.row.ID)">添加子菜单</el-button>
             <el-button size="small" link type="primary" icon="edit" @click="editMenu(scope.row.ID)">编辑</el-button>
-            <el-button size="small" link type="primary" icon="delete" v-if="!scope.row.children" @click="deleteMenu(scope.row.ID)">删除</el-button>
+            <el-button size="small" link type="primary" icon="delete" v-if="!scope.row.children"
+              @click="deleteMenu(scope.row.ID)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="handleClose" :title="dialogTitle" width="60%">
-      <el-form v-if="dialogFormVisible" ref="menuForm" :inline="true" :model="form" :rules="rules" label-position="top" label-width="85px">
+      <el-form v-if="dialogFormVisible" ref="menuForm" :inline="true" :model="form" :rules="rules" label-position="top"
+        label-width="85px">
         <el-form-item label="路由Name" prop="path" style="width: 30%">
           <el-input v-model="form.name" autocomplete="off" placeholder="唯一英文字符串" @change="changeName" />
         </el-form-item>
@@ -66,26 +68,19 @@
           </el-select>
         </el-form-item>
         <el-form-item label="父节点ID" style="width: 30%">
-          <el-cascader
-            v-model="form.parentId"
-            style="width: 100%"
-            :disabled="!isEdit"
-            :options="menuOption"
-            :props="{
-              checkStrictly: true,
-              label: 'title',
-              value: 'ID',
-              disabled: 'disabled',
-              emitPath: false,
-            }"
-            :show-all-levels="false"
-            filterable
-          />
+          <el-cascader v-model="form.parentId" style="width: 100%" :disabled="!isEdit" :options="menuOption" :props="{
+            checkStrictly: true,
+            label: 'title',
+            value: 'ID',
+            disabled: 'disabled',
+            emitPath: false,
+          }" :show-all-levels="false" filterable />
         </el-form-item>
         <el-form-item label="文件路径" prop="component" style="width: 60%">
           <el-input v-model="form.component" autocomplete="off" />
           <span style="font-size: 12px; margin-right: 12px">如果菜单包含子菜单，请创建router-view二级路由页面或者</span>
-          <el-button style="margin-top: 4px" size="small" @click="form.component = 'views/routerHolder.vue'">点我设置</el-button>
+          <el-button style="margin-top: 4px" size="small"
+            @click="form.component = 'views/routerHolder.vue'">点我设置</el-button>
         </el-form-item>
         <el-form-item label="展示名称" prop="meta.title" style="width: 30%">
           <el-input v-model="form.meta.title" autocomplete="off" />
@@ -137,13 +132,15 @@
           <el-table-column align="left">
             <template #default="scope">
               <div>
-                <el-button type="danger" size="small" icon="delete" @click="deleteParameter(form.parameters, scope.$index)">删除</el-button>
+                <el-button type="danger" size="small" icon="delete"
+                  @click="deleteParameter(form.parameters, scope.$index)">删除</el-button>
               </div>
             </template>
           </el-table-column>
         </el-table>
 
-        <el-button style="margin-top: 12px" size="small" type="primary" icon="edit" @click="addBtn(form)">新增可控按钮</el-button>
+        <el-button style="margin-top: 12px" size="small" type="primary" icon="edit"
+          @click="addBtn(form)">新增可控按钮</el-button>
         <el-table :data="form.menuBtn" style="width: 100%">
           <el-table-column align="left" prop="name" label="按钮名称" width="180">
             <template #default="scope">
@@ -162,7 +159,8 @@
           <el-table-column align="left">
             <template #default="scope">
               <div>
-                <el-button type="danger" size="small" icon="delete" @click="deleteBtn(form.menuBtn, scope.$index)">删除</el-button>
+                <el-button type="danger" size="small" icon="delete"
+                  @click="deleteBtn(form.menuBtn, scope.$index)">删除</el-button>
               </div>
             </template>
           </el-table-column>
@@ -208,7 +206,7 @@ const getTableData = async () => {
     ...searchInfo.value,
   });
   loading.value = false;
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -255,7 +253,7 @@ const deleteBtn = async (btns, index) => {
     return;
   }
   const res = await canRemoveAuthorityBtnApi({ id: btn.ID });
-  if (res.code === 0) {
+  if (res.code === 200) {
     btns.splice(index, 1);
     return;
   }
@@ -295,7 +293,7 @@ const deleteMenu = (ID) => {
   })
     .then(async () => {
       const res = await deleteBaseMenu({ ID });
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage({
           type: "success",
           message: "删除成功!",
@@ -353,7 +351,7 @@ const enterDialog = async () => {
         res = await addBaseMenu(form.value);
       }
       loadingSubmit.value = false;
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage({
           type: "success",
           message: isEdit.value ? "编辑成功" : "添加成功!",
@@ -435,9 +433,11 @@ export default {
 .warning {
   color: #dc143c;
 }
+
 .icon-column {
   display: flex;
   align-items: center;
+
   .el-icon {
     margin-right: 8px;
   }

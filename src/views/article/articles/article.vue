@@ -202,7 +202,7 @@ const getTableData = async () => {
     ...searchInfo.value,
   });
   loadingInit.value = false;
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -234,7 +234,7 @@ const onUploadImg = async (files, callback) => {
 onBeforeMount(() => {
   getTableData();
   getTagList({ page: 1, pageSize: 999 }).then((resp) => {
-    if (resp.code === 0) {
+    if (resp.code === 200) {
       tags.value = resp.data.list;
     }
   });
@@ -274,7 +274,7 @@ const onDelete = async () => {
       ids.push(item.ID);
     });
   const res = await deleteArticleByIds({ ids });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -299,7 +299,7 @@ const OnCancelView = async () => {
 
   const ids = multipleSelection.value.map((i) => i.ID);
   const resp = await putArticleByIds({ ids });
-  if (resp.code === 0) {
+  if (resp.code === 200) {
     ElMessage({
       type: "success",
       message: "首页显示取消成功",
@@ -348,7 +348,7 @@ const closeDialog = () => {
 const updateArticleFunc = async (row) => {
   const res = await findArticle({ ID: row.ID });
   type.value = "update";
-  if (res.code === 0) {
+  if (res.code === 200) {
     changeTags.value = res.data.article.tags;
     formData.value = res.data.article;
     formData.value.tags = res.data.article.tags.map((i) => i.ID);
@@ -378,7 +378,7 @@ const enterDialog = async (formRules) => {
           break;
       }
       // console.log(formData.value);
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage({
           type: "success",
           message: "创建/更改成功",

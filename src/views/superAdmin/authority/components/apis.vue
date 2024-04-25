@@ -4,7 +4,9 @@
       <el-input v-model="filterText" class="fitler" placeholder="筛选" />
       <el-button class="fl-right" size="small" type="primary" @click="authApiEnter">确 定</el-button>
     </div>
-    <el-tree ref="apiTree" :data="apiTreeData" :default-checked-keys="apiTreeIds" :props="apiDefaultProps" default-expand-all highlight-current node-key="onlyId" show-checkbox :filter-node-method="filterNode" @check="nodeChange" />
+    <el-tree ref="apiTree" :data="apiTreeData" :default-checked-keys="apiTreeIds" :props="apiDefaultProps"
+      default-expand-all highlight-current node-key="onlyId" show-checkbox :filter-node-method="filterNode"
+      @check="nodeChange" />
   </div>
 </template>
 <script>
@@ -107,7 +109,7 @@ const authApiEnter = async () => {
     authorityId: activeUserId.value,
     casbinInfos,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({ type: "success", message: "api设置成功" });
   }
 };

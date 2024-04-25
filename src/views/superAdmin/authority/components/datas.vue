@@ -103,7 +103,7 @@ const getChildrenId = (row, arrBox) => {
 // 提交
 const authDataEnter = async () => {
   const res = await setDataAuthority(props.row);
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({ type: "success", message: "资源设置成功" });
   }
 };

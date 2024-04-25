@@ -5,14 +5,17 @@
       <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="addAuthority('0')">新增角色</el-button>
       </div>
-      <el-table :data="tableData" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="authorityId" style="width: 100%" v-loading="loading">
+      <el-table :data="tableData" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        row-key="authorityId" style="width: 100%" v-loading="loading">
         <el-table-column label="角色ID" min-width="180" prop="authorityId" />
         <el-table-column align="left" label="角色名称" min-width="180" prop="authorityName" />
         <el-table-column align="left" label="操作" width="460">
           <template #default="scope">
             <el-button icon="setting" size="small" type="primary" link @click="opdendrawer(scope.row)">设置权限</el-button>
-            <el-button icon="plus" size="small" link type="primary" @click="addAuthority(scope.row.authorityId)">新增子角色</el-button>
-            <el-button icon="copy-document" size="small" link type="primary" @click="copyAuthorityFunc(scope.row)">拷贝</el-button>
+            <el-button icon="plus" size="small" link type="primary"
+              @click="addAuthority(scope.row.authorityId)">新增子角色</el-button>
+            <el-button icon="copy-document" size="small" link type="primary"
+              @click="copyAuthorityFunc(scope.row)">拷贝</el-button>
             <el-button icon="edit" type="primary" size="small" link @click="editAuthority(scope.row)">编辑</el-button>
             <el-button icon="delete" type="primary" size="small" link @click="deleteAuth(scope.row)">删除</el-button>
           </template>
@@ -23,21 +26,14 @@
     <el-dialog v-model="dialogFormVisible" :title="dialogTitle">
       <el-form ref="authorityForm" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="父级角色" prop="parentId">
-          <el-cascader
-            v-model="form.parentId"
-            style="width: 100%"
-            :disabled="dialogType == 'add'"
-            :options="AuthorityOption"
-            :props="{
+          <el-cascader v-model="form.parentId" style="width: 100%" :disabled="dialogType == 'add'"
+            :options="AuthorityOption" :props="{
               checkStrictly: true,
               label: 'authorityName',
               value: 'authorityId',
               disabled: 'disabled',
               emitPath: false,
-            }"
-            :show-all-levels="false"
-            filterable
-          />
+            }" :show-all-levels="false" filterable />
         </el-form-item>
         <el-form-item label="角色ID" prop="authorityId">
           <el-input v-model="form.authorityId" :disabled="dialogType == 'edit'" autocomplete="off" />
@@ -133,7 +129,7 @@ const getTableData = async () => {
     ...searchInfo.value,
   });
   loading.value = false;
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -183,7 +179,7 @@ const deleteAuth = (row) => {
   })
     .then(async () => {
       const res = await deleteAuthority({ authorityId: row.authorityId });
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage({
           type: "success",
           message: "删除成功!",
@@ -235,7 +231,7 @@ const enterDialog = () => {
         case "add":
           {
             const res = await createAuthority(form.value);
-            if (res.code === 0) {
+            if (res.code === 200) {
               ElMessage({
                 type: "success",
                 message: "添加成功!",
@@ -248,7 +244,7 @@ const enterDialog = () => {
         case "edit":
           {
             const res = await updateAuthority(form.value);
-            if (res.code === 0) {
+            if (res.code === 200) {
               ElMessage({
                 type: "success",
                 message: "添加成功!",
@@ -274,7 +270,7 @@ const enterDialog = () => {
           data.authority.dataAuthorityId = copyForm.value.dataAuthorityId;
           data.oldAuthorityId = copyForm.value.authorityId;
           const res = await copyAuthority(data);
-          if (res.code === 0) {
+          if (res.code === 200) {
             ElMessage({
               type: "success",
               message: "复制成功！",
@@ -353,6 +349,7 @@ export default {
 .authority {
   .el-input-number {
     margin-left: 15px;
+
     span {
       display: none;
     }
@@ -364,6 +361,7 @@ export default {
   height: calc(100vh - 100px);
   margin-top: 10px;
 }
+
 .auth-drawer {
   .el-drawer__body {
     padding: 0;

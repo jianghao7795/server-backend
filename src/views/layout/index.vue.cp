@@ -220,7 +220,7 @@ const changeUserAuth = async (id) => {
   const res = await setUserAuthority({
     authorityId: id,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     emitter.emit("closeAllPage");
     setTimeout(() => {
       window.location.reload();

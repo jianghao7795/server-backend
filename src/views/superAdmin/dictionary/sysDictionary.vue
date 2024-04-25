@@ -30,7 +30,8 @@
       <div class="btn-list">
         <el-button size="small" type="primary" icon="plus" @click="openDialog">新增</el-button>
       </div>
-      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" v-loading="loading">
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID"
+        v-loading="loading">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="日期" width="180">
           <template #default="scope">{{ formatDate(scope.row.CreatedAt) }}</template>
@@ -44,16 +45,11 @@
         <el-table-column align="left" label="操作">
           <template #default="scope">
             <el-button size="small" icon="document" link type="primary" @click="toDetile(scope.row)">详情</el-button>
-            <el-button size="small" icon="edit" link type="primary" @click="updateSysDictionaryFunc(scope.row)">编辑</el-button>
+            <el-button size="small" icon="edit" link type="primary"
+              @click="updateSysDictionaryFunc(scope.row)">编辑</el-button>
             <!-- v-model:visible="scope.row.visible" -->
-            <el-popconfirm
-              placement="top"
-              width="160"
-              confirm-button-text="确定"
-              cancel-button-text="取消"
-              title="确定要删除吗?"
-              @confirm="deleteSysDictionaryFunc(scope.row)"
-            >
+            <el-popconfirm placement="top" width="160" confirm-button-text="确定" cancel-button-text="取消" title="确定要删除吗?"
+              @confirm="deleteSysDictionaryFunc(scope.row)">
               <template #reference>
                 <el-button link type="primary" icon="delete" size="small" style="margin-left: 10px">删除</el-button>
               </template>
@@ -63,16 +59,9 @@
       </el-table>
 
       <div class="pagination">
-        <el-pagination
-          background
-          :current-page="page"
-          :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange"
-          @size-change="handleSizeChange"
-        />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="字典">
@@ -187,7 +176,7 @@ const getTableData = async () => {
     ...searchInfo.value,
   });
   loading.value = false;
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -211,7 +200,7 @@ const type = ref("");
 const updateSysDictionaryFunc = async (row) => {
   const res = await findSysDictionary({ ID: row.ID });
   type.value = "update";
-  if (res.code === 0) {
+  if (res.code === 200) {
     formData.value = res.data.resysDictionary;
     dialogFormVisible.value = true;
   }
@@ -228,7 +217,7 @@ const closeDialog = () => {
 const deleteSysDictionaryFunc = async (row) => {
   row.visible = false;
   const res = await deleteSysDictionary({ ID: row.ID });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: "删除成功",
@@ -256,7 +245,7 @@ const enterDialog = async () => {
         res = await createSysDictionary(formData.value);
         break;
     }
-    if (res.code === 0) {
+    if (res.code === 200) {
       closeDialog();
       getTableData();
     }

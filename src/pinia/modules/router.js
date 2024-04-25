@@ -57,7 +57,7 @@ export const useRouterStore = defineStore("router", () => {
       },
     ];
     const asyncRouterRes = await asyncMenu();
-    if (asyncRouterRes.code === 0) {
+    if (asyncRouterRes.code === 200) {
       const asyncRouter = asyncRouterRes.data.menus;
       asyncRouter &&
         asyncRouter.push(

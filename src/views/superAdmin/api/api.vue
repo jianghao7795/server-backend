@@ -200,7 +200,7 @@ const getTableData = async () => {
     ...searchInfo.value,
   });
   loading.value = false;
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -222,7 +222,7 @@ const deleteVisible = ref(false);
 const onDelete = async () => {
   const ids = apis.value.map((item) => item.ID);
   const res = await deleteApisByIds({ ids });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({
       type: "success",
       message: res.msg,
@@ -271,7 +271,7 @@ const closeDialog = () => {
 const editApiFunc = async (row) => {
   const res = await getApiById({ id: row.ID });
   // console.log(res);
-  if (res.code === 0) {
+  if (res.code === 200) {
     form.value = res.data.api;
     openDialog("edit");
   }
@@ -284,7 +284,7 @@ const enterDialog = async () => {
         case "addApi":
           {
             const res = await createApi(form.value);
-            if (res.code === 0) {
+            if (res.code === 200) {
               ElMessage({
                 type: "success",
                 message: "添加成功",
@@ -299,7 +299,7 @@ const enterDialog = async () => {
         case "edit":
           {
             const res = await updateApi(form.value);
-            if (res.code === 0) {
+            if (res.code === 200) {
               ElMessage({
                 type: "success",
                 message: "编辑成功",
@@ -333,7 +333,7 @@ const deleteApiFunc = async (row) => {
   }).then(async () => {
     console.log(row);
     const res = await deleteApi(row);
-    if (res.code === 0) {
+    if (res.code === 200) {
       ElMessage({
         type: "success",
         message: "删除成功!",

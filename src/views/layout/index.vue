@@ -11,7 +11,8 @@
         <el-backtop :right="100" :bottom="100"></el-backtop>
       </el-aside>
       <!-- 分块滑动功能 -->
-      <el-main class="main-cont main-right" :style="{ width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '50px' : '220px'})` }">
+      <el-main class="main-cont main-right"
+        :style="{ width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '50px' : '220px'})` }">
         <transition :duration="{ enter: 800, leave: 100 }" mode="out-in" name="el-fade-in-linear">
           <div class="topfix">
             <el-row>
@@ -43,7 +44,10 @@
                     <el-col :xs="12" :lg="9" :md="9" :sm="14" :xl="9">
                       <div class="right-box">
                         <el-dropdown trigger="click">
-                          <span class="el-dropdown-link"><translate theme="filled" size="20" fill="#333" strokeLinejoin="miter" strokeLinecap="square" /></span>
+                          <span class="el-dropdown-link">
+                            <translate theme="filled" size="20" fill="#333" strokeLinejoin="miter"
+                              strokeLinecap="square" />
+                          </span>
                           <template #dropdown>
                             <el-dropdown-menu @click="toggle" v-model="locale">
                               <el-dropdown-item>English</el-dropdown-item>
@@ -59,7 +63,8 @@
                               <span style="margin-left: 5px">
                                 {{ userStore.userInfo.nickName }}
                               </span>
-                              <el-icon class="" :class="mouseLeaveOrEnter ? 'switch-mouse mouse-enter-leave' : 'switch-mouse'">
+                              <el-icon class=""
+                                :class="mouseLeaveOrEnter ? 'switch-mouse mouse-enter-leave' : 'switch-mouse'">
                                 <arrow-down />
                               </el-icon>
                             </span>
@@ -67,10 +72,13 @@
                           <template #dropdown>
                             <el-dropdown-menu class="dropdown-group">
                               <el-dropdown-item>
-                                <span style="font-weight: 600">当前角色：{{ userStore.userInfo.authority?.authorityName }}</span>
+                                <span style="font-weight: 600">当前角色：{{ userStore.userInfo.authority?.authorityName
+                                  }}</span>
                               </el-dropdown-item>
                               <template v-if="userStore.userInfo.authorities">
-                                <el-dropdown-item v-for="item in userStore.userInfo.authorities.filter((i) => i.authorityId !== userStore.userInfo.authorityId)" :key="item.authorityId" @click="changeUserAuth(item.authorityId)">
+                                <el-dropdown-item
+                                  v-for="item in userStore.userInfo.authorities.filter((i) => i.authorityId !== userStore.userInfo.authorityId)"
+                                  :key="item.authorityId" @click="changeUserAuth(item.authorityId)">
                                   <span>切换为：{{ item.authorityName }}</span>
                                 </el-dropdown-item>
                               </template>
@@ -91,7 +99,8 @@
             <HistoryComponent ref="layoutHistoryComponent" />
           </div>
         </transition>
-        <router-view v-if="reloadFlag" v-slot="{ Component, route }" v-loading="loadingFlag" element-loading-text="正在加载中" class="admin-box">
+        <router-view v-if="reloadFlag" v-slot="{ Component, route }" v-loading="loadingFlag"
+          element-loading-text="正在加载中" class="admin-box">
           <div v-bind:id="'refreshView'">
             <!-- el-fade-in-linear -->
             <transition mode="out-in" name="el-fade-in-linear" type="transition" :appear="true">
@@ -221,7 +230,7 @@ const changeUserAuth = async (id) => {
   const res = await setUserAuthority({
     authorityId: id,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     emitter.emit("closeAllPage");
     setTimeout(() => {
       window.location.reload();
@@ -294,16 +303,20 @@ const changeMouse = (e) => {
   background-color: #191a23 !important;
   color: #fff !important;
 }
+
 .light {
   background-color: #fff !important;
   color: #000 !important;
 }
+
 .mouse-enter-leave {
   transform: rotate(180deg);
 }
+
 .switch-mouse {
   transition: transform 0.5s;
 }
+
 .el-dropdown-link {
   margin-right: 15px;
 }

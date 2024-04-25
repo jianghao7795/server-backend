@@ -2,7 +2,8 @@
   <el-drawer v-model="drawer" title="媒体库" size="650px">
     <div class="btn-list">
       <upload-common v-model:imageCommon="imageCommon" class="upload-btn-media-library" @on-success="open" />
-      <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn-media-library" @on-success="open" />
+      <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn-media-library"
+        @on-success="open" />
       <el-form ref="searchForm" :inline="true" :model="search">
         <el-form-item label="">
           <el-input v-model="search.keyword" class="keyword" placeholder="请输入文件名或备注" />
@@ -16,7 +17,8 @@
     <div class="media">
       <div v-for="(item, key) in picList" :key="key" class="media-box">
         <div class="header-img-box-list">
-          <el-image :key="key" :src="item.url && item.url.slice(0, 4) !== 'http' ? path + `/${item.url}` : item.url" @click="chooseImg(item.url, target, targetKey, item)">
+          <el-image :key="key" :src="item.url && item.url.slice(0, 4) !== 'http' ? path + `/${item.url}` : item.url"
+            @click="chooseImg(item.url, target, targetKey, item)">
             <template #error>
               <div class="header-img-box-list">
                 <el-icon>
@@ -31,7 +33,9 @@
         </div>
       </div>
     </div>
-    <el-pagination background :current-page="page" :page-size="pageSize" :total="total" :style="{ 'justify-content': 'center' }" layout="total, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+    <el-pagination background :current-page="page" :page-size="pageSize" :total="total"
+      :style="{ 'justify-content': 'center' }" layout="total, prev, pager, next, jumper"
+      @current-change="handleCurrentChange" @size-change="handleSizeChange" />
   </el-drawer>
 </template>
 
@@ -95,7 +99,7 @@ const open = async () => {
     is_cropper: 1,
     ...search.value,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     picList.value = res.data.list;
     total.value = res.data.total;
     page.value = res.data.page;
@@ -120,7 +124,7 @@ const editFileNameFunc = async (row) => {
     .then(async ({ value }) => {
       row.name = value;
       const res = await editFileName(row);
-      if (res.code === 0) {
+      if (res.code === 200) {
         ElMessage({
           type: "success",
           message: "编辑成功!",
@@ -170,6 +174,7 @@ defineExpose({ open });
       line-height: 120px;
       cursor: pointer;
       overflow: hidden;
+
       .el-image__inner {
         max-width: 120px;
         max-height: 120px;

@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="search-box">
-      <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline" @keyup.enter.native="onSubmit">
+      <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline"
+        @keyup.enter.native="onSubmit">
         <el-form-item label="用户名">
           <el-input v-model="searchInfo.username"></el-input>
         </el-form-item>
@@ -29,11 +30,7 @@
         <el-table-column align="left" label="邮箱" min-width="180" prop="email" />
         <el-table-column align="left" label="用户角色" min-width="200">
           <template #default="scope">
-            <el-cascader
-              v-model="scope.row.authorityIds"
-              :options="authOptions"
-              :show-all-levels="false"
-              collapse-tags
+            <el-cascader v-model="scope.row.authorityIds" :options="authOptions" :show-all-levels="false" collapse-tags
               :props="{
                 multiple: true,
                 checkStrictly: true,
@@ -41,25 +38,20 @@
                 value: 'authorityId',
                 disabled: 'disabled',
                 emitPath: false,
-              }"
-              :clearable="false"
-              @visible-change="
-                (flag) => {
+              }" :clearable="false" @visible-change="(flag) => {
                   changeAuthority(scope.row, flag);
                 }
-              "
-              @remove-tag="
-                () => {
+                " @remove-tag="() => {
                   changeAuthority(scope.row, false);
                 }
-              "
-            />
+                " />
           </template>
         </el-table-column>
 
         <el-table-column label="操作" min-width="250" fixed="right">
           <template #default="scope">
-            <el-popconfirm placement="top" width="160" title="确定要删除吗?" confirm-button-text="确定" cancel-button-text="取消" @confirm="deleteUserFunc(scope.row)">
+            <el-popconfirm placement="top" width="160" title="确定要删除吗?" confirm-button-text="确定" cancel-button-text="取消"
+              @confirm="deleteUserFunc(scope.row)">
               <!-- <p>确定要删除此用户吗</p>
               <div style="text-align: right; margin-top: 8px">
                 <el-button size="small" link type="primary" @click="scope.row.visible = false"
@@ -74,15 +66,19 @@
               </template>
             </el-popconfirm>
             <el-button link type="primary" icon="edit" size="small" @click="openEdit(scope.row)">编辑</el-button>
-            <el-button link type="primary" icon="magic-stick" size="small" @click="resetPasswordFunc(scope.row)">重置密码</el-button>
+            <el-button link type="primary" icon="magic-stick" size="small"
+              @click="resetPasswordFunc(scope.row)">重置密码</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
+          @size-change="handleSizeChange" />
       </div>
     </div>
-    <el-dialog :model-value="addUserDialog" class="user-dialog" title="用户" :show-close="false" :close-on-press-escape="false" :close-on-click-modal="false">
+    <el-dialog :model-value="addUserDialog" class="user-dialog" title="用户" :show-close="false"
+      :close-on-press-escape="false" :close-on-click-modal="false">
       <div style="height: 60vh; overflow: auto; padding: 0 12px">
         <el-form ref="userForm" :rules="rules" :model="userInfo" label-width="80px">
           <el-form-item v-if="dialogFlag === 'add'" label="用户名" prop="userName">
@@ -101,25 +97,20 @@
             <el-input v-model="userInfo.email" />
           </el-form-item>
           <el-form-item label="用户角色" prop="authorityId">
-            <el-cascader
-              v-model="userInfo.authorityIds"
-              style="width: 100%"
-              :options="authOptions"
-              :show-all-levels="false"
-              :props="{
+            <el-cascader v-model="userInfo.authorityIds" style="width: 100%" :options="authOptions"
+              :show-all-levels="false" :props="{
                 multiple: true,
                 checkStrictly: true,
                 label: 'authorityName',
                 value: 'authorityId',
                 disabled: 'disabled',
                 emitPath: false,
-              }"
-              :clearable="false"
-            />
+              }" :clearable="false" />
           </el-form-item>
           <el-form-item label="头像" label-width="80px">
             <div style="display: inline-block" @click="openHeaderChange">
-              <img v-if="userInfo.headerImg" class="header-img-box" :src="userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http' ? path + `/${userInfo.headerImg}` : userInfo.headerImg" />
+              <img v-if="userInfo.headerImg" class="header-img-box"
+                :src="userInfo.headerImg && userInfo.headerImg.slice(0, 4) !== 'http' ? path + `/${userInfo.headerImg}` : userInfo.headerImg" />
               <div v-else class="header-img-box">从媒体库选择</div>
             </div>
           </el-form-item>
@@ -209,7 +200,7 @@ const onReset = () => {
 // 查询
 const getTableData = async () => {
   const table = await getUserList({ page: page.value, pageSize: pageSize.value, ...searchInfo.value });
-  if (table.code === 0) {
+  if (table.code === 200) {
     tableData.value = table.data.list;
     total.value = table.data.total;
     page.value = table.data.page;
@@ -240,7 +231,7 @@ const resetPasswordFunc = (row) => {
     const res = await resetPassword({
       ID: row.ID,
     });
-    if (res.code === 0) {
+    if (res.code === 200) {
       ElMessage({
         type: "success",
         message: res.msg,
@@ -278,7 +269,7 @@ const setOptions = (authData) => {
 
 const deleteUserFunc = async (row) => {
   const res = await deleteUser({ id: row.ID });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage.success("删除成功");
     row.visible = false;
     await getTableData();
@@ -319,7 +310,7 @@ const enterAddUserDialog = async () => {
       };
       if (dialogFlag.value === "add") {
         const res = await register(req);
-        if (res.code === 0) {
+        if (res.code === 200) {
           ElMessage({ type: "success", message: "创建成功" });
           await getTableData();
           closeAddUserDialog();
@@ -327,7 +318,7 @@ const enterAddUserDialog = async () => {
       }
       if (dialogFlag.value === "edit") {
         const res = await setUserInfo(req);
-        if (res.code === 0) {
+        if (res.code === 200) {
           ElMessage({ type: "success", message: "编辑成功" });
           await getTableData();
           closeAddUserDialog();
@@ -361,7 +352,7 @@ const changeAuthority = async (row, flag) => {
     ID: row.ID,
     authorityIds: row.authorityIds,
   });
-  if (res.code === 0) {
+  if (res.code === 200) {
     ElMessage({ type: "success", message: "角色设置成功" });
   }
 };
@@ -384,9 +375,11 @@ const openEdit = (row) => {
     line-height: 200px;
     cursor: pointer;
   }
+
   .avatar-uploader .el-upload:hover {
     border-color: #409eff;
   }
+
   .avatar-uploader-icon {
     border: 1px dashed #d9d9d9 !important;
     border-radius: 6px;
@@ -397,17 +390,20 @@ const openEdit = (row) => {
     line-height: 178px;
     text-align: center;
   }
+
   .avatar {
     width: 178px;
     height: 178px;
     display: block;
   }
 }
+
 .nickName {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
+
 .pointer {
   cursor: pointer;
   font-size: 16px;

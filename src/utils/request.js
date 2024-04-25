@@ -93,15 +93,21 @@ service.interceptors.response.use(
     if (response.headers["new-token"]) {
       userStore.setToken(response.headers["new-token"]);
     }
-    if (response.data.code === 0 || response.headers.success === "true") {
+    if (response.data.code === 200 || response.headers.success === "true") {
       if (response.headers.msg) {
         response.data.msg = decodeURI(response.headers.msg);
       }
       return response.data;
-    } else {
+    }
+    return response.data;
+  },
+  (error) => {
+    closeLoading();
+    if (error.response && error.response.status >= 400 && error.response.status < 500) {
+      const response = error.response;
       ElMessage({
         showClose: true,
-        message: response.data.data.msg || response.data.msg || decodeURI(response.headers.msg),
+        message: response?.data?.data?.msg || response?.data?.msg || decodeURI(response?.headers?.msg),
         type: "error",
       });
       if (response.data.data && response.data.data.reload) {
@@ -110,14 +116,9 @@ service.interceptors.response.use(
         if (router.currentRoute?.value?.path !== "/login") {
           router.push({ name: "Login", replace: true });
         }
-        // router.push('/login');
       }
       return response.data.msg ? response.data : response;
     }
-  },
-  (error) => {
-    closeLoading();
-
     if (!error.response) {
       ElMessageBox.confirm(
         `

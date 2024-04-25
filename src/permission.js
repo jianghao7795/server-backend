@@ -15,7 +15,7 @@ const getRouter = async (userStore) => {
   const routerStore = useRouterStore();
   await routerStore.SetAsyncRouter();
   const resp = await userStore.GetUserInfo();
-  if (resp.code === 0) {
+  if (resp.code === 200) {
     const asyncRouters = routerStore.asyncRouters;
     asyncRouters.forEach((asyncRouter) => {
       router.addRoute(asyncRouter);

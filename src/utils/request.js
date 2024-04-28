@@ -110,7 +110,6 @@ service.interceptors.response.use(
         message: response?.data?.data?.msg || response?.data?.msg || decodeURI(response?.headers?.msg),
         type: "error",
       });
-      console.log(response);
       if (response.data.data && response.data.data.reload) {
         const userStore = useUserStore();
         userStore.token = "";

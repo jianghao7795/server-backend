@@ -2,7 +2,8 @@
   <el-card>
     <div v-cloak>
       <div class="container">
-        <div :class="['item', { active: currentIndex === index }]" v-for="(item, index) in prizeList" @click="start(index)">
+        <div :class="['item', { active: currentIndex === index }]" v-for="(item, index) in prizeList"
+          @click="start(index)">
           <img :src="item.pic" alt="" />
           <p v-if="index !== 4">{{ item.name }}</p>
         </div>
@@ -148,6 +149,7 @@ export default defineComponent({
 [v-cloak] {
   display: none;
 }
+
 .container {
   width: 450px;
   height: 450px;
@@ -159,19 +161,23 @@ export default defineComponent({
   justify-content: space-around;
   align-items: center;
 }
+
 .item {
   width: 140px;
   height: 140px;
   border: 2px solid #fff;
   position: relative;
 }
+
 .item:nth-of-type(5) {
   cursor: pointer;
 }
+
 .item img {
   width: 100%;
   height: 100%;
 }
+
 .item p {
   width: 100%;
   height: 20px;
@@ -184,6 +190,7 @@ export default defineComponent({
   left: 0;
   bottom: 0;
 }
+
 .active {
   border: 2px solid red;
   box-shadow: 2px 2px 30px #fff;

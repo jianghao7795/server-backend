@@ -46,10 +46,15 @@
               :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登
               录</el-button>
           </el-form-item>
+          <el-form-item>
+            <GoCaptchaBtn class="go-captcha-btn" v-model="captStatus" width="100%" height="50px"
+              :image-base64="captchaImgPath.images" :thumb-base64="captchaImgPath.themeImage" @confirm="handleConfirm"
+              @refresh="handleRequestCaptCode" />
+          </el-form-item>
         </el-form>
       </div>
       <div class="login_panle_right">
-        <!-- <img style="width: 100%; margin: auto 0" src="@/assets/login_left.jpg" fit="contain" /> -->
+
       </div>
       <div class="login_panle_foot">
         <div class="copyright">
@@ -67,7 +72,7 @@ export default {
 </script>
 
 <script setup>
-import { captcha } from "@/api/user";
+import { captcha, captchaImg } from "@/api/user";
 import { checkDB } from "@/api/initdb";
 import bootomInfo from "@/views/layout/bottomInfo/bottomInfo.vue";
 import { reactive, ref, onMounted } from "vue";
@@ -77,8 +82,17 @@ import { useUserStore } from "@/pinia/modules/user";
 import dayjs from "dayjs";
 import { setLocalStorage } from "@/utils/date";
 import md5 from "md5";
+import GoCaptchaBtn from "@/components/Captcha/GoCaptchaBtn.vue";
 
 const router = useRouter();
+
+const captchaImgPath = ref({
+  images: "",
+  captcha_key: "",
+  themeImage: ''
+});
+
+const captStatus = ref('default');
 
 // 是否需要初始化
 const isInit = ref(false);
@@ -107,7 +121,7 @@ const checkPassword = (rule, value, callback) => {
 
 // 获取验证码
 const loginVerify = () => {
-  captcha({}).then((ele) => {
+  captcha().then((ele) => {
     if (ele.code === 200) {
       rules.captcha[1].max = ele.data.captchaLength;
       rules.captcha[1].min = ele.data.captchaLength;
@@ -116,9 +130,27 @@ const loginVerify = () => {
     }
   });
 };
+
+// 获取图片点击验证码
+const getCaptcha = () => {
+  captchaImg().then((ele) => {
+    if (ele.code === 200) {
+      captchaImgPath.value = {
+        images: ele.data.images,
+        captcha_key: ele.data.captcha_key,
+        themeImage: ele.data.themeImage
+      }
+    }
+  });
+};
+
 onMounted(() => {
   loginVerify();
+  getCaptcha();
 });
+
+const handleRequestCaptCode = () => { }
+const handleConfirm = () => { }
 
 // 登录相关操作
 const lock = ref("lock");
@@ -207,5 +239,10 @@ const checkInit = async () => {
   text-align: center;
   color: #4d70ff;
   cursor: pointer;
+}
+
+.go-captcha-btn {
+  width: 300px !important;
+  margin: 0 auto !important;
 }
 </style>

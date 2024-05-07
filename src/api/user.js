@@ -21,6 +21,16 @@ export const captcha = () => {
     method: "get",
   });
 };
+// @Summary 获取图片点击验证码
+// @Produce  application/json
+// @Param data body {"code": 0,"image_base64": "string","thumb_base64": "string","captcha_key": "string",}
+// @Router /base/captcha/img [get]
+export const captchaImg = () => {
+  return service({
+    url: "/base/captcha/img",
+    method: "get",
+  });
+};
 
 // @Summary 用户注册
 // @Produce  application/json

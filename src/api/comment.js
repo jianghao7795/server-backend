@@ -26,9 +26,8 @@ export const createComment = (data) => {
 // @Router /comment/deleteComment [delete]
 export const deleteComment = (data) => {
   return service({
-    url: "/comment/deleteComment",
+    url: `/comment/deleteComment/${data.ID}`,
     method: "delete",
-    data,
   });
 };
 
@@ -58,7 +57,7 @@ export const deleteCommentByIds = (data) => {
 // @Router /comment/updateComment [put]
 export const updateComment = (data) => {
   return service({
-    url: "/comment/updateComment",
+    url: `/comment/updateComment/${data.ID}`,
     method: "put",
     data,
   });
@@ -74,9 +73,8 @@ export const updateComment = (data) => {
 // @Router /comment/findComment [get]
 export const findComment = (params) => {
   return service({
-    url: "/comment/findComment",
+    url: `/comment/getComment/${params.ID}`,
     method: "get",
-    params,
   });
 };
 

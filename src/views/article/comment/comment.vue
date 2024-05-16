@@ -92,13 +92,13 @@
       :title="!formData.articleId ? '创建评论' : '更新评论'">
       <el-form :model="formData" label-position="right" label-width="80px">
         <el-form-item label="文章:">
-          <el-select v-model="formData.articleId" :multiple="false" filterable remote clearable style="width: 100%"
+          <el-select v-model="formData.article_id" :multiple="false" filterable remote clearable style="width: 100%"
             reserve-keyword placeholder="请输入" :remote-method="searchArticle" :loading="searchLoading">
             <el-option v-for="item in options" :key="item.ID" :label="item.title" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="上级:">
-          <el-input v-model.number="formData.parentId" clearable placeholder="请输入" />
+          <el-input v-model.number="formData.parent_id" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="内容:">
           <el-input v-model="formData.content" clearable placeholder="请输入" />
@@ -121,7 +121,7 @@ export default {
 </script>
 
 <script setup>
-import { createComment, deleteComment, deleteCommentByIds, updateComment, findComment, getCommentTreeList, pariseComment } from "@/api/comment";
+import { createComment, deleteComment, deleteCommentByIds, updateComment, findComment, getCommentTreeList } from "@/api/comment";
 import { formatDate } from "@/utils/format";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { ref, onMounted } from "vue";
@@ -144,10 +144,10 @@ onMounted(() => {
 
 // 自动化生成的字典（可能为空）以及字段
 const formData = ref({
-  articleId: undefined,
-  parentId: undefined,
+  article_id: undefined,
+  parent_id: undefined,
   content: "",
-  userId: undefined,
+  user_id: undefined,
   praise: 0,
 });
 
@@ -161,53 +161,53 @@ const loading = ref(false);
 const options = ref([]);
 // const userInfo = ref([]);
 const searchLoading = ref(false);
-const likeItStatus = ref({});
+// const likeItStatus = ref({});
 
 // 点赞更新
-const changeLikeItStatus = async (row, index) => {
-  let praiseAuth = {};
-  const recordIsInclude = row.praise.map((i) => {
-    if (currentUser.userInfo.ID === i.user_id) {
-      praiseAuth = { ...i };
-    }
-    return i.user_id;
-  });
-  let addValue = false;
-  if (recordIsInclude.includes(currentUser.userInfo.ID)) {
-    addValue = true;
-  }
+// const changeLikeItStatus = async (row, index) => {
+//   let praiseAuth = {};
+//   const recordIsInclude = row.praise.map((i) => {
+//     if (currentUser.userInfo.ID === i.user_id) {
+//       praiseAuth = { ...i };
+//     }
+//     return i.user_id;
+//   });
+//   let addValue = false;
+//   if (recordIsInclude.includes(currentUser.userInfo.ID)) {
+//     addValue = true;
+//   }
 
-  const resp = await pariseComment({ user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: praiseAuth.ID });
-  if (resp?.code === 200) {
-    if (!addValue) {
-      row.praise = [...row.praise, { user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: resp.data.ID }];
-      ElMessage.success({
-        showClose: true,
-        message: "点赞成功",
-      });
-    } else {
-      const praiseLow = row.praise.filter((i) => i.user_id !== currentUser.userInfo.ID);
-      row.praise = praiseLow;
-      ElMessage.success({
-        showClose: true,
-        message: "取消成功",
-      });
-    }
-    likeItStatus.value = { ...likeItStatus.value, [index]: true };
-    setTimeout(() => {
-      likeItStatus.value = { ...likeItStatus.value, [index]: false };
-    }, 1200);
-  }
-};
+//   const resp = await pariseComment({ user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: praiseAuth.ID });
+//   if (resp?.code === 200) {
+//     if (!addValue) {
+//       row.praise = [...row.praise, { user_id: currentUser.userInfo.ID, comment_id: row.ID, ID: resp.data.ID }];
+//       ElMessage.success({
+//         showClose: true,
+//         message: "点赞成功",
+//       });
+//     } else {
+//       const praiseLow = row.praise.filter((i) => i.user_id !== currentUser.userInfo.ID);
+//       row.praise = praiseLow;
+//       ElMessage.success({
+//         showClose: true,
+//         message: "取消成功",
+//       });
+//     }
+//     likeItStatus.value = { ...likeItStatus.value, [index]: true };
+//     setTimeout(() => {
+//       likeItStatus.value = { ...likeItStatus.value, [index]: false };
+//     }, 1200);
+//   }
+// };
 // console.log(currentUser.userInfo);
-const viewPraise = (record = []) => {
-  const recordIsInclude = record.map((i) => i.user_id);
-  // console.log(recordIsInclude);
-  if (recordIsInclude.includes(currentUser.userInfo.ID)) {
-    return true;
-  }
-  return false;
-};
+// const viewPraise = (record = []) => {
+//   const recordIsInclude = record.map((i) => i.user_id);
+//   // console.log(recordIsInclude);
+//   if (recordIsInclude.includes(currentUser.userInfo.ID)) {
+//     return true;
+//   }
+//   return false;
+// };
 
 // 重置
 const onReset = () => {
@@ -389,7 +389,7 @@ const enterDialog = async () => {
     case "create":
       res = await createComment({
         ...formData.value,
-        userId: currentUser.userInfo.ID,
+        user_id: currentUser.userInfo.ID,
       });
       break;
     case "update":

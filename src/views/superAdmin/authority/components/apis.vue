@@ -71,12 +71,11 @@ const buildApiTree = (apis) => {
   const apiObj = {};
   apis &&
     apis.forEach((item) => {
-      // console.log(item);
       item.onlyId = "p:" + item.path + "m:" + item.method;
-      if (Object.prototype.hasOwnProperty.call(apiObj, item.apiGroup)) {
-        apiObj[item.apiGroup].push(item);
+      if (Object.prototype.hasOwnProperty.call(apiObj, item.api_group)) {
+        apiObj[item.api_group].push(item);
       } else {
-        Object.assign(apiObj, { [item.apiGroup]: [item] });
+        Object.assign(apiObj, { [item.api_group]: [item] });
       }
     });
   const apiTree = [];
@@ -88,7 +87,6 @@ const buildApiTree = (apis) => {
     };
     apiTree.push(treeNode);
   }
-  // console.log(apiTree);
   return apiTree;
 };
 

@@ -10,7 +10,13 @@
     </template>
     <template v-if="picType === 'file'">
       <el-icon v-if="file === '/'"><icon-picture /></el-icon>
-      <img v-else :src="file" class="file" />
+      <el-image :src="file" fit="fill">
+        <template #error>
+          <div class="image-slot">
+            <el-icon><icon-picture /></el-icon>
+          </div>
+        </template>
+      </el-image>
     </template>
   </span>
 </template>
@@ -71,10 +77,12 @@ const file = computed(() => {
   align-items: center;
   margin-right: 8px;
 }
+
 .file {
   height: 80px;
   position: relative;
 }
+
 .image-slot {
   display: flex;
   justify-content: center;

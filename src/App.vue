@@ -7,13 +7,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "App",
-};
-</script>
-
-<script setup>
+<script setup name="App">
 import { computed, ref, provide } from "vue";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import en from "element-plus/dist/locale/en.mjs";

@@ -88,11 +88,7 @@ service.interceptors.request.use(
 // http response 拦截器
 service.interceptors.response.use(
   (response) => {
-    const userStore = useUserStore();
     closeLoading();
-    if (response.headers["new-token"]) {
-      userStore.setToken(response.headers["new-token"]);
-    }
     if (response.data.code === 200 || response.headers.success === "true") {
       if (response.headers.msg) {
         response.data.msg = decodeURI(response.headers.msg);

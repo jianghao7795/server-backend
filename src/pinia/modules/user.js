@@ -53,7 +53,6 @@ export const useUserStore = defineStore("user", () => {
     } else {
       setUserInfo({});
     }
-    return res;
   };
   /* 登录*/
   const LoginIn = async (loginInfo) => {

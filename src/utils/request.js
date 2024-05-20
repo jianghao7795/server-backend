@@ -14,6 +14,7 @@ const service = axios.create({
 });
 // let acitveAxios = 0;
 // let timer;
+let dataStatus = true;
 const showLoading = () => {
   emitter.emit("showLoading");
   // acitveAxios++;
@@ -116,7 +117,7 @@ service.interceptors.response.use(
       }
       return response.data.msg ? response.data : response;
     }
-    if (!error.response) {
+    if (!error.response && dataStatus) {
       ElMessageBox.confirm(
         `
         <p>检测到请求错误</p>
@@ -130,6 +131,7 @@ service.interceptors.response.use(
           cancelButtonText: "取消",
         },
       );
+      dataStatus = false;
       return;
     }
 

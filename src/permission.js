@@ -54,11 +54,11 @@ router.beforeEach(async (to, from, next) => {
   // console.log(userStore.userInfo.authority.defaultRouter);
   if (whiteList.includes(to.name)) {
     if (token) {
-      // if (!asyncRouterFlag && !whiteList.includes(from.name)) {
-      //   asyncRouterFlag++;
-      //   await getRouter(userStore);
-      // }
-      // console.log(router.hasRoute(userStore.userInfo.authority.defaultRouter));
+      if (!asyncRouterFlag && !whiteList.includes(from.name)) {
+        asyncRouterFlag++;
+        await getRouter(userStore);
+      }
+      // console.log("test", router.hasRoute(userStore.userInfo.authority.defaultRouter));
       if (router.hasRoute(userStore.userInfo.authority.defaultRouter)) {
         return next({ name: userStore.userInfo.authority.defaultRouter });
       } else {

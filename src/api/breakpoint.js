@@ -24,18 +24,18 @@ export const breakpointContinue = (data) => {
   });
 };
 
-export const breakpointContinueFinish = (params) => {
+export const breakpointContinueFinish = (data) => {
   return service({
     url: "/fileUploadAndDownload/breakpointContinueFinish",
     method: "post",
-    params,
+    data,
   });
 };
 
 export const removeChunk = (data, params) => {
   return service({
     url: "/fileUploadAndDownload/removeChunk",
-    method: "post",
+    method: "delete",
     data,
     params,
   });

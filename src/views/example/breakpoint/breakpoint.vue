@@ -9,7 +9,7 @@
         </div>
       </form>
       <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn" @click="getFile">上传文件</el-button>
-      <div class="el-upload__tip">请上传不超过5MB的文件</div>
+      <div class="el-upload__tip">请上传不超过10MB的文件</div>
       <div class="list">
         <transition name="list" tag="p">
           <div v-if="file" class="list-item">
@@ -46,7 +46,7 @@ const percentageFlage = ref(true);
 const choseFile = async (e) => {
   const fileR = new FileReader(); // 创建一个reader用来读取文件流
   const fileInput = e.target.files[0]; // 获取当前文件
-  const maxSize = 5 * 1024 * 1024;
+  const maxSize = 10 * 1024 * 1024;
   file.value = fileInput; // file 丢全局方便后面用 可以改进为func传参形式
   percentage.value = 0;
   if (file.value.size < maxSize) {

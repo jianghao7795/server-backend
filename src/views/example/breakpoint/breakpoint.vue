@@ -8,8 +8,7 @@
           <input v-show="false" id="file" ref="FileInput" multiple="multiple" type="file" @change="choseFile" />
         </div>
       </form>
-      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn"
-        @click="getFile">上传文件</el-button>
+      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn" @click="getFile">上传文件</el-button>
       <div class="el-upload__tip">请上传不超过5MB的文件</div>
       <div class="list">
         <transition name="list" tag="p">
@@ -23,9 +22,7 @@
           </div>
         </transition>
       </div>
-      <div class="tips">
-        此版本为先行体验功能测试版，样式美化和性能优化正在进行中，上传切片文件和合成的完整文件分别再QMPlusserver目录的breakpointDir文件夹和fileDir文件夹
-      </div>
+      <div class="tips">此版本为先行体验功能测试版，样式美化和性能优化正在进行中，上传切片文件和合成的完整文件分别再QMPlusserver目录的breakpointDir文件夹和fileDir文件夹</div>
     </div>
   </div>
 </template>
@@ -141,10 +138,11 @@ watch(waitNum, () => {
 const upLoadFileSlice = async (item) => {
   // 切片上传
   const fileRe = await breakpointContinue(item.formData);
-  if (fileRe.code !== 0) {
+  if (fileRe.code !== 200) {
     return;
   }
   waitNum.value--; // 百分数增加
+  console.log("wait: ", waitNum);
   if (waitNum.value === 0) {
     // 切片传完以后 合成文件
     const params = {
@@ -271,8 +269,7 @@ a {
 .list-enter,
 .list-leave-to
 
-/* .list-leave-active for below version 2.1.8 */
-  {
+/* .list-leave-active for below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(-30px);
 }

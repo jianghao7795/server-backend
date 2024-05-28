@@ -103,6 +103,7 @@ onUnmounted(() => {
     height: 360px;
     width: 100%;
   }
+
   .dashboard-line-title {
     font-weight: 600;
     margin-bottom: 12px;

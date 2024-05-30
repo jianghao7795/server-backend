@@ -8,7 +8,8 @@
           <input v-show="false" id="file" ref="FileInput" multiple="multiple" type="file" @change="choseFile" />
         </div>
       </form>
-      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn" @click="getFile">上传文件</el-button>
+      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn"
+        @click="getFile">上传文件</el-button>
       <div class="el-upload__tip">请上传不超过10MB的文件</div>
       <div class="list">
         <transition name="list" tag="p">
@@ -23,14 +24,39 @@
         </transition>
       </div>
       <div class="tips">此版本为先行体验功能测试版，样式美化和性能优化正在进行中，上传切片文件和合成的完整文件分别再QMPlusserver目录的breakpointDir文件夹和fileDir文件夹</div>
+      <el-table ref="breakpoint" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID"
+        v-loading="loading">
+        <el-table-column align="left" label="ID" prop="ID" width="80"></el-table-column>
+        <el-table-column align="left" label="Name" width="180" />
+        <el-table-column align="left" label="FilePath" prop="file_path" width="120" />
+        <el-table-column align="left" label="ChunkTotal" prop="chunk_total" width="120" />
+        <el-table-column align="left" label="是否完成" prop="is_finish" width="120">
+          <template #default="{ row }">
+            <span>{{ row.is_finish ? '是' : '否' }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column align="left" label="操作" min-width="160">
+          <template #default="scope">
+            <!-- <el-button size="small" link type="primary" icon="edit" @click="updateCustomer(scope.row)">编辑</el-button>
+          <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" title="确定要删除吗？"
+            @confirm="deleteCustomer(scope.row)" placement="top">
+            @click="deleteCustomer(scope.row)"
+          <template #reference>
+            <el-button link type="danger" icon="delete" size="small">删除</el-button>
+          </template>
+  </el-popconfirm> -->
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
+
   </div>
 </template>
 
 <script setup>
 import SparkMD5 from "spark-md5";
-import { findFile, breakpointContinueFinish, removeChunk, breakpointContinue } from "@/api/breakpoint";
-import { ref, watch } from "vue";
+import { findFile, breakpointContinueFinish, removeChunk, breakpointContinue, getBreakpointList } from "@/api/breakpoint";
+import { ref, watch, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 
 const file = ref(null);
@@ -41,6 +67,27 @@ const waitNum = ref(NaN);
 const limitFileSize = ref(false);
 const percentage = ref(0);
 const percentageFlage = ref(true);
+
+const loading = ref(false);
+const tableData = ref([]);
+const page = ref(1);
+const pageSize = ref(10);
+
+// 查询 分页
+const getTableData = async () => {
+  loading.value = true;
+  const table = await getBreakpointList({
+    page: page.value,
+    pageSize: pageSize.value,
+  });
+  loading.value = false;
+  if (table.code === 200) {
+    tableData.value = table.data.list;
+    total.value = table.data.total;
+    page.value = table.data.page;
+    pageSize.value = table.data.pageSize;
+  }
+};
 
 // 选中文件的函数
 const choseFile = async (e) => {
@@ -167,6 +214,10 @@ const FileInput = ref(null);
 const inputChange = () => {
   FileInput.value.dispatchEvent(new MouseEvent("click"));
 };
+
+onMounted(() => {
+  getTableData()
+})
 </script>
 
 <script>
@@ -269,7 +320,8 @@ a {
 .list-enter,
 .list-leave-to
 
-/* .list-leave-active for below version 2.1.8 */ {
+/* .list-leave-active for below version 2.1.8 */
+  {
   opacity: 0;
   transform: translateY(-30px);
 }

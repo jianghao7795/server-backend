@@ -40,3 +40,11 @@ export const removeChunk = (data, params) => {
     params,
   });
 };
+
+export const getBreakpointList = (params) => {
+  return service({
+    url: "/fileUploadAndDownload/getFileBreakpoint",
+    method: "get",
+    params,
+  });
+};

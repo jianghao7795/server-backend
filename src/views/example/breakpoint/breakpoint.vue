@@ -27,7 +27,7 @@
       <el-table ref="breakpoint" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID"
         v-loading="loading">
         <el-table-column align="left" label="ID" prop="ID" width="80"></el-table-column>
-        <el-table-column align="left" label="Name" width="180" />
+        <el-table-column align="left" label="Name" prop="file_name" width="180" />
         <el-table-column align="left" label="FilePath" prop="file_path" width="120" />
         <el-table-column align="left" label="ChunkTotal" prop="chunk_total" width="120" />
         <el-table-column align="left" label="是否完成" prop="is_finish" width="120">
@@ -37,17 +37,21 @@
         </el-table-column>
         <el-table-column align="left" label="操作" min-width="160">
           <template #default="scope">
-            <!-- <el-button size="small" link type="primary" icon="edit" @click="updateCustomer(scope.row)">编辑</el-button>
-          <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" title="确定要删除吗？"
-            @confirm="deleteCustomer(scope.row)" placement="top">
-            @click="deleteCustomer(scope.row)"
-          <template #reference>
-            <el-button link type="danger" icon="delete" size="small">删除</el-button>
-          </template>
-  </el-popconfirm> -->
+            <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" title="确定要删除吗？"
+              @confirm="deleteFileChunk(scope.row)" placement="top">
+              <!-- @click="deleteCustomer(scope.row)" -->
+              <template #reference>
+                <el-button link type="danger" icon="delete" size="small">删除</el-button>
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
+      <div class="pagination">
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
+          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleBreakpointChange"
+          @size-change="handleSizeChange" />
+      </div>
     </div>
 
   </div>
@@ -55,7 +59,7 @@
 
 <script setup>
 import SparkMD5 from "spark-md5";
-import { findFile, breakpointContinueFinish, removeChunk, breakpointContinue, getBreakpointList } from "@/api/breakpoint";
+import { findFile, breakpointContinueFinish, removeChunk, breakpointContinue, getBreakpointList, deleteFileBreakpoint } from "@/api/breakpoint";
 import { ref, watch, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 
@@ -72,6 +76,7 @@ const loading = ref(false);
 const tableData = ref([]);
 const page = ref(1);
 const pageSize = ref(10);
+const total = ref(0)
 
 // 查询 分页
 const getTableData = async () => {
@@ -87,6 +92,27 @@ const getTableData = async () => {
     page.value = table.data.page;
     pageSize.value = table.data.pageSize;
   }
+};
+
+const deleteFileChunk = (item) => {
+  console.log(item.ID)
+  deleteFileBreakpoint(item.ID).then(resp => {
+    if(resp.code === 200) {
+      ElMessage.success("删除成功");
+      getTableData();
+    }
+  })
+}
+
+// 分页
+const handleSizeChange = (val) => {
+  pageSize.value = val;
+  getTableData();
+};
+
+const handleBreakpointChange = (val) => {
+  page.value = val;
+  getTableData();
 };
 
 // 选中文件的函数

@@ -48,3 +48,10 @@ export const getBreakpointList = (params) => {
     params,
   });
 };
+
+export const deleteFileBreakpoint = (id) => {
+  return service({
+    url: `/fileUploadAndDownload/deleteFileBreakpoint/${id}`,
+    method: "delete",
+  });
+};

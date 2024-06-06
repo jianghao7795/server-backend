@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-upload accept=".png,.jpg,.jpeg,.svg" :action="`${path}/fileUploadAndDownload/upload`" :before-upload="checkFile" :headers="{ Authorization: `Bearer ${userStore.token}` }" :on-error="uploadError" :on-success="uploadSuccess" :show-file-list="false" class="upload-btn">
+    <el-upload accept=".png,.jpg,.jpeg,.svg" :action="`${path}/fileUploadAndDownload/upload`" :before-upload="checkFile"
+      :headers="{ Authorization: `Bearer ${userStore.token}` }" :on-error="uploadError" :on-success="uploadSuccess"
+      :show-file-list="false" class="upload-btn">
       <el-button size="small" type="primary">普通上传</el-button>
     </el-upload>
   </div>
@@ -37,7 +39,7 @@ const checkFile = (file) => {
 
 const uploadSuccess = (res) => {
   const { code, data, msg } = res;
-  if (code === 0) {
+  if (code === 200) {
     emit("on-success", data.file.url);
   } else {
     ElMessage({

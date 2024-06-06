@@ -12,29 +12,13 @@ const service = axios.create({
   timeout: 9999,
   timeoutErrorMessage: "",
 });
-// let acitveAxios = 0;
-// let timer;
 let dataStatus = true;
 const showLoading = () => {
   emitter.emit("showLoading");
-  // acitveAxios++;
-  // if (timer) {
-  //   clearTimeout(timer);
-  // }
-  // timer = setTimeout(() => {
-  //   if (acitveAxios > 0) {
-
-  //   }
-  // }, 400);
 };
 
 const closeLoading = () => {
   emitter.emit("closeLoading");
-  // acitveAxios--;
-  // if (acitveAxios <= 0) {
-  //   clearTimeout(timer);
-
-  // }
 };
 // http request 拦截器
 service.interceptors.request.use(

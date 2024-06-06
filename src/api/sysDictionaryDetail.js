@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Tags SysDictionaryDetail
 // @Summary 创建SysDictionaryDetail
 // @Security ApiKeyAuth
@@ -9,8 +9,8 @@ import service from '@/utils/request';
 // @Router /sysDictionaryDetail/createSysDictionaryDetail [post]
 export const createSysDictionaryDetail = (data) => {
   return service({
-    url: '/sysDictionaryDetail/createSysDictionaryDetail',
-    method: 'post',
+    url: "/sysDictionaryDetail/createSysDictionaryDetail",
+    method: "post",
     data,
   });
 };
@@ -23,11 +23,10 @@ export const createSysDictionaryDetail = (data) => {
 // @Param data body model.SysDictionaryDetail true "删除SysDictionaryDetail"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"删除成功"}"
 // @Router /sysDictionaryDetail/deleteSysDictionaryDetail [delete]
-export const deleteSysDictionaryDetail = (data) => {
+export const deleteSysDictionaryDetail = (params) => {
   return service({
-    url: '/sysDictionaryDetail/deleteSysDictionaryDetail',
-    method: 'delete',
-    data,
+    url: `/sysDictionaryDetail/deleteSysDictionaryDetail/${params.ID}`,
+    method: "delete",
   });
 };
 
@@ -41,8 +40,8 @@ export const deleteSysDictionaryDetail = (data) => {
 // @Router /sysDictionaryDetail/updateSysDictionaryDetail [put]
 export const updateSysDictionaryDetail = (data) => {
   return service({
-    url: '/sysDictionaryDetail/updateSysDictionaryDetail',
-    method: 'put',
+    url: `/sysDictionaryDetail/updateSysDictionaryDetail/${data.ID}`,
+    method: "put",
     data,
   });
 };
@@ -57,9 +56,8 @@ export const updateSysDictionaryDetail = (data) => {
 // @Router /sysDictionaryDetail/findSysDictionaryDetail [get]
 export const findSysDictionaryDetail = (params) => {
   return service({
-    url: '/sysDictionaryDetail/findSysDictionaryDetail',
-    method: 'get',
-    params,
+    url: `/sysDictionaryDetail/findSysDictionaryDetail/${params.ID}`,
+    method: "get",
   });
 };
 
@@ -73,8 +71,8 @@ export const findSysDictionaryDetail = (params) => {
 // @Router /sysDictionaryDetail/getSysDictionaryDetailList [get]
 export const getSysDictionaryDetailList = (params) => {
   return service({
-    url: '/sysDictionaryDetail/getSysDictionaryDetailList',
-    method: 'get',
+    url: "/sysDictionaryDetail/getSysDictionaryDetailList",
+    method: "get",
     params,
   });
 };

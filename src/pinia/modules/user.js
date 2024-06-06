@@ -49,7 +49,7 @@ export const useUserStore = defineStore("user", () => {
   const GetUserInfo = async () => {
     const res = await getUserInfo();
     if (res.code === 200) {
-      setUserInfo(res.data.userInfo);
+      setUserInfo(res.data);
     } else {
       setUserInfo({});
     }

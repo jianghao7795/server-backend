@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Tags SysDictionary
 // @Summary 创建SysDictionary
 // @Security ApiKeyAuth
@@ -9,8 +9,8 @@ import service from '@/utils/request';
 // @Router /sysDictionary/createSysDictionary [post]
 export const createSysDictionary = (data) => {
   return service({
-    url: '/sysDictionary/createSysDictionary',
-    method: 'post',
+    url: "/sysDictionary/createSysDictionary",
+    method: "post",
     data,
   });
 };
@@ -25,9 +25,8 @@ export const createSysDictionary = (data) => {
 // @Router /sysDictionary/deleteSysDictionary [delete]
 export const deleteSysDictionary = (data) => {
   return service({
-    url: '/sysDictionary/deleteSysDictionary',
-    method: 'delete',
-    data,
+    url: `/sysDictionary/deleteSysDictionary/${data.ID}`,
+    method: "delete",
   });
 };
 
@@ -38,11 +37,11 @@ export const deleteSysDictionary = (data) => {
 // @Produce application/json
 // @Param data body model.SysDictionary true "更新SysDictionary"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"更新成功"}"
-// @Router /sysDictionary/updateSysDictionary [put]
+// @Router /sysDictionary/updateSysDictionary/:id [put]
 export const updateSysDictionary = (data) => {
   return service({
-    url: '/sysDictionary/updateSysDictionary',
-    method: 'put',
+    url: `/sysDictionary/updateSysDictionary/${data.ID}`,
+    method: "put",
     data,
   });
 };
@@ -54,12 +53,11 @@ export const updateSysDictionary = (data) => {
 // @Produce application/json
 // @Param data body model.SysDictionary true "用id查询SysDictionary"
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"查询成功"}"
-// @Router /sysDictionary/findSysDictionary [get]
+// @Router /sysDictionary/findSysDictionary/:id [get]
 export const findSysDictionary = (params) => {
   return service({
-    url: '/sysDictionary/findSysDictionary',
-    method: 'get',
-    params,
+    url: `/sysDictionary/findSysDictionary/${params.ID}`,
+    method: "get",
   });
 };
 
@@ -73,8 +71,8 @@ export const findSysDictionary = (params) => {
 // @Router /sysDictionary/getSysDictionaryList [get]
 export const getSysDictionaryList = (params) => {
   return service({
-    url: '/sysDictionary/getSysDictionaryList',
-    method: 'get',
+    url: "/sysDictionary/getSysDictionaryList",
+    method: "get",
     params,
   });
 };

@@ -1,4 +1,4 @@
-import service from '@/utils/request';
+import service from "@/utils/request";
 // @Tags SysApi
 // @Summary 删除客户
 // @Security ApiKeyAuth
@@ -9,8 +9,8 @@ import service from '@/utils/request';
 // @Router /customer/customer [post]
 export const createExaCustomer = (data) => {
   return service({
-    url: '/customer/customer',
-    method: 'post',
+    url: "/customer/customer",
+    method: "post",
     data,
   });
 };
@@ -25,8 +25,8 @@ export const createExaCustomer = (data) => {
 // @Router /customer/customer [put]
 export const updateExaCustomer = (data) => {
   return service({
-    url: '/customer/customer',
-    method: 'put',
+    url: `/customer/customer/${data.ID}`,
+    method: "put",
     data,
   });
 };
@@ -41,9 +41,8 @@ export const updateExaCustomer = (data) => {
 // @Router /customer/customer [delete]
 export const deleteExaCustomer = (data) => {
   return service({
-    url: '/customer/customer',
-    method: 'delete',
-    data,
+    url: `/customer/customer/${data.ID}`,
+    method: "delete",
   });
 };
 
@@ -57,8 +56,8 @@ export const deleteExaCustomer = (data) => {
 // @Router /customer/customer [get]
 export const getExaCustomer = (params) => {
   return service({
-    url: '/customer/customer',
-    method: 'get',
+    url: `/customer/customer/${params.ID}`,
+    method: "get",
     params,
   });
 };
@@ -73,8 +72,8 @@ export const getExaCustomer = (params) => {
 // @Router /customer/customerList [get]
 export const getExaCustomerList = (params) => {
   return service({
-    url: '/customer/customerList',
-    method: 'get',
+    url: "/customer/customerList",
+    method: "get",
     params,
   });
 };

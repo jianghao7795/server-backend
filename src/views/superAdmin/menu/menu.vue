@@ -416,7 +416,7 @@ const addMenu = (id) => {
 const editMenu = async (id) => {
   dialogTitle.value = "编辑菜单";
   const res = await getBaseMenuById({ id });
-  form.value = res.data.menu;
+  form.value = res.data;
   isEdit.value = true;
   setOptions();
   dialogFormVisible.value = true;

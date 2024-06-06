@@ -97,10 +97,10 @@ export const setUserAuthority = (data) => {
 // @Success 200 {string} string "{"success":true,"data":{},"msg":"修改成功"}"
 // @Router /user/deleteUser [delete]
 export const deleteUser = (data) => {
+  console.log(data);
   return service({
-    url: "/user/deleteUser",
+    url: `/user/deleteUser/${data.id}`,
     method: "delete",
-    data: data,
   });
 };
 

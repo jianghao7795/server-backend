@@ -41,7 +41,7 @@ const apiTreeIds = ref([]);
 const activeUserId = ref("");
 const init = async () => {
   const res2 = await getAllApis();
-  const apis = res2.data.apis;
+  const apis = res2.data;
 
   apiTreeData.value = buildApiTree(apis);
   const res = await getPolicyPathByAuthorityId({
@@ -49,8 +49,8 @@ const init = async () => {
   });
   activeUserId.value = props.row.authorityId;
   apiTreeIds.value = [];
-  res.data.paths &&
-    res.data.paths.forEach((item) => {
+  res.data &&
+    res.data.forEach((item) => {
       apiTreeIds.value.push("p:" + item.path + "m:" + item.method);
     });
 };

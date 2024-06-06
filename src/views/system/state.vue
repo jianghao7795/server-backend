@@ -130,7 +130,7 @@ const colors = ref([
 
 const reload = async () => {
   const { data } = await getSystemState();
-  state.value = data.server;
+  state.value = data;
 };
 
 onMounted(() => {

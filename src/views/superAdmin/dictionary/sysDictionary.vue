@@ -198,10 +198,14 @@ const toDetile = (row) => {
 const dialogFormVisible = ref(false);
 const type = ref("");
 const updateSysDictionaryFunc = async (row) => {
+  if (!row.status) {
+    ElMessage.warning("字典已禁用，无法编辑");
+    return;
+  }
   const res = await findSysDictionary({ ID: row.ID });
   type.value = "update";
   if (res.code === 200) {
-    formData.value = res.data.resysDictionary;
+    formData.value = res.data;
     dialogFormVisible.value = true;
   }
 };

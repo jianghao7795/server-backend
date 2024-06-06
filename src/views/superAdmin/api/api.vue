@@ -272,7 +272,7 @@ const editApiFunc = async (row) => {
   const res = await getApiById({ id: row.ID });
   // console.log(res);
   if (res.code === 200) {
-    form.value = res.data.api;
+    form.value = res.data;
     openDialog("edit");
   }
 };

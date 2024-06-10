@@ -80,8 +80,9 @@ export const useUserStore = defineStore("user", () => {
     } catch (e) {
       loadingInstance.value.close();
     }
-    console.log("555555555");
+    // console.log("555555555");
     loadingInstance.value.close();
+    return false;
   };
   /* 登出*/
   const LoginOut = async () => {

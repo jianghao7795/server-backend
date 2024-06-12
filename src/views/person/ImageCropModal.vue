@@ -6,7 +6,7 @@
         :can-move-box="options.canMoveBox" :fixed-box="options.fixedBox" :original="options.original"
         :auto-crop="options.autoCrop" :auto-crop-width="options.autoCropWidth"
         :auto-crop-height="options.autoCropHeight" :center-box="options.centerBox" @real-time="realTime"
-        :high="options.high" mode="contain" :max-img-size="options.max"></vue-cropper>
+        :high="options.high" mode="contain" :max-img-size="options.max" />
     </div>
     <el-card header="预览">
       <div style="min-height: 200px">

@@ -287,7 +287,7 @@ const rules = reactive({
     { required: true, message: "请输入确认密码", trigger: "blur" },
     { min: 6, message: "最少6个字符", trigger: "blur" },
     {
-      validator: (rule, value, callback) => {
+      validator: (_, value, callback) => {
         if (value !== pwdModify.value.newPassword) {
           callback(new Error("两次密码不一致"));
         } else {
@@ -357,7 +357,6 @@ const nextStep = async () => {
   }
 
   if (activeValue === 1) {
-    console.log(securityQuestionList.value);
     const resp = await putProblem({ data: securityQuestionList.value });
     if (resp?.code === 200) {
       if (resp.data) {

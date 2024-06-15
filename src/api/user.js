@@ -218,7 +218,7 @@ export const userCount = () => {
 // 获取ip的流量
 export const getFlowmeter = () => {
   return service({
-    url: "/user/getFlowmeter",
+    url: "/user/getFlow",
     method: "get",
   });
 };

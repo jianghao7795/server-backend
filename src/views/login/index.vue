@@ -36,7 +36,7 @@
               <div class="vPic">
                 <img v-if="picPath" :src="picPath" alt="请输入验证码" @click="loginVerify()" />
                 <!-- <el-icon v-else @click="loginVerify()"><RefreshLeft /></el-icon> -->
-                <div v-else class="centerFont" @click="loginVerify()">刷新</div>
+                <div v-else class="centerFont" @click="loginVerify()">重新加载</div>
               </div>
             </div>
           </el-form-item>
@@ -47,9 +47,7 @@
               录</el-button>
           </el-form-item>
           <el-form-item>
-            <GoCaptchaBtn class="go-captcha-btn" v-model="captStatus" width="100%" height="50px"
-              :image-base64="captchaImgPath.images" :thumb-base64="captchaImgPath.themeImage" @confirm="handleConfirm"
-              @refresh="handleRequestCaptCode" />
+
           </el-form-item>
         </el-form>
       </div>
@@ -82,7 +80,6 @@ import { useUserStore } from "@/pinia/modules/user";
 import dayjs from "dayjs";
 import { setLocalStorage } from "@/utils/date";
 import md5 from "md5";
-import GoCaptchaBtn from "@/components/Captcha/GoCaptchaBtn.vue";
 
 const router = useRouter();
 
@@ -91,8 +88,6 @@ const captchaImgPath = ref({
   captcha_key: "",
   themeImage: ''
 });
-
-const captStatus = ref('default');
 
 // 是否需要初始化
 const isInit = ref(false);
@@ -104,14 +99,14 @@ onMounted(async () => {
 });
 
 // 验证函数
-const checkUsername = (rule, value, callback) => {
+const checkUsername = (_, value, callback) => {
   if (value.length < 3) {
     return callback(new Error("请输入正确的用户名"));
   } else {
     callback();
   }
 };
-const checkPassword = (rule, value, callback) => {
+const checkPassword = (_, value, callback) => {
   if (value.length < 6) {
     return callback(new Error("请输入正确的密码"));
   } else {

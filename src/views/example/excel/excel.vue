@@ -16,9 +16,9 @@
         <el-table-column align="left" show-overflow-tooltip label="文件名MD5" min-width="160" prop="filename_md5" />
         <el-table-column align="left" label="路径" min-width="100" show-overflow-tooltip
           prop="file_path"></el-table-column>
-        <el-table-column align="left" label="大小（KB）" min-width="90" prop="file_size">
+        <el-table-column align="left" label="大小" min-width="90" prop="file_size">
           <template #default="scope">
-            <span>{{ fileSizeChange(scope.row.file_size, "KB") }}</span>
+            <span>{{ fileSizeChange(scope.row.file_size) }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" label="文件类型" min-width="70" prop="file_type" />
@@ -30,7 +30,7 @@
         <el-table-column align="left" label="操作" min-width="70">
           <template #default="{ row }">
             <el-space :size="2" spacer="|">
-              <el-button link type="primary" @click="fileDownload(row.file_path)">下载</el-button>
+              <el-button link type="primary" @click="fileDownload(row.file_path, row.filename)">下载</el-button>
               <el-button link type="primary" @click="deleteFileDownload(row)">删除</el-button>
             </el-space>
           </template>
@@ -55,7 +55,8 @@ export default {
 import { ref, onMounted } from "vue";
 import { importExcel, getFileList, deleteFile, exportExcel } from "@/api/excel";
 import { fileSizeChange, formatDate } from "@/utils/format";
-import { useUserStore } from "@/pinia/modules/user";
+// import { useUserStore } from "@/pinia/modules/user";
+import { downloadFile } from "@/utils/downloadImg";
 
 const loadingUpload = ref(false);
 const tableData = ref([]);
@@ -103,7 +104,7 @@ const handleSizeChange = (val) => {
   pageSize.value = val;
   getTableData();
 };
-const userStore = useUserStore();
+// const userStore = useUserStore();
 
 const handleExcelExport = (fileName) => {
   if (!!fileName) {
@@ -111,11 +112,11 @@ const handleExcelExport = (fileName) => {
   }
   exportExcel(tableData.value, fileName);
 };
-const loadExcel = async () => {
-  await getTableData();
-};
-const fileDownload = (path) => {
-  window.open("/backend/" + path);
+// const loadExcel = async () => {
+//   await getTableData();
+// };
+const fileDownload = (path, filename) => {
+  downloadFile(`/backend/${path}`, filename);
 };
 
 const deleteFileDownload = async (row) => {

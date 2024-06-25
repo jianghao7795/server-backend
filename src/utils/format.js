@@ -27,23 +27,14 @@ export const getDictFunc = async (type) => {
   return dicts;
 };
 
-export const fileSizeChange = (value = 0, type = "B") => {
-  if (value === 0) return 0;
-  let size = 0;
-  switch (type) {
-    case "MB":
-      size = value / 1024 / 1024;
-      break;
-    case "GB":
-      size = value / 1024 / 1024 / 1024;
-      break;
-    case "KB":
-      size = value / 1024;
-      break;
-    default:
-      size = value;
-      break;
+export const fileSizeChange = (value = 0) => {
+  if (value === 0) return `0 B`;
+  let size = value;
+  let i = 0;
+  while (size > 1024) {
+    size = size / 1024;
+    i = i + 1;
   }
-
-  return size.toFixed(2);
+  const unit = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  return `${size.toFixed(2)} ${unit[i]}`;
 };

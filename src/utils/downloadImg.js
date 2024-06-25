@@ -1,9 +1,10 @@
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage } from "element-plus";
 export const downloadImage = (imgsrc = "", name = "") => {
   // 下载图片地址和图片名
   var image = new Image();
   image.setAttribute("crossOrigin", "anonymous");
   image.onload = function () {
+    console.log(this);
     var canvas = document.createElement("canvas");
     canvas.width = image.width;
     canvas.height = image.height;

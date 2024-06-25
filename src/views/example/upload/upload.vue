@@ -59,7 +59,8 @@
         </el-table-column>
         <el-table-column align="left" label="操作" width="160">
           <template #default="scope">
-            <el-button size="small" icon="download" link type="primary" @click="downloadFile(scope.row)">下载</el-button>
+            <el-button size="small" icon="download" link type="primary"
+              @click="downloadFileURL(scope.row)">下载</el-button>
             <el-button size="small" icon="delete" link type="primary" @click="deleteFileFunc(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -97,7 +98,7 @@
 
 <script setup>
 import { getFileList, deleteFile, editFileName, uploadFile } from "@/api/fileUploadAndDownload";
-import { downloadImage } from "@/utils/downloadImg";
+import { downloadFile } from "@/utils/downloadImg";
 import CustomPic from "@/components/customPic/index.vue";
 import UploadImage from "@/components/upload/image.vue";
 import UploadCommon from "@/components/upload/common.vue";
@@ -248,11 +249,11 @@ const deleteFileFunc = async (row) => {
     });
 };
 
-const downloadFile = (row) => {
-  if (row.url.indexOf("http://") > -1 || row.url.indexOf("https://") > -1) {
-    downloadImage(row.url, row.name);
+const downloadFileURL = (row) => {
+  if (row.url.includes("http://") || row.url.includes("https://")) {
+    downloadFile(row.url, row.name);
   } else {
-    downloadImage(path.value + row.url, row.name);
+    downloadFile(path.value + row.url, row.name);
   }
 };
 

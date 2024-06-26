@@ -1,14 +1,14 @@
 <template>
   <el-drawer v-model="drawer" title="媒体库" size="650px">
     <div class="btn-list">
-      <upload-common v-model:imageCommon="imageCommon" class="upload-btn-media-library" @on-success="open" />
+      <upload-common v-model:imageCommon="imageCommon" accept=".png,.jpg,.jpeg,.svg,.gif"
+        class="upload-btn-media-library" @on-success="open" />
       <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn-media-library"
         @on-success="open" />
       <el-form ref="searchForm" :inline="true" :model="search">
         <el-form-item label="">
           <el-input v-model="search.keyword" class="keyword" placeholder="请输入文件名或备注" />
         </el-form-item>
-
         <el-form-item>
           <el-button size="small" type="primary" icon="search" @click="open">查询</el-button>
         </el-form-item>
@@ -16,18 +16,25 @@
     </div>
     <div class="media">
       <div v-for="(item, key) in picList" :key="key" class="media-box">
-        <div class="header-img-box-list">
-          <el-image :key="key" :src="item.url && item.url.slice(0, 4) !== 'http' ? path + `/${item.url}` : item.url"
-            @click="chooseImg(item.url, target, targetKey, item)">
-            <template #error>
-              <div class="header-img-box-list">
-                <el-icon>
-                  <picture />
-                </el-icon>
-              </div>
-            </template>
-          </el-image>
-        </div>
+        <el-popconfirm width="300" confirm-button-text="裁剪" cancel-button-text="原图" title="裁剪图片吗？"
+          @confirm="chooseImg(item.url, target, targetKey, item, true)"
+          @cancel="chooseImg(item.url, target, targetKey, item, false)">
+          <template #reference>
+            <div class="header-img-box-list">
+              <el-image :key="key"
+                :src="item.url && item.url.slice(0, 4) !== 'http' ? path + `/${item.url}` : item.url">
+                <template #error>
+                  <div class="header-img-box-list">
+                    <el-icon>
+                      <picture />
+                    </el-icon>
+                  </div>
+                </template>
+              </el-image>
+            </div>
+          </template>
+        </el-popconfirm>
+
         <div class="img-title" @click="editFileNameFunc(item)">
           {{ item.name }}
         </div>
@@ -82,13 +89,13 @@ const drawer = ref(false);
 const picList = ref([]);
 const path = ref(import.meta.env.VITE_BASE_API);
 
-const chooseImg = (url, target, targetKey, item) => {
+const chooseImg = (url, target, targetKey, item, isCropper) => {
   if (target && targetKey) {
     target[targetKey] = url;
     return;
   }
   // console.log(url, target, targetKey, item);
-  emit("enterImg", url, item);
+  emit("enterImg", url, item, isCropper);
   // drawer.value = false;
 };
 

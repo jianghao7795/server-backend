@@ -35,7 +35,8 @@
                     <close />
                   </el-icon>
                 </p>
-                <p class="person-info">这个家伙很懒，什么都没有留下</p>
+                <p class="person-info" v-if="!userStore.userInfo.introduction">这个家伙很懒，什么都没有留下</p>
+                <p class="person-info" v-else>{{ userStore.userInfo.introduction }}</p>
               </div>
               <div class="user-information">
                 <ul>
@@ -477,8 +478,12 @@ const changeImageStatus = (status = false, url = "", data) => {
   }
 };
 
-const enterImg = async (url, record) => {
-  changeImageStatus(true, `/backend/${url}`, record);
+const enterImg = async (url, record, isCropper = false) => {
+  if(isCropper) {
+    changeImageStatus(true, `/backend/${url}`, record);
+  } else {
+    changeAvatar(url);
+  }
 };
 
 const changeAvatar = async (url) => {

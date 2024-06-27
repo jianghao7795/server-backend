@@ -21,8 +21,7 @@
       <el-table :data="tableData">
         <el-table-column align="left" label="预览" width="100">
           <template #default="scope">
-            <div @click="() => changePicker(true, scope.row.url, scope.row.name)">
-              <!-- <viewer :images="[scope.row.url]"><CustomPic pic-type="file" :pic-src="scope.row.url" /></viewer> -->
+            <div @click="changePreview(true, scope.row.url)">
               <CustomPic pic-type="file" :pic-src="scope.row.url" />
             </div>
           </template>
@@ -58,8 +57,10 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="left" label="操作" width="160">
+        <el-table-column align="left" label="操作" width="200">
           <template #default="scope">
+            <el-button size="small" icon="Crop" link type="primary"
+              @click="() => changePicker(true, scope.row.url, scope.row.name)">裁剪</el-button>
             <el-button size="small" icon="download" link type="primary"
               @click="downloadFileURL(scope.row)">下载</el-button>
             <el-button size="small" icon="delete" link type="primary" @click="deleteFileFunc(scope.row)">删除</el-button>
@@ -76,6 +77,8 @@
           <img v-for="src in scope.images" :src="src" :key="src" class="image" />
         </template>
       </VueViewer> -->
+      <el-image-viewer v-if="showImagePreview" :hide-on-click-modal="true" :zoom-rate="1.2"
+        @close="changePreview(false)" :url-list="imgPreviewList" />
       <el-dialog v-model="dialogFormVisible" title="裁剪图片">
         <div style="width: 100%; height: 400px">
           <vue-cropper ref="cropper" :img="option.img" :output-size="option.size" :output-type="option.outputType"
@@ -105,13 +108,23 @@ import UploadImage from "@/components/upload/image.vue";
 import UploadCommon from "@/components/upload/common.vue";
 import { formatDate } from "@/utils/format";
 import { VueCropper } from "vue-cropper";
-// import VueViewer from "v-viewer";
 import { ref, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
+import constant from "@/utils/constant";
+
+const showImagePreview = ref(false);
+const imgPreviewList = ref([]);
+const changePreview = (status, filepath) => {
+  showImagePreview.value = status;
+  if(status) {
+    imgPreviewList.value = [constant.prefix + filepath];
+  } else {
+    imgPreviewList.value = [];
+  }
+}
 
 const cropper = ref(null);
 const path = ref(import.meta.env.VITE_BASE_API + "/");
-// const userStore = useUserStore();
 const imageUrl = ref("");
 const imageCommon = ref("");
 const filename = ref("");

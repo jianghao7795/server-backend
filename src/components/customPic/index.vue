@@ -10,13 +10,8 @@
     </template>
     <template v-if="picType === 'file'">
       <el-icon v-if="file === '/'"><icon-picture /></el-icon>
-      <el-image :src="file" fit="fill">
-        <template #error>
-          <div class="image-slot">
-            <el-icon><icon-picture /></el-icon>
-          </div>
-        </template>
-      </el-image>
+      <img :src="file" class="file" :onerror="defaultImage">
+      </img>
     </template>
   </span>
 </template>
@@ -46,6 +41,11 @@ const noAvatar = ref(noAvatarPng);
 
 const userStore = useUserStore();
 
+const defaultImage = img => {
+  console.log(img)
+  img.srcElement.style.display = "none";
+}
+
 const avatar = computed(() => {
   if (props.picSrc === "") {
     if (userStore.userInfo.headerImg !== "" && userStore.userInfo.headerImg.slice(0, 4) === "http") {
@@ -60,14 +60,14 @@ const avatar = computed(() => {
   }
 });
 const file = computed(() => {
-  if (props.picSrc && props.picSrc.slice(0, 4) !== "http") {
-    return path.value + props.picSrc;
-  }
   if (props.picSrc && props.picSrc.slice(0, 4) === "http") {
     return props.picSrc;
+  } else {
+    return path.value + props.picSrc;
   }
-  return `/${props.picSrc}`;
+  // return `/${props.picSrc}`;
 });
+console.log(file)
 </script>
 
 <style scoped>

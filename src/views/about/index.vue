@@ -88,13 +88,7 @@ strokeWidth	the stroke-width prop of svg element	number	4
   </div>
 </template>
 
-<script>
-export default {
-  name: "About",
-};
-</script>
-
-<script setup>
+<script setup name="About">
 import Draggable from "./draggable.vue";
 import pkg from "~/package.json";
 import { getGithubCommitList } from "@/api/github";

@@ -15,6 +15,7 @@ export const findFile = (params) => {
   });
 };
 
+// @Summary 片段上传文件
 export const breakpointContinue = (data) => {
   return service({
     url: "/fileUploadAndDownload/breakpointContinue",
@@ -24,6 +25,7 @@ export const breakpointContinue = (data) => {
   });
 };
 
+// @Summary 完成上传
 export const breakpointContinueFinish = (data) => {
   return service({
     url: "/fileUploadAndDownload/breakpointContinueFinish",

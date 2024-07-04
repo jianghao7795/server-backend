@@ -59,7 +59,7 @@
 
 <script setup>
 import SparkMD5 from "spark-md5";
-import { findFile, breakpointContinueFinish, removeChunk, breakpointContinue, getBreakpointList, deleteFileBreakpoint } from "@/api/breakpoint";
+import { findFile, breakpointContinueFinish, breakpointContinue, getBreakpointList, deleteFileBreakpoint } from "@/api/breakpoint";
 import { ref, watch, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 
@@ -144,6 +144,7 @@ const choseFile = async (e) => {
         formData.append("fileMd5", fileMd5.value); // 存储总文件的Md5 让后端知道自己是谁的切片
         formData.append("file", fileSlice); // 当前的切片
         formData.append("chunkNumber", i); // 当前是第几片
+        // console.log("i is ", i);
         formData.append("fileName", file.value.name); // 当前文件的文件名 用于后端文件切片的命名  formData.appen 为 formData对象添加参数的方法
         formDataList.value.push({ key: i, formData }); // 把当前切片信息 自己是第几片 存入我们方才准备好的池子
         i++;
@@ -171,7 +172,7 @@ const choseFile = async (e) => {
     };
   } else {
     limitFileSize.value = true;
-    ElMessage("请上传小于5M文件");
+    ElMessage("请上传小于10M文件");
   }
 };
 
@@ -232,6 +233,7 @@ const upLoadFileSlice = async (item) => {
       };
       ElMessage.success("上传成功");
       await removeChunk(params);
+      await getTableData();
     }
   }
 };

@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="search-box">
-      <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline"
-        @keyup.enter.native="onSubmit">
+      <el-form :inline="true" :model="searchInfo" ref="searchForm" class="demo-form-inline" @keyup.enter.native="onSubmit">
         <el-form-item label="名称">
           <el-input v-model="searchInfo.name"></el-input>
         </el-form-item>
@@ -22,13 +21,11 @@
             <el-button size="small" :text="true" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length"
-              @click="deleteVisible = true">删除</el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table v-loading="loadingInit" ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData"
-        row-key="ID" @selection-change="handleSelectionChange">
+      <el-table v-loading="loadingInit" ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData" row-key="ID" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="日期" width="180">
           <template #default="scope">
@@ -38,22 +35,18 @@
         <el-table-column align="left" label="标签名称" prop="name" width="120" />
         <el-table-column align="left" label="状态" prop="status" width="150">
           <template #default="scope">
-            <el-switch v-model="scope.row.status" :loading="loading[scope.row.id]"
-              :before-change="() => changeHide(scope.row)" active-text="显示" inactive-text="隐藏" />
+            <el-switch v-model="scope.row.status" :loading="loading[scope.row.id]" :before-change="() => changeHide(scope.row)" active-text="显示" inactive-text="隐藏" />
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button link type="primary" icon="edit" size="small" class="table-button"
-              @click="updateTagFunc(scope.row)">编辑</el-button>
+            <el-button link type="primary" icon="edit" size="small" class="table-button" @click="updateTagFunc(scope.row)">编辑</el-button>
             <el-button type="primary" link icon="delete" size="small" @click="deleteRow(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page="page"
-          :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange"
-          @size-change="handleSizeChange" />
+        <el-pagination background layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
     <el-dialog :model-value="dialogFormVisible" :before-close="closeDialog" title="标签">
@@ -255,7 +248,7 @@ const updateTagFunc = async (row) => {
   const res = await findTag({ ID: row.ID });
   type.value = "update";
   if (res.code === 200) {
-    formData.value = res.data.tag;
+    formData.value = res.data;
     dialogFormVisible.value = true;
   }
 };

@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="search-box">
-      <el-form ref="searForm" :inline="true" :model="searchInfo" class="demo-form-inline"
-        @keyup.enter.native="onSubmit">
+      <el-form ref="searForm" :inline="true" :model="searchInfo" class="demo-form-inline" @keyup.enter.native="onSubmit">
         <el-form-item label="名称:">
           <el-input v-model="searchInfo.title"></el-input>
         </el-form-item>
@@ -24,19 +23,16 @@
         <el-button icon="plus" size="small" type="primary" @click="openDialog">新增</el-button>
         <el-popconfirm :width="250" placement="top" title="确定要删除吗?" @confirm="onDelete">
           <template #reference>
-            <el-button :disabled="!multipleSelection.length" icon="delete" size="small"
-              style="margin-left: 10px">删除</el-button>
+            <el-button :disabled="!multipleSelection.length" icon="delete" size="small" style="margin-left: 10px">删除</el-button>
           </template>
         </el-popconfirm>
         <el-popconfirm :width="250" placement="top" title="确定不显示首页?" @confirm="OnCancelView">
           <template #reference>
-            <el-button :disabled="!multipleSelection.length" icon="hide" size="small"
-              style="margin-left: 10px">取消首页显示</el-button>
+            <el-button :disabled="!multipleSelection.length" icon="hide" size="small" style="margin-left: 10px">取消首页显示</el-button>
           </template>
         </el-popconfirm>
       </div>
-      <el-table ref="multipleTable" v-loading="loadingInit" :data="tableData" row-key="ID" style="width: 100%"
-        tooltip-effect="dark" @selection-change="handleSelectionChange">
+      <el-table ref="multipleTable" v-loading="loadingInit" :data="tableData" row-key="ID" style="width: 100%" tooltip-effect="dark" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column label="ID" prop="ID" width="55" />
         <el-table-column label="标题" prop="title"></el-table-column>
@@ -53,8 +49,7 @@
           <template #default="{ row }">
             <div class="centerBg">
               <el-space>
-                <el-tag :type="row.is_important === 1 ? 'success' : ''">{{ row.is_important === 1 ? "显示" : "隐藏"
-                  }}</el-tag>
+                <el-tag :type="row.is_important === 1 ? 'success' : ''">{{ row.is_important === 1 ? "显示" : "隐藏" }}</el-tag>
               </el-space>
             </div>
           </template>
@@ -77,8 +72,7 @@
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button class="table-button" icon="edit" link size="small" type="primary"
-              @click="updateArticleFunc(scope.row)">编辑</el-button>
+            <el-button class="table-button" icon="edit" link size="small" type="primary" @click="updateArticleFunc(scope.row)">编辑</el-button>
             <el-popconfirm placement="top" title="确认删除？" width="200" v-on:confirm="deleteRow(scope.row)">
               <template #reference><el-button icon="delete" link size="small" type="primary">删除</el-button></template>
             </el-popconfirm>
@@ -86,18 +80,13 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total"
-          background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
-          @size-change="handleSizeChange" />
+        <el-pagination :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" background layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
-    <el-dialog :before-close="closeDialog" :model-value="dialogFormVisible" :title="type === 'update' ? '更新文章' : '新建文章'"
-      :width="1100" draggable>
-      <el-form ref="ruleFormRef" :inline-message="true" :model="formData" :rules="rules" :scroll-to-error="true"
-        label-position="right" label-suffix=":" label-width="80px" status-icon>
+    <el-dialog :before-close="closeDialog" :model-value="dialogFormVisible" :title="type === 'update' ? '更新文章' : '新建文章'" :width="1100" draggable>
+      <el-form ref="ruleFormRef" :inline-message="true" :model="formData" :rules="rules" :scroll-to-error="true" label-position="right" label-suffix=":" label-width="80px" status-icon>
         <el-form-item label="标签" prop="tags">
-          <el-select v-model="formData.tags" filterable multiple placeholder="请选择" style="width: 100%"
-            @change="changeTagsFunc" @remove-tag="removeTag">
+          <el-select v-model="formData.tags" filterable multiple placeholder="请选择" style="width: 100%" @change="changeTagsFunc" @remove-tag="removeTag">
             <el-option v-for="item in tags" :key="item.ID" :label="item.name" :value="item.ID"></el-option>
           </el-select>
         </el-form-item>
@@ -349,9 +338,10 @@ const updateArticleFunc = async (row) => {
   const res = await findArticle({ ID: row.ID });
   type.value = "update";
   if (res.code === 200) {
-    changeTags.value = res.data.article.tags;
-    formData.value = res.data.article;
-    formData.value.tags = res.data.article.tags.map((i) => i.ID);
+    console.log(res);
+    changeTags.value = res.data.tags;
+    formData.value = res.data;
+    formData.value.tags = res.data.tags.map((i) => i.ID);
     // text.value = formData.value.content;
     dialogFormVisible.value = true;
   }

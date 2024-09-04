@@ -1,15 +1,12 @@
 <template>
   <div class="commit-table">
     <div class="commit-table-title">
-      <el-button link @click="loadCommits" type="success" :loading="loadingPlue"
-        :loading-icon="LoadingFour">更新日志</el-button>
-      <el-button link @click="() => scrollChange(1)" type="success" :loading="loading"
-        :loading-icon="LoadingFour">更新commit</el-button>
+      <el-button link @click="loadCommits" type="success" :loading="loadingPlue" :loading-icon="LoadingFour">更新日志</el-button>
+      <el-button link @click="() => scrollChange(1)" type="success" :loading="loading" :loading-icon="LoadingFour">更新commit</el-button>
     </div>
     <div class="log">
       <div>
-        <ul v-infinite-scroll="scrollChange" class="infinite-list log" :infinite-scroll-delay="500"
-          :infinite-scroll-immediate="false" style="overflow: auto">
+        <ul v-infinite-scroll="scrollChange" class="infinite-list log" :infinite-scroll-delay="500" :infinite-scroll-immediate="false" style="overflow: auto">
           <li v-for="(item, key) in dataTimeline" :key="item.commit_time" class="infinite-list-item log-item">
             <!-- {{ key + 1 }} - {{ item.message }} - {{ item.author }} -->
 
@@ -129,7 +126,7 @@ onMounted(() => {
   color: #111;
 }
 
-.infinite-list .infinite-list-item+.list-item {
+.infinite-list .infinite-list-item + .list-item {
   margin-top: 10px;
 }
 

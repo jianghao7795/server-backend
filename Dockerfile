@@ -1,10 +1,11 @@
-FROM node:latest AS builder
+FROM node:18.20.4 AS builder
 
 LABEL org.opencontainers.image.authors="jianghao"
 
 WORKDIR /backend/
 COPY . /backend/
 
+RUN npm config set registry https://registry.npmmirror.com
 RUN npm install -g pnpm
 RUN pnpm config set registry https://registry.npmmirror.com
 RUN pnpm install && pnpm run build

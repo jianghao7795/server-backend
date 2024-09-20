@@ -2,8 +2,7 @@
   <el-card>
     <div v-cloak>
       <div class="container">
-        <div :class="['item', { active: currentIndex === index }]" v-for="(item, index) in prizeList"
-          @click="start(index)">
+        <div :class="['item', { active: currentIndex === index }]" v-for="(item, index) in prizeList" @click="start(index)">
           <img :src="item.pic" alt="" />
           <p v-if="index !== 4">{{ item.name }}</p>
         </div>
@@ -145,7 +144,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 [v-cloak] {
   display: none;
 }

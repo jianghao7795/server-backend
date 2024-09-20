@@ -27,6 +27,7 @@ provide("toggle", toggle);
 @import "@/style/mobile.scss";
 @import "@/style/newLogin.scss";
 @import "@/style/element_visiable.scss";
+
 #app {
   background: #eee;
   height: 100vh;

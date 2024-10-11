@@ -32,13 +32,11 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length"
-              @click="deleteVisible = true">删除</el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID"
-        @selection-change="handleSelectionChange" v-loading="loading">
+      <el-table ref="multipleTable" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" @selection-change="handleSelectionChange" v-loading="loading">
         <el-table-column align="left" type="selection" width="55" />
         <el-table-column align="left" label="操作人" width="160">
           <template #default="scope">
@@ -102,17 +100,14 @@
                 <el-button size="small" type="primary" @click="deleteSysOperationRecordFunc(scope.row)">确定</el-button>
               </div>
               <template #reference>
-                <el-button icon="delete" size="small" link type="primary"
-                  @click="scope.row.visible = true">删除</el-button>
+                <el-button icon="delete" size="small" link type="primary" @click="scope.row.visible = true">删除</el-button>
               </template>
             </el-popover>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
-          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
-          @size-change="handleSizeChange" />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
   </div>
@@ -217,7 +212,7 @@ const fmtBody = (value) => {
   try {
     return JSON.parse(value);
   } catch (err) {
-    return value;
+    return err;
   }
 };
 </script>

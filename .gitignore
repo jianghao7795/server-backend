@@ -6,3 +6,4 @@ dist
 components.d.ts
 pnpm-lock.yaml
 auto-imports.d.ts
+conf.d/config.conf

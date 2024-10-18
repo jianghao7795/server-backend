@@ -11,7 +11,7 @@ RUN pnpm config set registry https://registry.npmmirror.com
 RUN pnpm install
 RUN pnpm run build
 
-FROM nginx
+FROM nginx:stable
 LABEL org.opencontainers.image.authors="jianghao"
 
 COPY ./conf.d/my.conf /etc/nginx/conf.d/config.conf

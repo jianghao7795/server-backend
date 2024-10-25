@@ -56,8 +56,9 @@ export const updateSysDictionary = (data) => {
 // @Router /sysDictionary/findSysDictionary/:id [get]
 export const findSysDictionary = (params) => {
   return service({
-    url: `/sysDictionary/findSysDictionary/${params.ID}`,
+    url: "/sysDictionary/findSysDictionary",
     method: "get",
+    params,
   });
 };
 

@@ -15,14 +15,12 @@
           <el-form ref="getTableForm" style="margin-top: 24px" :inline="true" :model="dbform" label-width="120px">
             <el-form-item label="数据库名" prop="structName">
               <el-select v-model="dbform.dbName" filterable placeholder="请选择数据库" @change="getTableFunc">
-                <el-option v-for="item in dbOptions" :key="item.database" :label="item.database"
-                  :value="item.database" />
+                <el-option v-for="item in dbOptions" :key="item.database" :label="item.database" :value="item.database" />
               </el-select>
             </el-form-item>
             <el-form-item label="表名" prop="structName">
               <el-select v-model="dbform.tableName" :disabled="!dbform.dbName" filterable placeholder="请选择表">
-                <el-option v-for="item in tableOptions" :key="item.tableName" :label="item.tableName"
-                  :value="item.tableName" />
+                <el-option v-for="item in tableOptions" :key="item.tableName" :label="item.tableName" :value="item.tableName" />
               </el-select>
             </el-form-item>
             <el-form-item>
@@ -48,8 +46,7 @@
           <el-input v-model="form.description" placeholder="中文描述作为自动api描述" />
         </el-form-item>
         <el-form-item label="文件名称" prop="packageName">
-          <el-input v-model="form.packageName" placeholder="生成文件的默认名称(建议为驼峰格式,首字母小写,如sysXxxXxxx)"
-            @blur="toLowerCaseFunc(form, 'packageName')" />
+          <el-input v-model="form.packageName" placeholder="生成文件的默认名称(建议为驼峰格式,首字母小写,如sysXxxXxxx)" @blur="toLowerCaseFunc(form, 'packageName')" />
         </el-form-item>
         <el-form-item label="Package（包）" prop="packageName">
           <el-select v-model="form.package" style="width: 194px">
@@ -97,10 +94,8 @@
         <el-table-column align="left" label="操作" width="300">
           <template #default="scope">
             <el-button size="small" link type="primary" icon="edit" @click="editAndAddField(scope.row)">编辑</el-button>
-            <el-button size="small" link type="primary" :disabled="scope.$index === 0"
-              @click="moveUpField(scope.$index)">上移</el-button>
-            <el-button size="small" link type="primary" :disabled="scope.$index + 1 === form.fields.length"
-              @click="moveDownField(scope.$index)">下移</el-button>
+            <el-button size="small" link type="primary" :disabled="scope.$index === 0" @click="moveUpField(scope.$index)">上移</el-button>
+            <el-button size="small" link type="primary" :disabled="scope.$index + 1 === form.fields.length" @click="moveDownField(scope.$index)">下移</el-button>
             <el-popover v-model:visible="scope.row.visible" placement="top">
               <p>确定删除吗？</p>
               <div style="text-align: right; margin-top: 8px">
@@ -108,8 +103,7 @@
                 <el-button type="primary" size="small" @click="deleteField(scope.$index)">确定</el-button>
               </div>
               <template #reference>
-                <el-button size="small" link type="primary" icon="delete"
-                  @click="scope.row.visible = true">删除</el-button>
+                <el-button size="small" link type="primary" icon="delete" @click="scope.row.visible = true">删除</el-button>
               </template>
             </el-popover>
           </template>
@@ -198,6 +192,7 @@ const form = ref({
   autoCreateApiToSql: false,
   autoMoveFile: false,
   fields: [],
+  humpPackageName: "",
 });
 const rules = ref({
   structName: [{ required: true, message: "请输入结构体名称", trigger: "blur" }],

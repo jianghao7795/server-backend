@@ -42,7 +42,7 @@ const noAvatar = ref(noAvatarPng);
 const userStore = useUserStore();
 
 const defaultImage = img => {
-  console.log(img)
+  // console.log(img)
   img.srcElement.style.display = "none";
 }
 
@@ -67,7 +67,7 @@ const file = computed(() => {
   }
   // return `/${props.picSrc}`;
 });
-console.log(file)
+// console.log(file)
 </script>
 
 <style scoped>

@@ -24,7 +24,7 @@
     "core-js": "^3.32.1",
     "dayjs": "^1.11.9",
     "echarts": "^5.4.3",
-    "element-plus": "^2.3.12",
+    "element-plus": "2.8.4",
     "highlight.js": "^11.8.0",
     "marked": "^4.3.0",
     "md-editor-v3": "^4.0.0",

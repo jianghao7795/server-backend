@@ -21,13 +21,11 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length"
-              @click="deleteVisible = true">删除</el-button>
+            <el-button icon="delete" size="small" style="margin-left: 10px" :disabled="!multipleSelection.length" @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData" row-key="ID"
-        @selection-change="handleSelectionChange">
+      <el-table ref="multipleTable" style="width: 100%" tooltip-effect="dark" :data="tableData" row-key="ID" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="用户名" prop="username" width="120" />
         <el-table-column align="left" label="昵称" prop="nickname" width="120" />
@@ -40,7 +38,7 @@
         <el-table-column align="left" label="简介" prop="sign" width="120" />
         <el-table-column align="left" label="主页封面" prop="cover" width="120">
           <template #default="scope">
-            <CustomPic picType="file" :pic-src="scope.row.cover" />
+            <CustomPic v-if="scope.row.cover !== ''" picType="file" :pic-src="scope.row.cover" />
           </template>
         </el-table-column>
         <el-table-column align="left" label="用户信息" prop="content" width="120" />
@@ -53,16 +51,13 @@
         </el-table-column>
         <el-table-column align="left" label="操作">
           <template #default="scope">
-            <el-button link type="primary" icon="edit" size="small" class="table-button"
-              @click="updateMoblieUserFunc(scope.row)">编辑</el-button>
+            <el-button link type="primary" icon="edit" size="small" class="table-button" @click="updateMoblieUserFunc(scope.row)">编辑</el-button>
             <el-button link type="primary" icon="delete" size="small" @click="deleteRow(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize"
-          :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange"
-          @size-change="handleSizeChange" />
+        <el-pagination layout="total, sizes, prev, pager, next, jumper" :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
     <el-dialog v-model="dialogFormVisible" :before-close="closeDialog" title="用户">
@@ -78,8 +73,7 @@
         </el-form-item>
         <el-form-item label="头像:">
           <div style="display: inline-block" @click="openHeaderChange">
-            <img v-if="!!formData.avatar" class="header-img-box"
-              :src="formData.avatar ? path + `/${formData.avatar}` : formData.avatar" />
+            <img v-if="!!formData.avatar" class="header-img-box" :src="formData.avatar ? path + `/${formData.avatar}` : formData.avatar" />
             <div v-else class="header-img-box">从媒体库选择</div>
           </div>
         </el-form-item>
@@ -263,7 +257,7 @@ getTableData();
 // ============== 表格控制部分结束 ===============
 
 // 获取需要的字典 可能为空 按需保留
-const setOptions = async () => { };
+const setOptions = async () => {};
 
 // 获取需要的字典 可能为空 按需保留
 setOptions();
@@ -325,7 +319,7 @@ const updateMoblieUserFunc = async (row) => {
   const res = await findMobileUser({ ID: row.ID });
   type.value = "update";
   if (res.code === 200) {
-    formData.value = res.data.moblieUser;
+    formData.value = res.data;
     dialogFormVisible.value = true;
   }
 };

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <el-upload :accept="accept" :action="`${path}/fileUploadAndDownload/upload`" :before-upload="checkFile"
-      :headers="{ Authorization: `Bearer ${userStore.token}` }" :on-error="uploadError" :on-success="uploadSuccess"
-      :show-file-list="false" class="upload-btn">
+    <el-upload :accept="accept" :multiple="multiple" :action="`${path}/fileUploadAndDownload/upload`" :before-upload="checkFile" :headers="{ Authorization: `Bearer ${userStore.token}` }" :on-error="uploadError" :on-success="uploadSuccess" :show-file-list="false" class="upload-btn">
       <el-button size="small" type="primary">普通上传</el-button>
     </el-upload>
   </div>
@@ -17,7 +15,13 @@ import { fileSize } from "@/core/config";
 const props = defineProps({
   accept: {
     type: String,
+    required: false,
     default: "",
+  },
+  multiple: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 
@@ -26,7 +30,7 @@ const path = ref(import.meta.env.VITE_BASE_API);
 
 const userStore = useUserStore();
 const fullscreenLoading = ref(false);
-const accept = computed(() => props.accept === "" ? ".png,.jpg,.jpeg,.svg" : props.accept);
+const accept = computed(() => (props.accept === "" ? ".png,.jpg,.jpeg,.svg" : props.accept));
 const checkFile = (file) => {
   fullscreenLoading.value = true;
   const isJPG = file.type === "image/jpeg";

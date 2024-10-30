@@ -3,10 +3,8 @@
     <!-- v-loading.fullscreen.lock="fullscreenLoading" -->
     <div class="table-box">
       <div class="btn-list">
-        <upload-common v-model:imageCommon="imageCommon" accept=".png,.jpg,.jpeg,.svg,.gif" class="upload-btn"
-          @on-success="getTableData" />
-        <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn"
-          @on-success="getTableData" />
+        <upload-common v-model:imageCommon="imageCommon" accept=".png,.jpg,.jpeg,.svg,.gif" :multiple="true" class="upload-btn" @on-success="getTableData" />
+        <upload-image v-model:imageUrl="imageUrl" :file-size="512" :max-w-h="1080" class="upload-btn" @on-success="getTableData" />
         <el-form ref="searchForm" :inline="true" :model="search" @keyup.enter.native="getTableData">
           <el-form-item label="">
             <el-input v-model="search.keyword" class="keyword" placeholder="请输入文件名或备注" />
@@ -21,8 +19,11 @@
       <el-table :data="tableData">
         <el-table-column align="left" label="预览" width="100">
           <template #default="scope">
-            <div @click="changePreview(true, scope.row.url)">
+            <div @mouseover="showIcon(scope.row.ID)" @mouseleave="hideIcon">
               <CustomPic pic-type="file" :pic-src="scope.row.url" />
+              <div class="image-common-backage" style="width: 100%; height: 80px; position: absolute; top: 6px; left: 0">
+                <el-icon @click="changePreview(true, scope.row.url)" color="#fff" :size="20" v-show="showHide.id === scope.row.ID"><View /></el-icon>
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -59,35 +60,47 @@
         </el-table-column>
         <el-table-column align="left" label="操作" width="200">
           <template #default="scope">
-            <el-button size="small" icon="Crop" link type="primary"
-              @click="() => changePicker(true, scope.row.url, scope.row.name)">裁剪</el-button>
-            <el-button size="small" icon="download" link type="primary"
-              @click="downloadFileURL(scope.row)">下载</el-button>
+            <el-button size="small" icon="Crop" link type="primary" @click="() => changePicker(true, scope.row.url, scope.row.name)">裁剪</el-button>
+            <el-button size="small" icon="download" link type="primary" @click="downloadFileURL(scope.row)">下载</el-button>
             <el-button size="small" icon="delete" link type="primary" @click="deleteFileFunc(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
-          :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper"
-          @current-change="handleCurrentChange" @size-change="handleSizeChange" />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :style="{ float: 'right', padding: '20px' }" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
       <!-- <VueViewer :images="tableData.map((i) => i.url)">
         <template slot-scope="scope">
           <img v-for="src in scope.images" :src="src" :key="src" class="image" />
         </template>
       </VueViewer> -->
-      <el-image-viewer v-if="showImagePreview" :hide-on-click-modal="true" :zoom-rate="1.2"
-        @close="changePreview(false)" :url-list="imgPreviewList" />
+      <el-image-viewer v-if="showImagePreview" :hide-on-click-modal="true" :zoom-rate="1.2" @close="changePreview(false)" :url-list="imgPreviewList" />
       <el-dialog v-model="dialogFormVisible" title="裁剪图片">
         <div style="width: 100%; height: 400px">
-          <vue-cropper ref="cropper" :img="option.img" :output-size="option.size" :output-type="option.outputType"
-            :info="true" :full="option.full" :fixed="false" :fixed-number="[75, 34]" :can-move="option.canMove"
-            :can-move-box="option.canMoveBox" :fixed-box="option.fixedBox" :original="option.original"
-            :auto-crop="option.autoCrop" :auto-crop-width="option.autoCropWidth"
-            :auto-crop-height="option.autoCropHeight" :center-box="option.centerBox" @real-time="realTime"
-            :high="option.high" @img-load="imgLoad" mode="contain" :max-img-size="option.max"
-            @crop-moving="cropMoving"></vue-cropper>
+          <vue-cropper
+            ref="cropper"
+            :img="option.img"
+            :output-size="option.size"
+            :output-type="option.outputType"
+            :info="true"
+            :full="option.full"
+            :fixed="false"
+            :fixed-number="[75, 34]"
+            :can-move="option.canMove"
+            :can-move-box="option.canMoveBox"
+            :fixed-box="option.fixedBox"
+            :original="option.original"
+            :auto-crop="option.autoCrop"
+            :auto-crop-width="option.autoCropWidth"
+            :auto-crop-height="option.autoCropHeight"
+            :center-box="option.centerBox"
+            @real-time="realTime"
+            :high="option.high"
+            @img-load="imgLoad"
+            mode="contain"
+            :max-img-size="option.max"
+            @crop-moving="cropMoving"
+          ></vue-cropper>
         </div>
         <template #footer>
           <span class="dialog-footer">
@@ -111,23 +124,25 @@ import { VueCropper } from "vue-cropper";
 import { ref, onMounted } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import constant from "@/utils/constant";
+import { View } from "@element-plus/icons-vue";
 
 const showImagePreview = ref(false);
 const imgPreviewList = ref([]);
 const changePreview = (status, filepath) => {
   showImagePreview.value = status;
-  if(status) {
+  if (status) {
     imgPreviewList.value = [constant.prefix + filepath];
   } else {
     imgPreviewList.value = [];
   }
-}
+};
 
 const cropper = ref(null);
 const path = ref(import.meta.env.VITE_BASE_API + "/");
 const imageUrl = ref("");
 const imageCommon = ref("");
 const filename = ref("");
+const showHide = ref({});
 
 const dialogFormVisible = ref(false);
 const option = ref({
@@ -175,6 +190,14 @@ const imgLoad = (e) => {
 
 const oncancel = () => {
   changePicker(false, "");
+};
+
+const showIcon = (id) => {
+  showHide.value = { id };
+};
+
+const hideIcon = () => {
+  showHide.value = {};
 };
 
 const onOk = () => {
@@ -317,7 +340,15 @@ export default {
   color: #4d70ff;
 }
 
-.upload-btn+.upload-btn {
+.upload-btn + .upload-btn {
   margin-left: 12px;
+}
+.image-common-backage:hover {
+  background-color: #999;
+  opacity: 0.7;
+  /* margin: auto; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -19,8 +19,7 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="loginFormData.password" :type="lock === 'lock' ? 'password' : 'text'"
-              placeholder="请输入密码">
+            <el-input v-model="loginFormData.password" :type="lock === 'lock' ? 'password' : 'text'" placeholder="请输入密码">
               <template #suffix>
                 <span class="input-icon">
                   <el-icon>
@@ -42,18 +41,12 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" style="width: 46%" size="large" v-if="isInit" @click="checkInit">前往初始化</el-button>
-            <el-button v-bind:loading="loading" type="primary" size="large"
-              :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登
-              录</el-button>
+            <el-button v-bind:loading="loading" type="primary" size="large" :style="isInit ? { width: '46%', marginLeft: '8%' } : { width: '100%' }" @click="submitForm">登 录</el-button>
           </el-form-item>
-          <el-form-item>
-
-          </el-form-item>
+          <el-form-item></el-form-item>
         </el-form>
       </div>
-      <div class="login_panle_right">
-
-      </div>
+      <div class="login_panle_right"></div>
       <div class="login_panle_foot">
         <div class="copyright">
           <bootomInfo />
@@ -79,14 +72,14 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "@/pinia/modules/user";
 import dayjs from "dayjs";
 import { setLocalStorage } from "@/utils/date";
-import md5 from "md5";
+// import md5 from "md5";
 
 const router = useRouter();
 
 const captchaImgPath = ref({
   images: "",
   captcha_key: "",
-  themeImage: ''
+  themeImage: "",
 });
 
 // 是否需要初始化
@@ -133,8 +126,8 @@ const getCaptcha = () => {
       captchaImgPath.value = {
         images: ele.data.images,
         captcha_key: ele.data.captcha_key,
-        themeImage: ele.data.themeImage
-      }
+        themeImage: ele.data.themeImage,
+      };
     }
   });
 };
@@ -144,8 +137,8 @@ onMounted(() => {
   getCaptcha();
 });
 
-const handleRequestCaptCode = () => { }
-const handleConfirm = () => { }
+// const handleRequestCaptCode = () => { }
+// const handleConfirm = () => { }
 
 // 登录相关操作
 const lock = ref("lock");
@@ -176,7 +169,7 @@ const rules = reactive({
 
 const userStore = useUserStore();
 const login = async () => {
-  return await userStore.LoginIn({ ...loginFormData, password: md5(loginFormData.password) });
+  return await userStore.LoginIn({ ...loginFormData, password: loginFormData.password });
 };
 const submitForm = () => {
   loginForm.value.validate(async (v) => {

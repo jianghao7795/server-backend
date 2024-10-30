@@ -7,7 +7,9 @@ echo $ip
 
 
 sed -i -e "s/192.168.56.103/$ip/g" /root/man/server-backend/conf.d/my.conf
-
+docker stop backend
+docker rm backend
+docker rmi backend
 
 docker build -t backend .
 docker run --name backend -d -p 9000:9000 backend

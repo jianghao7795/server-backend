@@ -51,7 +51,7 @@
                           <template #dropdown>
                             <el-dropdown-menu @click="toggle">
                               <el-dropdown-item :disabled="language === 'en'">English</el-dropdown-item>
-                              <el-dropdown-item :disabled="language === 'zh-cn'">中文</el-dropdown-item>
+                              <el-dropdown-item :disabled="language === 'zh-CN'">中文</el-dropdown-item>
                             </el-dropdown-menu>
                           </template>
                         </el-dropdown>
@@ -148,7 +148,7 @@ const language = inject("language");
 // console.log(locale, language);
 const languageSelect = {
   en: "English",
-  "zh-cn": "简体中文",
+  "zh-CN": "简体中文",
 };
 
 const router = useRouter();

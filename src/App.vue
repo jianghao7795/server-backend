@@ -11,11 +11,12 @@
 import { computed, ref, provide } from "vue";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import en from "element-plus/dist/locale/en.mjs";
-const language = ref("zh-cn");
-const locale = computed(() => (language.value === "zh-cn" ? zhCn : en));
+const language = ref(window.navigator.language);
+const locale = computed(() => (language.value === "zh-CN" ? zhCn : en));
 const toggle = () => {
-  language.value = language.value === "zh-cn" ? "en" : "zh-cn";
+  language.value = language.value === "zh-CN" ? "en" : "zh-CN";
 };
+// console.log(window.navigator); /
 provide("locale", locale);
 provide("toggle", toggle);
 provide("language", language);

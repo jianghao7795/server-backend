@@ -11,8 +11,7 @@
         <el-backtop :right="100" :bottom="100"></el-backtop>
       </el-aside>
       <!-- 分块滑动功能 -->
-      <el-main class="main-cont main-right"
-        :style="{ width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '50px' : '220px'})` }">
+      <el-main class="main-cont main-right" :style="{ width: `calc(100% - ${isMobile ? '0px' : isCollapse ? '50px' : '220px'})` }">
         <transition :duration="{ enter: 800, leave: 100 }" mode="out-in" name="el-fade-in-linear">
           <div class="topfix">
             <el-row>
@@ -45,13 +44,14 @@
                       <div class="right-box">
                         <el-dropdown trigger="click">
                           <span class="el-dropdown-link">
-                            <translate theme="filled" size="20" fill="#333" strokeLinejoin="miter"
-                              strokeLinecap="square" />
+                            <translate theme="filled" size="20" fill="#333" strokeLinejoin="miter" strokeLinecap="square" />
+                            {{ languageSelect[language] }}
+                            <el-icon><CaretBottom /></el-icon>
                           </span>
                           <template #dropdown>
-                            <el-dropdown-menu @click="toggle" v-model="locale">
-                              <el-dropdown-item>English</el-dropdown-item>
-                              <el-dropdown-item>中文</el-dropdown-item>
+                            <el-dropdown-menu @click="toggle">
+                              <el-dropdown-item :disabled="language === 'en'">English</el-dropdown-item>
+                              <el-dropdown-item :disabled="language === 'zh-cn'">中文</el-dropdown-item>
                             </el-dropdown-menu>
                           </template>
                         </el-dropdown>
@@ -63,8 +63,7 @@
                               <span style="margin-left: 5px">
                                 {{ userStore.userInfo.nickName }}
                               </span>
-                              <el-icon class=""
-                                :class="mouseLeaveOrEnter ? 'switch-mouse mouse-enter-leave' : 'switch-mouse'">
+                              <el-icon class="" :class="mouseLeaveOrEnter ? 'switch-mouse mouse-enter-leave' : 'switch-mouse'">
                                 <arrow-down />
                               </el-icon>
                             </span>
@@ -72,13 +71,10 @@
                           <template #dropdown>
                             <el-dropdown-menu class="dropdown-group">
                               <el-dropdown-item>
-                                <span style="font-weight: 600">
-                                  当前角色：{{ userStore.userInfo.authority?.authorityName }}</span>
+                                <span style="font-weight: 600">当前角色：{{ userStore.userInfo.authority?.authorityName }}</span>
                               </el-dropdown-item>
                               <template v-if="userStore.userInfo.authorities">
-                                <el-dropdown-item
-                                  v-for="item in userStore.userInfo.authorities.filter((i) => i.authorityId !== userStore.userInfo.authorityId)"
-                                  :key="item.authorityId" @click="changeUserAuth(item.authorityId)">
+                                <el-dropdown-item v-for="item in userStore.userInfo.authorities.filter((i) => i.authorityId !== userStore.userInfo.authorityId)" :key="item.authorityId" @click="changeUserAuth(item.authorityId)">
                                   <span>切换为：{{ item.authorityName }}</span>
                                 </el-dropdown-item>
                               </template>
@@ -99,8 +95,7 @@
             <HistoryComponent ref="layoutHistoryComponent" />
           </div>
         </transition>
-        <router-view v-if="reloadFlag" v-slot="{ Component, route }" v-loading="loadingFlag"
-          element-loading-text="正在加载中" class="admin-box">
+        <router-view v-if="reloadFlag" v-slot="{ Component, route }" v-loading="loadingFlag" element-loading-text="正在加载中" class="admin-box">
           <div v-bind:id="'refreshView'">
             <!-- el-fade-in-linear -->
             <transition mode="out-in" name="el-fade-in-linear" type="transition" :appear="true">
@@ -147,8 +142,14 @@ import { Translate } from "@icon-park/vue-next";
 //   console.log(refreshStore.isRefresh);
 // });
 
-const locale = inject("locale");
+// const locale = inject("locale");
 const toggle = inject("toggle");
+const language = inject("language");
+// console.log(locale, language);
+const languageSelect = {
+  en: "English",
+  "zh-cn": "简体中文",
+};
 
 const router = useRouter();
 const route = useRoute();
@@ -319,5 +320,7 @@ const changeMouse = (e) => {
 
 .el-dropdown-link {
   margin-right: 15px;
+  display: flex;
+  align-items: center;
 }
 </style>

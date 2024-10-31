@@ -18,6 +18,7 @@ const toggle = () => {
 };
 provide("locale", locale);
 provide("toggle", toggle);
+provide("language", language);
 </script>
 
 <style lang="scss">

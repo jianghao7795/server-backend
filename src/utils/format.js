@@ -1,4 +1,5 @@
-import { formatTimeToStr } from "@/utils/date";
+// import { formatTimeToStr } from "@/utils/date";
+import dayjs from "dayjs";
 import { getDict } from "@/utils/dictionary";
 
 export const formatBoolean = (bool) => {
@@ -8,10 +9,10 @@ export const formatBoolean = (bool) => {
     return "";
   }
 };
-export const formatDate = (time) => {
+export const formatDate = (time, pattern = "YYYY-MM-DD HH:mm:ss") => {
   if (time !== null && time !== "") {
-    var date = new Date(time);
-    return formatTimeToStr(date, "yyyy-MM-dd hh:mm:ss");
+    // var date = new Date(time);
+    return dayjs(time).format(pattern);
   } else {
     return "";
   }

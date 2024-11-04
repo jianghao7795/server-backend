@@ -1,12 +1,10 @@
 <template>
   <div>
-    <div class="clearflex">
+    <div class="clirc-fire">
       <el-input v-model="filterText" class="fitler" placeholder="筛选" />
-      <el-button class="fl-right" size="small" type="primary" @click="authApiEnter">确 定</el-button>
+      <el-button size="small" type="primary" @click="authApiEnter">确 定</el-button>
     </div>
-    <el-tree ref="apiTree" :data="apiTreeData" :default-checked-keys="apiTreeIds" :props="apiDefaultProps"
-      default-expand-all highlight-current node-key="onlyId" show-checkbox :filter-node-method="filterNode"
-      @check="nodeChange" />
+    <el-tree ref="apiTree" :data="apiTreeData" :default-checked-keys="apiTreeIds" :props="apiDefaultProps" highlight-current node-key="onlyId" show-checkbox :filter-node-method="filterNode" @check="nodeChange" />
   </div>
 </template>
 <script>
@@ -128,3 +126,10 @@ watch(filterText, (val) => {
   console.log(apiTree.value.filter(val));
 });
 </script>
+
+<style lang="scss">
+.clirc-fire {
+  display: flex;
+  justify-content: flex-end;
+}
+</style>

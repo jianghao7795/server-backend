@@ -8,8 +8,7 @@
           <input v-show="false" id="file" ref="FileInput" multiple="multiple" type="file" @change="choseFile" />
         </div>
       </form>
-      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn"
-        @click="getFile">上传文件</el-button>
+      <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn" @click="getFile">上传文件</el-button>
       <div class="el-upload__tip">请上传不超过10MB的文件</div>
       <div class="list">
         <transition name="list" tag="p">
@@ -24,21 +23,19 @@
         </transition>
       </div>
       <div class="tips">此版本为先行体验功能测试版，样式美化和性能优化正在进行中，上传切片文件和合成的完整文件分别再QMPlusserver目录的breakpointDir文件夹和fileDir文件夹</div>
-      <el-table ref="breakpoint" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID"
-        v-loading="loading">
+      <el-table ref="breakpoint" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" v-loading="loading">
         <el-table-column align="left" label="ID" prop="ID" width="80"></el-table-column>
         <el-table-column align="left" label="Name" prop="file_name" width="180" />
         <el-table-column align="left" label="FilePath" prop="file_path" width="120" />
         <el-table-column align="left" label="ChunkTotal" prop="chunk_total" width="120" />
         <el-table-column align="left" label="是否完成" prop="is_finish" width="120">
           <template #default="{ row }">
-            <span>{{ row.is_finish ? '是' : '否' }}</span>
+            <span>{{ row.is_finish ? "是" : "否" }}</span>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作" min-width="160">
           <template #default="scope">
-            <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" title="确定要删除吗？"
-              @confirm="deleteFileChunk(scope.row)" placement="top">
+            <el-popconfirm confirm-button-text="确定" cancel-button-text="取消" title="确定要删除吗？" @confirm="deleteFileChunk(scope.row)" placement="top">
               <!-- @click="deleteCustomer(scope.row)" -->
               <template #reference>
                 <el-button link type="danger" icon="delete" size="small">删除</el-button>
@@ -48,12 +45,9 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
-          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleBreakpointChange"
-          @size-change="handleSizeChange" />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleBreakpointChange" @size-change="handleSizeChange" />
       </div>
     </div>
-
   </div>
 </template>
 
@@ -76,7 +70,7 @@ const loading = ref(false);
 const tableData = ref([]);
 const page = ref(1);
 const pageSize = ref(10);
-const total = ref(0)
+const total = ref(0);
 
 // 查询 分页
 const getTableData = async () => {
@@ -95,14 +89,14 @@ const getTableData = async () => {
 };
 
 const deleteFileChunk = (item) => {
-  console.log(item.ID)
-  deleteFileBreakpoint(item.ID).then(resp => {
-    if(resp.code === 200) {
+  console.log(item.ID);
+  deleteFileBreakpoint(item.ID).then((resp) => {
+    if (resp.code === 200) {
       ElMessage.success("删除成功");
       getTableData();
     }
-  })
-}
+  });
+};
 
 // 分页
 const handleSizeChange = (val) => {
@@ -216,7 +210,7 @@ const upLoadFileSlice = async (item) => {
     return;
   }
   waitNum.value--; // 百分数增加
-  console.log("wait: ", waitNum);
+  console.log("wait: ", waitNum.value);
   if (waitNum.value === 0) {
     // 切片传完以后 合成文件
     const params = {
@@ -226,13 +220,13 @@ const upLoadFileSlice = async (item) => {
     const res = await breakpointContinueFinish(params);
     if (res.code === 200) {
       // 合成文件过后 删除缓存切片
-      const params = {
-        fileName: file.value.name,
-        fileMd5: fileMd5.value,
-        filePath: res.data.filePath,
-      };
+      // const params = {
+      //   fileName: file.value.name,
+      //   fileMd5: fileMd5.value,
+      //   filePath: res.data.filePath,
+      // };
       ElMessage.success("上传成功");
-      await removeChunk(params);
+      // await removeChunk(params);
       await getTableData();
     }
   }
@@ -244,8 +238,8 @@ const inputChange = () => {
 };
 
 onMounted(() => {
-  getTableData()
-})
+  getTableData();
+});
 </script>
 
 <script>
@@ -348,8 +342,7 @@ a {
 .list-enter,
 .list-leave-to
 
-/* .list-leave-active for below version 2.1.8 */
-  {
+/* .list-leave-active for below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(-30px);
 }

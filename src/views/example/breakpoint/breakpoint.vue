@@ -9,7 +9,7 @@
         </div>
       </form>
       <el-button :disabled="limitFileSize" type="primary" size="small" class="uploadBtn" @click="getFile">上传文件</el-button>
-      <div class="el-upload__tip">请上传不超过10MB的文件</div>
+      <div class="el-upload__tip">请上传不超过100MB的文件</div>
       <div class="list">
         <transition name="list" tag="p">
           <div v-if="file" class="list-item">

@@ -14,6 +14,6 @@ RUN pnpm run build
 FROM nginx:stable
 LABEL org.opencontainers.image.authors="jianghao"
 
-COPY ./conf.d/my.conf /etc/nginx/conf.d/config.conf
+COPY ./conf.d/config.conf /etc/nginx/conf.d/config.conf
 COPY --from=builder /backend/dist /usr/share/nginx/html/backend
 RUN ls -al /usr/share/nginx/html

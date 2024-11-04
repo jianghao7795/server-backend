@@ -1,8 +1,9 @@
 import axios from "axios"; // 引入axios
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 import { useUserStore } from "@/pinia/modules/user";
 import { emitter } from "@/utils/bus.js";
 import router from "@/router/index";
+// import { de } from "element-plus/es/locale";
 // import { useAuthorityStore } from "@/pinia/modules/authority";
 
 // const authorityStore =
@@ -86,12 +87,18 @@ service.interceptors.response.use(
     closeLoading();
     if (error.response && error.response.status >= 400 && error.response.status < 500) {
       const response = error.response;
-      ElMessage({
-        showClose: true,
-        message: response?.data?.data?.msg || response?.data?.msg || decodeURI(response?.headers?.msg),
+      // ElMessage({
+      //   showClose: true,
+      //   message: response?.data?.data?.msg || response?.data?.msg || decodeURI(response?.headers?.msg),
+      //   type: "error",
+      // });
+      ElNotification({
+        title: `请求错误：${error.response.status}`,
         type: "error",
+        message: response?.data?.msg || response.data.msg || decodeURI(response?.headers?.msg),
+        duration: 10000,
       });
-      if (response.data.data && response.data.data.reload) {
+      if (response.data && response.data.reload) {
         const userStore = useUserStore();
         userStore.token = "";
         localStorage.clear();

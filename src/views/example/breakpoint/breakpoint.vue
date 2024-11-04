@@ -113,7 +113,7 @@ const handleBreakpointChange = (val) => {
 const choseFile = async (e) => {
   const fileR = new FileReader(); // 创建一个reader用来读取文件流
   const fileInput = e.target.files[0]; // 获取当前文件
-  const maxSize = 10 * 1024 * 1024;
+  const maxSize = 100 * 1024 * 1024;
   file.value = fileInput; // file 丢全局方便后面用 可以改进为func传参形式
   percentage.value = 0;
   if (file.value.size < maxSize) {
@@ -166,7 +166,7 @@ const choseFile = async (e) => {
     };
   } else {
     limitFileSize.value = true;
-    ElMessage("请上传小于10M文件");
+    ElMessage("请上传小于100M文件");
   }
 };
 

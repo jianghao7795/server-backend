@@ -35,7 +35,7 @@ service.interceptors.request.use(
         Accept: "application/json",
         // "Content-Type": "application/json; charset=utf-8",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST",
+        "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST,PUT",
         "Access-Control-Allow-Credentials": "true",
         "x-user-id": userStore.userInfo.ID,
       };
@@ -51,7 +51,7 @@ service.interceptors.request.use(
           Authorization: `Bearer ${userStore.token}`,
           "Content-Type": "application/json; charset=utf-8",
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST",
+          "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST,PUT",
           "Access-Control-Allow-Credentials": "true",
           "x-user-id": userStore.userInfo.ID,
           ...config.headers,

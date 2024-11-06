@@ -98,7 +98,7 @@ service.interceptors.response.use(
         message: response?.data?.msg || response.data.msg || decodeURI(response?.headers?.msg),
         duration: 10000,
       });
-      if (response.data && response.data.reload) {
+      if ((response.data && response.data.reload) || response.status === 401) {
         const userStore = useUserStore();
         userStore.token = "";
         localStorage.clear();

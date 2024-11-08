@@ -22,7 +22,7 @@
           </div>
         </transition>
       </div>
-      <div class="tips">此版本为先行体验功能测试版，样式美化和性能优化正在进行中，上传切片文件和合成的完整文件分别再QMPlusserver目录的breakpointDir文件夹和fileDir文件夹</div>
+      <!-- <div class="tips">此版本为先行体验功能测试版，样式美化和性能优化正在进行中，上传切片文件和合成的完整文件分别再QMPlusserver目录的breakpointDir文件夹和fileDir文件夹</div> -->
       <el-table ref="breakpoint" :data="tableData" style="width: 100%" tooltip-effect="dark" row-key="ID" v-loading="loading">
         <el-table-column align="left" label="ID" prop="ID" width="80"></el-table-column>
         <el-table-column align="left" label="Name" prop="file_name" width="180" />
@@ -30,7 +30,10 @@
         <el-table-column align="left" label="ChunkTotal" prop="chunk_total" width="120" />
         <el-table-column align="left" label="是否完成" prop="is_finish" width="120">
           <template #default="{ row }">
-            <span>{{ row.is_finish ? "是" : "否" }}</span>
+            <span>
+              <el-icon v-if="row.is_finish" color="#85E89D"><CircleCheck /></el-icon>
+              <el-icon v-else color="#F97583"><CircleClose /></el-icon>
+            </span>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作" min-width="160">
@@ -53,7 +56,7 @@
 
 <script setup>
 import SparkMD5 from "spark-md5";
-import { findFile, breakpointContinueFinish, breakpointContinue, getBreakpointList, deleteFileBreakpoint } from "@/api/breakpoint";
+import { findFile, breakpointContinueFinish, breakpointContinue, getBreakpointList, deleteFileBreakpoint, removeChunk } from "@/api/breakpoint";
 import { ref, watch, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 
@@ -220,13 +223,13 @@ const upLoadFileSlice = async (item) => {
     const res = await breakpointContinueFinish(params);
     if (res.code === 200) {
       // 合成文件过后 删除缓存切片
-      // const params = {
-      //   fileName: file.value.name,
-      //   fileMd5: fileMd5.value,
-      //   filePath: res.data.filePath,
-      // };
+      const params = {
+        file_name: file.value.name,
+        file_md5: fileMd5.value,
+        file_path: res.data.filePath,
+      };
       ElMessage.success("上传成功");
-      // await removeChunk(params);
+      await removeChunk(params);
       await getTableData();
     }
   }

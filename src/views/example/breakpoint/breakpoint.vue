@@ -30,7 +30,10 @@
         <el-table-column align="left" label="ChunkTotal" prop="chunk_total" width="120" />
         <el-table-column align="left" label="是否完成" prop="is_finish" width="120">
           <template #default="{ row }">
-            <span>{{ row.is_finish ? "是" : "否" }}</span>
+            <span>
+              <el-icon v-if="row.is_finish" color="#85E89D"><CircleCheck /></el-icon>
+              <el-icon v-else color="#F97583"><CircleClose /></el-icon>
+            </span>
           </template>
         </el-table-column>
         <el-table-column align="left" label="操作" min-width="160">

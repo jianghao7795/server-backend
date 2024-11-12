@@ -310,8 +310,11 @@ const handleSizeChange = (val) => {
 const type = ref("");
 const dialogFormVisible = ref(false);
 // 删除行
-const deleteRow = (row) => {
-  deleteArticle(row);
+const deleteRow = async (row) => {
+  const resp = await deleteArticle(row);
+  if (resp.code === 200) {
+    getTableData();
+  }
 };
 
 const openDialog = () => {

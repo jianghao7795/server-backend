@@ -63,7 +63,7 @@
                               <span style="margin-left: 5px">
                                 {{ userStore.userInfo.nickName }}
                               </span>
-                              <el-icon class="" :class="mouseLeaveOrEnter ? 'switch-mouse mouse-enter-leave' : 'switch-mouse'">
+                              <el-icon :class="mouseLeaveOrEnter ? 'switch-mouse mouse-enter-leave' : 'switch-mouse'">
                                 <arrow-down />
                               </el-icon>
                             </span>

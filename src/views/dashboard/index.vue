@@ -54,8 +54,7 @@
           </div>
         </template>
         <el-row :gutter="20">
-          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items"
-            @click="toTarget(card.name)">
+          <el-col v-for="(card, key) in toolCards" :key="key" :span="4" :xs="8" class="quick-entrance-items" @click="toTarget(card.name)">
             <div class="quick-entrance-item">
               <div class="quick-entrance-item-icon" :style="{ backgroundColor: card.bg }">
                 <el-icon>
@@ -189,7 +188,7 @@ onMounted(() => {
 
 const swiperUploadFile = ref({
   id: 8,
-  label: "最新图片",
+  label: "封面图片",
   options: {
     // navigation: {
     //   nextEl: ".swiper-button-next",
@@ -389,7 +388,7 @@ export default {
   .card-box {
     padding: 12px 16px;
 
-    &+.card-box {
+    & + .card-box {
       padding-top: 0px;
     }
   }
@@ -435,7 +434,7 @@ export default {
       }
 
       &-item {
-        +.top-card-left-item {
+        + .top-card-left-item {
           margin-top: 24px;
         }
 

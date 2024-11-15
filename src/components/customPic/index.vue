@@ -75,7 +75,7 @@ const file = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 8px;
+  /* margin-right: 8px; */
 }
 
 .file {

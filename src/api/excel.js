@@ -76,6 +76,9 @@ export const importExcel = (file) => {
     url: "/excel/importExcel",
     method: "post",
     data: file,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
 };
 

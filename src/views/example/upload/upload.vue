@@ -19,10 +19,10 @@
       <el-table :data="tableData">
         <el-table-column align="left" label="预览" width="100">
           <template #default="scope">
-            <div @mouseover="showIcon(scope.row.ID)" @mouseleave="hideIcon">
+            <div @mouseover="showIcon(scope.row.ID)" @mouseleave="hideIcon" @click="changePreview(true, scope.row.url)">
               <CustomPic pic-type="file" :pic-src="scope.row.url" />
               <div class="image-common-backage" style="width: 100%; height: 80px; position: absolute; top: 6px; left: 0">
-                <el-icon @click="changePreview(true, scope.row.url)" color="#fff" :size="20" v-show="showHide.id === scope.row.ID"><View /></el-icon>
+                <el-icon color="#fff" :size="20" v-show="showHide.id === scope.row.ID"><View /></el-icon>
               </div>
             </div>
           </template>

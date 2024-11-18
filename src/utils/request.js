@@ -32,7 +32,7 @@ service.interceptors.request.use(
       config.headers = {
         ...config.headers,
         Authorization: `Bearer ${userStore.token}`,
-        Accept: "application/json",
+        // Accept: "application/json",
         // "Content-Type": "application/json; charset=utf-8",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "OPTIONS,GET,DELETE,PATCH,POST,PUT",
@@ -41,13 +41,14 @@ service.interceptors.request.use(
       };
     } else {
       if (config.data instanceof FormData) {
+        console.log;
         config.headers = {
           Authorization: `Bearer ${userStore.token}`,
           ...config.headers,
         };
       } else {
         config.headers = {
-          Accept: "application/json",
+          // Accept: "application/json",
           Authorization: `Bearer ${userStore.token}`,
           "Content-Type": "application/json; charset=utf-8",
           "Access-Control-Allow-Origin": "*",

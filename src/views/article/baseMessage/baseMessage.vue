@@ -22,11 +22,7 @@
           <el-input v-model.number="formData.introduction" clearable placeholder="请输入" />
         </el-form-item>
         <el-form-item label="网站头像:" prop="head_img">
-          <el-upload :action="`${path}/base_message/upload_file`" ref="upload"
-            :class="[fileList.length === 5 ? 'disUoloadSty' : '']" accept=".png,.jpg,.jpeg" list-type="picture-card"
-            :disabled="fileList.length === 5" :limit="5" :headers="{ Authorization: `Bearer ${userStore.token}` }"
-            :file-list="fileList" :on-success="uploadSuccess" :on-remove="handleRemove" :on-error="uploadError"
-            :on-change="changeFile">
+          <el-upload :action="`${path}/base_message/upload_file`" ref="upload" :class="[fileList.length === 5 ? 'disUoloadSty' : '']" accept=".png,.jpg,.jpeg" list-type="picture-card" :disabled="fileList.length === 5" :limit="5" :headers="{ Authorization: `Bearer ${userStore.token}` }" :file-list="fileList" :on-success="uploadSuccess" :on-remove="handleRemove" :on-error="uploadError" :on-change="changeFile">
             <template #default>
               <div>
                 <el-icon>
@@ -148,7 +144,7 @@ const handlePictureCardPreview = (file) => {
 };
 
 const changeFile = (uploadFile, uploadFiles) => {
-  // console.log(uploadFile);
+  console.log(uploadFile);
   fileList.value = uploadFiles;
   // formData.value.head_img =
 };

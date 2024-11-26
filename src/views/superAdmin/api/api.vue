@@ -13,8 +13,7 @@
         </el-form-item>
         <el-form-item label="请求">
           <el-select v-model="searchInfo.method" clearable placeholder="请选择" style="width: 120px">
-            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`"
-              :value="item.value" />
+            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -33,13 +32,11 @@
             <el-button size="small" type="primary" @click="onDelete">确定</el-button>
           </div>
           <template #reference>
-            <el-button icon="delete" size="small" :disabled="!apis.length" style="margin-left: 10px"
-              @click="deleteVisible = true">删除</el-button>
+            <el-button icon="delete" size="small" :disabled="!apis.length" style="margin-left: 10px" @click="deleteVisible = true">删除</el-button>
           </template>
         </el-popover>
       </div>
-      <el-table :data="tableData" @sort-change="sortChange" @selection-change="handleSelectionChange" stripe
-        v-loading="loading">
+      <el-table :data="tableData" @sort-change="sortChange" @selection-change="handleSelectionChange" stripe v-loading="loading">
         <el-table-column type="selection" width="55" />
         <el-table-column align="left" label="id" min-width="60" prop="ID" sortable="custom" />
         <el-table-column align="left" label="API路径" min-width="150" prop="path" sortable="custom" />
@@ -59,9 +56,7 @@
         </el-table-column>
       </el-table>
       <div class="pagination">
-        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]"
-          :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange"
-          @size-change="handleSizeChange" />
+        <el-pagination background :current-page="page" :page-size="pageSize" :page-sizes="[10, 30, 50, 100]" :total="total" layout="total, sizes, prev, pager, next, jumper" @current-change="handleCurrentChange" @size-change="handleSizeChange" />
       </div>
     </div>
 
@@ -72,8 +67,7 @@
         </el-form-item>
         <el-form-item label="请求" prop="method">
           <el-select v-model="form.method" placeholder="请选择" style="width: 100%">
-            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`"
-              :value="item.value" />
+            <el-option v-for="item in methodOptions" :key="item.value" :label="`${item.label}(${item.value})`" :value="item.value" />
           </el-select>
         </el-form-item>
         <el-form-item label="api分组" prop="api_group">
@@ -347,7 +341,7 @@ const deleteApiFunc = async (row) => {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .button-box {
   padding: 10px 20px;
 

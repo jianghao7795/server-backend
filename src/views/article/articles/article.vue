@@ -48,9 +48,7 @@
         <el-table-column label="首页显示" prop="is_important">
           <template #default="{ row }">
             <div class="centerBg">
-              <el-space>
-                <el-tag :type="row.is_important === 1 ? 'success' : ''">{{ row.is_important === 1 ? "显示" : "隐藏" }}</el-tag>
-              </el-space>
+              <el-switch v-model="{ 1: true, 2: false }[row.is_important]" :before-change="() => updateHide({ 1: false, 2: true }[row.is_important], row)" active-text="显示" inactive-text="隐藏" />
             </div>
           </template>
         </el-table-column>
@@ -347,6 +345,18 @@ const updateArticleFunc = async (row) => {
     formData.value.tags = res.data.tags.map((i) => i.ID);
     // text.value = formData.value.content;
     dialogFormVisible.value = true;
+  }
+};
+
+const updateHide = async (status, row) => {
+  // const resp = await findArticle({ID: id});
+  const resp = await updateArticle({ ...row, is_important: status ? 1 : 2 });
+  if (resp.code === 200) {
+    ElMessage({
+      type: "success",
+      message: "更改成功",
+    });
+    getTableData();
   }
 };
 

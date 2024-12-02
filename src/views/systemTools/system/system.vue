@@ -154,11 +154,11 @@
               <el-input v-model.number="config.mysql['max-open-conns']" />
             </el-form-item>
             <el-form-item label="logMode">
-              <el-radio-group v-model="config.mysql['log-mode']">
-                <el-radio-button name="Silent" value="silent" />
-                <el-radio-button name="Error" value="error" />
-                <el-radio-button name="Warn" value="warn" />
-                <el-radio-button name="Info" value="info" />
+              <el-radio-group size="small" v-model="config.mysql['logMode']">
+                <el-radio-button label="Silent" value="silent" />
+                <el-radio-button label="Error" value="error" />
+                <el-radio-button label="Warn" value="warn" />
+                <el-radio-button label="Info" value="info" />
               </el-radio-group>
             </el-form-item>
           </template>
@@ -407,6 +407,7 @@ const config = ref({
 const initForm = async () => {
   const res = await getSystemConfig();
   if (res.code === 200) {
+    console.log(res);
     config.value = res.data.config;
   }
 };

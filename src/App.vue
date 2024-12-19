@@ -16,7 +16,7 @@ const locale = computed(() => (language.value === "zh-CN" ? zhCn : en));
 const toggle = () => {
   language.value = language.value === "zh-CN" ? "en" : "zh-CN";
 };
-// console.log(window.navigator); /
+// console.log(window.navigator);
 provide("locale", locale);
 provide("toggle", toggle);
 provide("language", language);

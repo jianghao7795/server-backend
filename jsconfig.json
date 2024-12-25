@@ -1,14 +1,19 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
     "jsx": "preserve",
-    "experimentalDecorators": true,
-    "baseUrl": "./",
-    "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    },
-    "include": ["src/**/*.vue", "src/**/*.js"],
-    "types": ["element-plus/global"]
-  }
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.vue", "src/**/*.js"],
+  "types": ["element-plus/global"]
 }

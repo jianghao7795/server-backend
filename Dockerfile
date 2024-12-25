@@ -11,7 +11,6 @@ RUN npm install -g pnpm
 RUN pnpm config set registry https://registry.npmmirror.com
 RUN pnpm install
 RUN pnpm run build
-RUN npm run build
 
 FROM nginx:stable
 LABEL org.opencontainers.image.authors="jianghao"

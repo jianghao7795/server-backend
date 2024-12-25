@@ -154,11 +154,11 @@
               <el-input v-model.number="config.mysql['max-open-conns']" />
             </el-form-item>
             <el-form-item label="logMode">
-              <el-radio-group v-model="config.mysql['log-mode']">
-                <el-radio-button name="Silent" value="silent" />
-                <el-radio-button name="Error" value="error" />
-                <el-radio-button name="Warn" value="warn" />
-                <el-radio-button name="Info" value="info" />
+              <el-radio-group size="small" v-model="config.mysql['log-mode']">
+                <el-radio-button label="Silent" value="silent" />
+                <el-radio-button label="Error" value="error" />
+                <el-radio-button label="Warn" value="warn" />
+                <el-radio-button label="Info" value="info" />
               </el-radio-group>
             </el-form-item>
           </template>
@@ -336,7 +336,7 @@
             <el-input v-model="config.timer.spec" />
           </el-form-item>
           <el-alert title="清除数据" type="success" :closable="false" />
-          <template v-for="(item, k) in config.timer.detail">
+          <template v-for="(item, k) in config.time?.detail">
             <div v-for="(key, k2) in item" :key="k2">
               <el-form-item :key="k + k2" :label="k2">
                 <el-input v-model="item[k2]" />
@@ -344,7 +344,7 @@
             </div>
           </template>
           <el-alert title="任务" type="error" :closable="false" />
-          <template v-for="(item, k) in config.timer?.tasks">
+          <template v-for="(item, k) in config.time?.tasks">
             <div v-for="(key, k2) in item" :key="k2">
               <el-form-item :key="k + k2" :label="k2">
                 <el-input v-model="item[k2]" />
@@ -407,6 +407,7 @@ const config = ref({
 const initForm = async () => {
   const res = await getSystemConfig();
   if (res.code === 200) {
+    console.log(res);
     config.value = res.data.config;
   }
 };

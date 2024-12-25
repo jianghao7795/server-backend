@@ -331,6 +331,7 @@ const closeDialog = () => {
     desc: "",
     content: "",
     state: 1,
+    is_important: 1,
   };
   // text.value = "";
 };

@@ -14,7 +14,7 @@ docker rmi backend
 
 if [ $ip == $hostip ]
 then
-  docker build --progress=plain -t backend .
+  docker build --progress=plain -f Dockerfile -t backend .
 else
   docker build --progress=plain -f DockerfileHome -t backend .
 fi

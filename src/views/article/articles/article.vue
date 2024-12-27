@@ -126,7 +126,7 @@ export default { name: "Article" };
 
 <script setup>
 import { formatDate } from "@/utils/format";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElDialog, ElButton } from "element-plus";
 import { getArticleList, deleteArticle, findArticle, createArticle, updateArticle, uploadFile, deleteArticleByIds, putArticleByIds } from "@/api/article";
 import { getTagList } from "@/api/tag";
 import { ref, onBeforeMount, reactive } from "vue";
@@ -256,10 +256,10 @@ const onDelete = async () => {
     });
     return;
   }
-  multipleSelection.value &&
-    multipleSelection.value.forEach((item) => {
-      ids.push(item.ID);
-    });
+
+  multipleSelection.value?.forEach((item) => {
+    ids.push(item.ID);
+  });
   const res = await deleteArticleByIds({ ids });
   if (res.code === 200) {
     ElMessage({

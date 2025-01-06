@@ -8,9 +8,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["element-plus/global"]
   },
-  "types": ["element-plus/global"],
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.js"],
   "exclude": ["node_modules", "dist"]
 }

@@ -6,10 +6,6 @@
  */
 import { createApp } from "vue";
 import "@/style/element_visiable.scss";
-// import ElementPlus from "element-plus";
-// import zhCn from "element-plus/es/locale/lang/zh-cn";
-// import "./core/vue-admin";
-// 引入封装的router
 import router from "@/router/index";
 import "@/permission";
 import run from "@/core/vue-admin"; // 图标加载
@@ -17,8 +13,6 @@ import auth from "@/directive/auth"; // 权限
 import { store } from "@/pinia";
 import App from "./App.vue";
 import "vue-cropper/dist/index.css";
-// import "virtual:windi.css"; // 会搞乱的
-// import "animate.css"; //导入animate.css包 https://animate.style/
 import i18n from "@/locals/index"; //语言翻译 i18b
 
 const app = createApp(App);

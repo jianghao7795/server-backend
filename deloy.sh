@@ -12,13 +12,13 @@ docker stop backend
 docker rm backend
 docker rmi backend
 
-if [ $ip == $hostip ]
-then
-  docker build --progress=plain -f Dockerfile -t backend .
-else
-  docker build --progress=plain -f DockerfileHome -t backend .
-fi
-
+# if [ $ip == $hostip ]
+# then
+#   docker build --progress=plain -f Dockerfile -t backend .
+# else
+#   docker build --progress=plain -f DockerfileHome -t backend .
+# fi
+docker build --progress=plain -f Dockerfile -t backend .
 docker run --name backend -d -p 9000:9000 backend
 
 # a=10

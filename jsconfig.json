@@ -12,7 +12,9 @@
       ]
     },
     "types": [
-      "element-plus/global"
+      "element-plus/global",
+      "vite/client",
+      "vue"
     ]
   },
   "include": [

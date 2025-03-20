@@ -10,8 +10,8 @@ import router from "@/router/index";
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_BASE_API,
-  timeout: 9999,
-  timeoutErrorMessage: "",
+  timeout: 9999, // ms
+  timeoutErrorMessage: "请求超时，请稍后重试",
 });
 let dataStatus = true;
 const showLoading = () => {
@@ -75,6 +75,9 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     closeLoading();
+    if (response.responseType === "blob") {
+      return response;
+    }
     if (response.data.code === 200 || response.headers.success === "true") {
       if (response.headers.msg) {
         response.data.msg = decodeURI(response.headers.msg);
@@ -83,9 +86,22 @@ service.interceptors.response.use(
     }
     return response.data;
   },
-  (error) => {
+  async (error) => {
     closeLoading();
+    if (error.request.responseType === "blob") {
+      // console.log(error);
+      const data = await error.response.data.text();
+      const jsonData = JSON.parse(data || "{}");
+      ElNotification({
+        title: `请求错误：${error.response.status}`,
+        type: "error",
+        message: jsonData?.msg || "文件错误",
+        duration: 10000,
+      });
+      throw jsonData;
+    }
     if (error.response && error.response.status >= 400 && error.response.status < 500) {
+      // console.log(error.response);
       const response = error.response;
       // ElMessage({
       //   showClose: true,
@@ -106,7 +122,7 @@ service.interceptors.response.use(
           router.push({ name: "Login", replace: true });
         }
       }
-      return response.data.msg ? response.data : response;
+      throw response.data.msg ? response.data : response;
     }
     if (!error.response && dataStatus) {
       ElMessageBox.confirm(
@@ -198,7 +214,7 @@ service.interceptors.response.use(
         );
     }
 
-    return error;
+    throw error;
   },
 );
 export default service;

@@ -7,6 +7,7 @@ import * as path from "path";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
 import vuePlugin from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 import Components from "unplugin-vue-components/vite";
 import ElementPlus from "unplugin-element-plus/vite";
 // import importElementPlus from "vite-plugin-element-plus";
@@ -126,7 +127,7 @@ export default defineConfig(({ command }) => {
         renderLegacyChunks: false,
       }),
       vuePlugin({}),
-      // vueJsx(),
+      vueJsx(),
       [Banner(`\n Build based on server-web \n Time : ${timestamp}`)],
 
       // importElementPlus(),

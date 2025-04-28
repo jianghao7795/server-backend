@@ -18,6 +18,14 @@ import i18n from "@/locals/index"; //语言翻译 i18b
 const app = createApp(App);
 // app.config.productionTip = false;
 
-app.use(run).use(store).use(auth).use(router).use(i18n).mount("#app");
+app
+  .use(run)
+  .use(store)
+  .use(auth, {
+    test: "test",
+  })
+  .use(router)
+  .use(i18n)
+  .mount("#app");
 
 export default app;

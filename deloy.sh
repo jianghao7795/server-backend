@@ -7,7 +7,7 @@ hostip="192.168.56.103"
 # sed -i `s/192.168.56.103/$ip/g` './conf.d/my.conf'
 
 cp conf.d/my.conf conf.d/config.conf
-sed -i -e "s/192.168.56.103/$ip/g" conf.d/config.conf
+sed -i -e "s/127.0.0.1/$ip/g" conf.d/config.conf
 docker stop backend
 docker rm backend
 docker rmi backend

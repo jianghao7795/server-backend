@@ -121,7 +121,7 @@ const handleExcelExport = (fileName) => {
 //   await getTableData();
 // };
 const fileDownload = (path, filename) => {
-  downloadFile(`/backend/${path}`, filename);
+  downloadFile(path, filename);
 };
 
 const deleteFileDownload = async (row) => {

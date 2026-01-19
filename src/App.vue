@@ -24,11 +24,11 @@ provide("language", language);
 
 <style lang="scss">
 // 引入初始化样式
-@import "@/style/main.scss";
-@import "@/style/base.scss";
-@import "@/style/mobile.scss";
-@import "@/style/newLogin.scss";
-@import "@/style/element_visiable.scss";
+@use "@/style/main.scss";
+@use "@/style/base.scss";
+@use "@/style/mobile.scss";
+@use "@/style/newLogin.scss";
+@use "@/style/element_visiable.scss";
 
 #app {
   background: #eee;

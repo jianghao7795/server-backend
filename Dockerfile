@@ -1,4 +1,4 @@
-FROM node:20.18.1-bullseye-slim AS builder
+FROM node:22.22.0-bullseye-slim AS builder
 
 LABEL org.opencontainers.image.authors="jianghao"
 

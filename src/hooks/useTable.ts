@@ -8,12 +8,7 @@ import { reactive, computed, onMounted, toRefs } from "vue";
  * @param {Boolean} isPageable 是否有分页(非必传，默认为true)
  * @param {Function} dataCallBack 对后台返回的数据进行处理的方法(非必传)
  * */
-export const useTable = (
-  api: (params: any) => Promise<any>,
-  initParam: object = {},
-  isPageable: boolean = true,
-  dataCallBack?: (data: any) => any,
-) => {
+export const useTable = (api: (params: any) => Promise<any>, initParam: object = {}, isPageable: boolean = true, dataCallBack?: (data: any) => any) => {
   const state = reactive<Table.TableStateProps>({
     // 表格数据
     tableData: [],

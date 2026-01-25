@@ -70,9 +70,7 @@ const breakPoint = computed<BreakPoint>(() => gridRef.value?.breakPoint);
 const showCollapse = computed(() => {
   let show = false;
   props.columns.reduce((prev, current) => {
-    prev +=
-      (current.search![breakPoint.value]?.span ?? current.search?.span ?? 1) +
-      (current.search![breakPoint.value]?.offset ?? current.search?.offset ?? 0);
+    prev += (current.search![breakPoint.value]?.span ?? current.search?.span ?? 1) + (current.search![breakPoint.value]?.offset ?? current.search?.offset ?? 0);
     if (typeof props.searchCol !== "number") {
       if (prev >= props.searchCol[breakPoint.value]) show = true;
     } else {

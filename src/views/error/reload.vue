@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div><Icon type="reload" /></div>
 </template>
 <script>
 import { useRouter } from "vue-router";

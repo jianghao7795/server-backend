@@ -1,12 +1,28 @@
 <template>
   <el-dialog v-model="status" title="裁剪图片">
     <div style="width: 100%; height: 400px; margin-bottom: 10px">
-      <vue-cropper ref="cropper" :img="props.imgUrl" :output-size="options.size" :output-type="options.outputType"
-        :info="true" :full="options.full" :fixed="false" :fixed-number="[75, 34]" :can-move="options.canMove"
-        :can-move-box="options.canMoveBox" :fixed-box="options.fixedBox" :original="options.original"
-        :auto-crop="options.autoCrop" :auto-crop-width="options.autoCropWidth"
-        :auto-crop-height="options.autoCropHeight" :center-box="options.centerBox" @real-time="realTime"
-        :high="options.high" mode="contain" :max-img-size="options.max" />
+      <vue-cropper
+        ref="cropper"
+        :img="props.imgUrl"
+        :output-size="options.size"
+        :output-type="options.outputType"
+        :info="true"
+        :full="options.full"
+        :fixed="false"
+        :fixed-number="[75, 34]"
+        :can-move="options.canMove"
+        :can-move-box="options.canMoveBox"
+        :fixed-box="options.fixedBox"
+        :original="options.original"
+        :auto-crop="options.autoCrop"
+        :auto-crop-width="options.autoCropWidth"
+        :auto-crop-height="options.autoCropHeight"
+        :center-box="options.centerBox"
+        @real-time="realTime"
+        :high="options.high"
+        mode="contain"
+        :max-img-size="options.max"
+      />
     </div>
     <el-card header="预览">
       <div style="min-height: 200px">

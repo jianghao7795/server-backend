@@ -7,11 +7,14 @@
 
           <div class="fl-center avatar-box">
             <div class="user-card">
-              <div class="user-headpic-update" :style="{
-                'background-image': `url(${userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http' ? path + userStore.userInfo.headerImg : userStore.userInfo.headerImg})`,
-                'background-repeat': 'no-repeat',
-                'background-size': 'cover',
-              }">
+              <div
+                class="user-headpic-update"
+                :style="{
+                  'background-image': `url(${userStore.userInfo.headerImg && userStore.userInfo.headerImg.slice(0, 4) !== 'http' ? path + userStore.userInfo.headerImg : userStore.userInfo.headerImg})`,
+                  'background-repeat': 'no-repeat',
+                  'background-size': 'cover',
+                }"
+              >
                 <span class="update" @click="openChooseImg">
                   <el-icon>
                     <edit />
@@ -150,8 +153,7 @@
         </el-form-item>
         <el-form-item label="验证码" label-width="120px">
           <div class="code-box">
-            <el-input v-model="phoneForm.code" autocomplete="off" placeholder="请自行设计短信服务，此处为模拟随便写"
-              style="width: 300px" />
+            <el-input v-model="phoneForm.code" autocomplete="off" placeholder="请自行设计短信服务，此处为模拟随便写" style="width: 300px" />
             <el-button size="small" type="primary" :disabled="time > 0" @click="getCode">
               {{ time > 0 ? `(${time}s)后重新获取` : "获取验证码" }}
             </el-button>
@@ -173,8 +175,7 @@
         </el-form-item>
         <el-form-item label="验证码" label-width="120px">
           <div class="code-box">
-            <el-input v-model="emailForm.code" placeholder="请自行设计邮件服务，此处为模拟随便写" autocomplete="off"
-              style="width: 300px" />
+            <el-input v-model="emailForm.code" placeholder="请自行设计邮件服务，此处为模拟随便写" autocomplete="off" style="width: 300px" />
             <el-button size="small" type="primary" :disabled="emailTime > 0" @click="getEmailCode">
               {{ emailTime > 0 ? `(${emailTime}s)后重新获取` : "获取验证码" }}
             </el-button>
@@ -219,8 +220,7 @@
           </div>
           <div>
             <el-form-item label="" label-width="100px">
-              <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true"
-                style="width: 100%" :icon="Plus"></el-button>
+              <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true" style="width: 100%" :icon="Plus"></el-button>
             </el-form-item>
           </div>
         </div>
@@ -243,8 +243,7 @@
         </div>
         <div>
           <el-form-item label="" label-width="100px">
-            <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true"
-              style="width: 100%" :icon="Plus"></el-button>
+            <el-button size="small" @click="addChallenge" :disabled="securityQuestionList.length >= 4" :plain="true" style="width: 100%" :icon="Plus"></el-button>
           </el-form-item>
         </div>
         <div style="text-align: center">
@@ -253,8 +252,7 @@
       </div>
     </el-dialog>
 
-    <ImageCropModal :img-url="cropUrl" :dialog-form-visible="cropStatus" :crop-data="cropData"
-      @changeImageStatus="changeImageStatus" @changeAvatar="changeAvatar" />
+    <ImageCropModal :img-url="cropUrl" :dialog-form-visible="cropStatus" :crop-data="cropData" @changeImageStatus="changeImageStatus" @changeAvatar="changeAvatar" />
   </div>
 </template>
 
@@ -479,7 +477,7 @@ const changeImageStatus = (status = false, url = "", data) => {
 };
 
 const enterImg = async (url, record, isCropper = false) => {
-  if(isCropper) {
+  if (isCropper) {
     changeImageStatus(true, `/backend/${url}`, record);
   } else {
     changeAvatar(url);
@@ -727,7 +725,9 @@ const changeEmail = async () => {
 
   &:hover {
     color: #fff;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%), radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%) #989898;
+    background:
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%),
+      radial-gradient(at top center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.4) 120%) #989898;
     background-blend-mode: multiply, multiply;
 
     .update {

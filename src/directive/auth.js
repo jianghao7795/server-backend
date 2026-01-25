@@ -8,7 +8,7 @@
 import { useUserStore } from "@/pinia/modules/user";
 export default {
   install: (app, options) => {
-    console.log(options); /// options 是 use(auth, {changeAuth: true})
+    // console.log(options); /// options 是 use(auth, {changeAuth: true})
     const userStore = useUserStore();
     app.directive("auth", {
       // 当被绑定的元素插入到 DOM 中时……

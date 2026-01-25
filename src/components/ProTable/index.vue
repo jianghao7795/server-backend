@@ -24,12 +24,7 @@
       <slot></slot>
       <template v-for="item in tableColumns" :key="item">
         <!-- selection || index -->
-        <el-table-column
-          v-bind="item"
-          :align="item.align ?? 'center'"
-          :reserve-selection="item.type == 'selection'"
-          v-if="item.type == 'selection' || item.type == 'index'"
-        ></el-table-column>
+        <el-table-column v-bind="item" :align="item.align ?? 'center'" :reserve-selection="item.type == 'selection'" v-if="item.type == 'selection' || item.type == 'index'"></el-table-column>
         <!-- expand 支持 tsx 语法 && 作用域插槽 (tsx > slot) -->
         <el-table-column v-bind="item" :align="item.align ?? 'center'" v-if="item.type == 'expand'" v-slot="scope">
           <component :is="item.render" :row="scope.row" v-if="item.render"></component>
@@ -112,12 +107,7 @@ const props = withDefaults(defineProps<ProTableProps>(), {
 const { selectionChange, getRowKeys, selectedList, selectedListIds, isSelected } = useSelection(props.selectId);
 
 // 表格操作 Hooks
-const { tableData, pageable, searchParam, searchInitParam, getTableList, search, reset, handleSizeChange, handleCurrentChange } = useTable(
-  props.requestApi,
-  props.initParam,
-  props.pagination,
-  props.dataCallback,
-);
+const { tableData, pageable, searchParam, searchInitParam, getTableList, search, reset, handleSizeChange, handleCurrentChange } = useTable(props.requestApi, props.initParam, props.pagination, props.dataCallback);
 
 // 清空选中数据列表
 const clearSelection = () => tableRef.value!.clearSelection();
@@ -186,10 +176,7 @@ const printData = computed(() => {
   let colEnumList = flatColumns.value!.filter((item) => item.enum || (item.prop && item.prop.split(".").length > 1));
   colEnumList.forEach((colItem) => {
     printDataList.forEach((tableItem: { [key: string]: any }) => {
-      tableItem[handleProp(colItem.prop!)] =
-        colItem.prop!.split(".").length > 1 && !colItem.enum
-          ? formatValue(handleRowAccordingToProp(tableItem, colItem.prop!))
-          : filterEnum(handleRowAccordingToProp(tableItem, colItem.prop!), enumMap.value.get(colItem.prop!), colItem.fieldNames);
+      tableItem[handleProp(colItem.prop!)] = colItem.prop!.split(".").length > 1 && !colItem.enum ? formatValue(handleRowAccordingToProp(tableItem, colItem.prop!)) : filterEnum(handleRowAccordingToProp(tableItem, colItem.prop!), enumMap.value.get(colItem.prop!), colItem.fieldNames);
     });
   });
   return printDataList;
@@ -201,9 +188,7 @@ const handlePrint = () => {
     printable: printData.value,
     header: props.title && `<div style="display: flex;flex-direction: column;text-align: center"><h2>${props.title}</h2></div>`,
     properties: flatColumns
-      .value!.filter(
-        (item) => item.isShow && item.type !== "selection" && item.type !== "index" && item.type !== "expand" && item.prop !== "operation",
-      )
+      .value!.filter((item) => item.isShow && item.type !== "selection" && item.type !== "index" && item.type !== "expand" && item.prop !== "operation")
       .map((item: ColumnProps) => {
         return {
           field: handleProp(item.prop!),

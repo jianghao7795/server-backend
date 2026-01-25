@@ -3,14 +3,7 @@
     <el-dialog :model-value="show" :before-close="() => (show = false)" :draggable="true" :width="500">
       <el-form>
         <el-form-item>
-          <el-input
-            :prefix-icon="Search"
-            ref="searchInputRef"
-            v-model="serarchValue"
-            placeholder="请输入关键词搜索"
-            clearable
-            @input="changeSearchRouter"
-          ></el-input>
+          <el-input :prefix-icon="Search" ref="searchInputRef" v-model="serarchValue" placeholder="请输入关键词搜索" clearable @input="changeSearchRouter"></el-input>
         </el-form-item>
       </el-form>
       <template #header>
@@ -19,13 +12,7 @@
       <el-empty description="暂无搜索结果" v-if="searchRouter.length === 0" />
       <el-scrollbar v-else>
         <template v-for="(i, index) in searchRouter" :key="i.label">
-          <div
-            class="border-every padding-pad"
-            :class="!!mouseoverdown[index] ? 'padding-pad-over' : ''"
-            @mouseover="() => (mouseoverdown = { [index]: true })"
-            @click="linkRouter(i.value)"
-            @enter="handleEnter"
-          >
+          <div class="border-every padding-pad" :class="!!mouseoverdown[index] ? 'padding-pad-over' : ''" @mouseover="() => (mouseoverdown = { [index]: true })" @click="linkRouter(i.value)" @enter="handleEnter">
             <!-- @mouseleave="() => (mouseoverdown[index] = false)" -->
             <div class="after-search">
               <div class="margin-icon">

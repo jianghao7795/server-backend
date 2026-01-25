@@ -221,7 +221,7 @@ const checkInit = async () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/style/newLogin.scss";
+@use "@/style/newLogin.scss";
 
 .centerFont {
   text-align: center;

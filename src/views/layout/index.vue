@@ -303,7 +303,7 @@ const changeMouse = (e) => {
 </script>
 
 <style lang="scss">
-@import "@/style/mobile.scss";
+@use "@/style/mobile.scss";
 
 .dark {
   background-color: #191a23 !important;

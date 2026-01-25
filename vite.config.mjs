@@ -6,6 +6,7 @@ import Banner from "vite-plugin-banner";
 import * as path from "path";
 import * as dotenv from "dotenv";
 import * as fs from "fs";
+import { fileURLToPath } from "url";
 import vuePlugin from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import Components from "unplugin-vue-components/vite";
@@ -17,6 +18,9 @@ import AutoImport from "unplugin-auto-import/vite";
 // import vueJsx from '@vitejs/plugin-vue-jsx';
 // import { isAsyncFunction } from 'util/types';
 // @see https://cn.vitejs.dev/config/
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig(({ command }) => {
   // mode development and production
@@ -99,7 +103,6 @@ export default defineConfig(({ command }) => {
       },
     },
     build: {
-      target: "es2015",
       minify: "terser", // 是否进行压缩,boolean | 'terser' | 'esbuild',默认使用terser
       manifest: false, // 是否产出maifest.json
       sourcemap: false, // 是否产出soucemap.json
@@ -124,6 +127,7 @@ export default defineConfig(({ command }) => {
       }),
       legacyPlugin({
         targets: ["Android > 39", "Chrome >= 60", "Safari >= 10.1", "iOS >= 10.3", "Firefox >= 54", "Edge >= 15"],
+        modernTargets: ["defaults", "not IE 11"],
         renderLegacyChunks: false,
       }),
       vuePlugin({}),
@@ -135,6 +139,12 @@ export default defineConfig(({ command }) => {
     ],
     css: {
       preprocessorOptions: {
+        scss: {
+          // 注入 Sass 兼容层，为第三方库提供全局函数兼容
+          additionalData: `@use "@/style/sass-compat.scss" as *;`,
+          // 静默弃用警告（不推荐，但可以暂时使用）
+          // silenceDeprecations: ["import", "global-builtin", "if-function", "new-global", "color-functions"],
+        },
         less: {
           // 支持内联 JavaScript
           javascriptEnabled: true,

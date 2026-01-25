@@ -1,0 +1,55 @@
+// Sass 兼容层 - 为第三方库提供全局函数的兼容实现
+// 这个文件通过 Vite 配置注入到所有 Sass 文件的开头
+
+@use "sass:color";
+@use "sass:meta";
+@use "sass:string";
+@use "sass:map";
+
+// 提供全局函数的兼容实现
+// 注意：这些函数会被注入到全局作用域，以兼容第三方库
+
+// 颜色函数兼容
+@function mix($color1, $color2, $weight: 50%) {
+  @return color.mix($color1, $color2, $weight);
+}
+
+@function red($color) {
+  @return color.channel($color, "red", $space: rgb);
+}
+
+@function green($color) {
+  @return color.channel($color, "green", $space: rgb);
+}
+
+@function blue($color) {
+  @return color.channel($color, "blue", $space: rgb);
+}
+
+// 字符串函数兼容
+@function str-slice($string, $start-at, $end-at: -1) {
+  @return string.slice($string, $start-at, $end-at);
+}
+
+@function str-index($string, $substring) {
+  @return string.index($string, $substring);
+}
+
+// Meta 函数兼容
+@function inspect($value) {
+  @return meta.inspect($value);
+}
+
+// Map 函数兼容
+@function map-has-key($map, $key) {
+  @return map.has-key($map, $key);
+}
+
+@function map-get($map, $key) {
+  @return map.get($map, $key);
+}
+
+// 字符串处理函数兼容
+@function unquote($string) {
+  @return string.unquote($string);
+}

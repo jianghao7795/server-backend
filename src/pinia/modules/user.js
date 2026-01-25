@@ -21,6 +21,7 @@ export const useUserStore = defineStore("user", () => {
     authority: {},
     phone: "",
     email: "",
+    authorities: [],
   });
   const token = ref(window.localStorage.getItem("token") || "");
   const isInit = ref(false);

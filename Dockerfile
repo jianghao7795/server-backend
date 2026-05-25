@@ -23,3 +23,4 @@ LABEL org.opencontainers.image.authors="jianghao"
 RUN rm -rf /usr/share/nginx/html/* && mkdir -p /usr/share/nginx/html/backend
 COPY --from=builder /app/dist /usr/share/nginx/html/backend
 COPY ./conf.d/config.conf /etc/nginx/conf.d/default.conf
+COPY ./conf.d/nginx.conf /etc/nginx/nginx.conf

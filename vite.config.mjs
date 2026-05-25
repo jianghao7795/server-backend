@@ -107,7 +107,14 @@ export default defineConfig(({ command }) => {
       manifest: false, // 是否产出maifest.json
       sourcemap: false, // 是否产出soucemap.json
       outDir: "dist", // 产出目录
-      rollupOptions,
+      rollupOptions: {
+        ...rollupOptions,
+        onwarn(warning, warn) {
+          // 忽略 node_modules 中的 PURE 注解位置警告
+          if (warning.message?.includes("PURE") && warning.id?.includes("node_modules")) return;
+          warn(warning);
+        },
+      },
       chunkSizeWarningLimit: 1200,
     },
     esbuild,

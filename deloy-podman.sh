@@ -7,7 +7,7 @@
 # sed -i `s/192.168.56.103/$ip/g` './conf.d/my.conf'
 
 cp conf.d/my.conf conf.d/config.conf
-sed -i -e "s/127.0.0.1/host.container.internal/g" conf.d/config.conf
+sed -i -e "s/127.0.0.1/host.containers.internal/g" conf.d/config.conf
 podman stop backend
 podman rm backend
 podman rmi backend

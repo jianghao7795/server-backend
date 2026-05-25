@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': true
+  core-js: true
+  cssnano: true
+  esbuild: true
+  swiper: true
+  vue-demi: true
+  yorkie: true
